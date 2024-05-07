@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 
+import DotMenuSVG from "@/assets/icons/dots-menu.svg";
 import FemaleSVG from "@/assets/icons/female.svg";
 import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
 import LocationWhiteBackSVG from "@/assets/icons/location-white-back.svg";
 import MaleSVG from "@/assets/icons/male.svg";
+import { DropDownMenu } from "@/components/common/drop-down-menu";
 // import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
@@ -12,6 +15,7 @@ import { colorTheme } from "@/style/color-theme";
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();
   const { data: bankAccount } = useGetBankData();
+  const [show, setShow] = useState<boolean>(false);
 
   return (
     <Wrapper>
@@ -26,6 +30,17 @@ export const MypageListProfile = () => {
             {myProfile?.gender == "male" ? "남" : "여"} / {myProfile?.ageRange}
             대
           </SexAge>
+          <MenuBox>
+            <MenuSVG src={DotMenuSVG} onClick={() => setShow(!show)} />
+            {show && (
+              <DropDownMenu>
+                <DropDownMenu.MenuItem>로그아웃</DropDownMenu.MenuItem>
+                <DropDownMenu.MenuItem style={{ color: "red " }}>
+                  회원탈퇴
+                </DropDownMenu.MenuItem>
+              </DropDownMenu>
+            )}
+          </MenuBox>
         </ProfileRowBox>
         <StateOrangeBox>
           <PriceStateBox>
@@ -75,11 +90,13 @@ const ColumnBox = styled.div`
 `;
 
 const ProfileRowBox = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 1%;
+  white-space: nowrap;
 `;
 
 const Name = styled.div`
@@ -89,6 +106,16 @@ const Name = styled.div`
 const SexAge = styled.div`
   font-size: 0.56rem;
   color: ${colorTheme.shade};
+`;
+
+const MenuBox = styled.div`
+  position: absolute;
+  right: 3.3%;
+  height: 25px;
+`;
+
+const MenuSVG = styled.img`
+  height: 100%;
 `;
 
 const StateOrangeBox = styled.div`
