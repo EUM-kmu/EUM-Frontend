@@ -23,4 +23,12 @@ export default class AuthApi {
     const res = response.data as AuthResponse;
     return res.data;
   }
+
+  static async postSignOut() {
+    const response = await Instance.post(`/auth-service/api/v2/logOut`);
+
+    console.log(response);
+    const res = response.data as AuthResponse;
+    return res.data;
+  }
 }

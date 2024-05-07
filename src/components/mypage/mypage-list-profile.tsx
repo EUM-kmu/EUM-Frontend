@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import DotMenuSVG from "@/assets/icons/dots-menu.svg";
@@ -10,12 +11,17 @@ import { DropDownMenu } from "@/components/common/drop-down-menu";
 // import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
+// import { useSignOut } from "@/hooks/queries/useSignOut";
 import { colorTheme } from "@/style/color-theme";
 
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();
   const { data: bankAccount } = useGetBankData();
+  // TODO: 연동
+  // const { mutate: signOut } = useSignOut();
   const [show, setShow] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -34,7 +40,20 @@ export const MypageListProfile = () => {
             <MenuSVG src={DotMenuSVG} onClick={() => setShow(!show)} />
             {show && (
               <DropDownMenu>
-                <DropDownMenu.MenuItem>로그아웃</DropDownMenu.MenuItem>
+                <DropDownMenu.MenuItem
+                  onClick={() => {
+                    // signOut();
+                    // temp
+                    localStorage.removeItem("accessToken");
+                    localStorage.removeItem("refreshToken");
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("role");
+                    sessionStorage.removeItem("isLoading");
+                    navigate("/");
+                  }}
+                >
+                  로그아웃
+                </DropDownMenu.MenuItem>
                 <DropDownMenu.MenuItem style={{ color: "red " }}>
                   회원탈퇴
                 </DropDownMenu.MenuItem>
