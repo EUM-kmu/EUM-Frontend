@@ -46,7 +46,7 @@ const StyledDefaultAppbar = styled.div`
 const StyledDefaultLayout = styled.div<{ $scrollbar: boolean }>`
   position: relative;
   flex: 1;
-  width: 100%;
   height: 100%;
+  margin: 0 20px;
   ${({ $scrollbar }) => $scrollbar && "overflow-y: auto;overflow-x:hidden"}
 `;

@@ -22,8 +22,9 @@ const MenuContainer = styled.div`
   width: auto;
   max-width: 100px;
   padding: 10px 7px;
+  box-shadow: 0px 0px 8px 2px ${colorTheme.blue300};
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   flex-direction: column;
   gap: 10px;
   top: 100%;
@@ -32,12 +33,8 @@ const MenuContainer = styled.div`
 
 const MenuItemWrapper = styled.button`
   padding: 0.5rem;
-  background-color: ${colorTheme.blue100};
-  box-shadow: 0px 0px 2px 2px ${colorTheme.blue300};
+  background-color: transparent;
   border: 1px solid transparent;
   border-radius: 10px;
   font-size: 1rem;
-  &:active {
-    border: 1px solid ${colorTheme.blue700};
-  }
 `;
