@@ -17,15 +17,11 @@ export const GoogleButton = ({
     setIsLoading(true);
     sessionStorage.setItem("isLoading", "true");
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
     await signInWithRedirect(auth, provider);
   };
-
-  // // Not yet
-  // const signOut = async () => {
-  //   setIsLoading(true);
-  //   await auth.signOut().then(() => console.log("logout!"));
-  //   setIsLoading(false);
-  // };
 
   useEffect(() => {
     void getRedirectResult(auth)

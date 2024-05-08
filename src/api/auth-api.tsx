@@ -28,7 +28,15 @@ export default class AuthApi {
     const response = await Instance.post(`/auth-service/api/v2/logOut`);
 
     console.log(response);
-    const res = response.data as AuthResponse;
-    return res.data;
+    return response;
+  }
+
+  static async postWithdrawal() {
+    const response = await Instance.post(
+      `/haetsal-service/api/v2/user/withdrawal`,
+    );
+
+    console.log(response);
+    return response;
   }
 }

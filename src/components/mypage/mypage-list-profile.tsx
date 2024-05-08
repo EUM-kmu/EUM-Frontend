@@ -11,14 +11,16 @@ import { DropDownMenu } from "@/components/common/drop-down-menu";
 // import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
-// import { useSignOut } from "@/hooks/queries/useSignOut";
+import { useSignOut } from "@/hooks/queries/useSignOut";
+import { useWithdrawal } from "@/hooks/queries/useWithdrawal";
 import { colorTheme } from "@/style/color-theme";
 
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();
   const { data: bankAccount } = useGetBankData();
   // TODO: 연동
-  // const { mutate: signOut } = useSignOut();
+  const { mutate: signOut } = useSignOut();
+  const { mutate: withdrawal } = useWithdrawal();
   const [show, setShow] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -42,19 +44,15 @@ export const MypageListProfile = () => {
               <DropDownMenu>
                 <DropDownMenu.MenuItem
                   onClick={() => {
-                    // signOut();
-                    // temp
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("refreshToken");
-                    localStorage.removeItem("userId");
-                    localStorage.removeItem("role");
-                    sessionStorage.removeItem("isLoading");
-                    navigate("/");
+                    signOut();
                   }}
                 >
                   로그아웃
                 </DropDownMenu.MenuItem>
-                <DropDownMenu.MenuItem style={{ color: "red " }}>
+                <DropDownMenu.MenuItem
+                  style={{ color: "red " }}
+                  onClick={() => withdrawal()}
+                >
                   회원탈퇴
                 </DropDownMenu.MenuItem>
               </DropDownMenu>
