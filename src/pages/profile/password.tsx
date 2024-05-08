@@ -42,18 +42,21 @@ export const PasswordPage = () => {
   }, []);
 
   useEffect(() => {
-    if (password.length === PASSWORD_LENGTH) setStatus("CONFIRM");
+    if (password.length === PASSWORD_LENGTH)
+      setTimeout(() => setStatus("CONFIRM"), 200);
   }, [password]);
 
   useEffect(() => {
     if (confirmPassword.length === PASSWORD_LENGTH) {
-      if (password === confirmPassword) {
-        submitProfile({ ...profile, password });
-      } else {
-        setPassword("");
-        setConfirmPassword("");
-        setStatus("MISMATCH");
-      }
+      setTimeout(() => {
+        if (password === confirmPassword)
+          submitProfile({ ...profile, password });
+        else {
+          setPassword("");
+          setConfirmPassword("");
+          setStatus("MISMATCH");
+        }
+      }, 200);
     }
   }, [confirmPassword]);
 
