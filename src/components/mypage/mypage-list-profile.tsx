@@ -8,6 +8,7 @@ import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
 import LocationWhiteBackSVG from "@/assets/icons/location-white-back.svg";
 import MaleSVG from "@/assets/icons/male.svg";
 import { DropDownMenu } from "@/components/common/drop-down-menu";
+import { Modal } from "@/components/common/modal";
 // import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
@@ -23,7 +24,8 @@ export const MypageListProfile = () => {
   const { mutate: withdrawal } = useWithdrawal();
   const [show, setShow] = useState<boolean>(false);
 
-  const navigate = useNavigate();
+  const [withdrawalModal, setWithDrawalModal] = useState<boolean>(false);
+  const [signOutModal, setSignOutModal] = useState<boolean>(false);
 
   return (
     <Wrapper>
@@ -41,24 +43,32 @@ export const MypageListProfile = () => {
           <MenuBox>
             <MenuSVG src={DotMenuSVG} onClick={() => setShow(!show)} />
             {show && (
-              <DropDownMenu>
-                <DropDownMenu.MenuItem
-                  onClick={() => {
-                    signOut();
-                  }}
-                >
-                  로그아웃
-                </DropDownMenu.MenuItem>
-                <DropDownMenu.MenuItem
-                  style={{ color: "red " }}
-                  onClick={() => withdrawal()}
-                >
-                  회원탈퇴
-                </DropDownMenu.MenuItem>
-              </DropDownMenu>
+              <>
+                <DropDownMenu>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      setShow(false);
+                      setWithDrawalModal(true);
+                      withdrawal();
+                    }}
+                  >
+                    탈퇴하기
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      setShow(false);
+                      setSignOutModal(true);
+                      signOut();
+                    }}
+                  >
+                    로그아웃하기
+                  </DropDownMenu.MenuItem>
+                </DropDownMenu>
+              </>
             )}
           </MenuBox>
         </ProfileRowBox>
+        {show && <MenuBackground onClick={() => setShow(false)} />}
         <StateOrangeBox>
           <PriceStateBox>
             <KnotIconImg src={KnotWhiteBackSVG} />
@@ -76,6 +86,20 @@ export const MypageListProfile = () => {
           </OtherStateColumnBox>
         </StateOrangeBox>
       </ColumnBox>
+
+      {/** Modal */}
+      {withdrawalModal && (
+        <Modal onClose={() => setWithDrawalModal(false)}>
+          <Modal.Title text="탈퇴하시겠습니까?" />
+          <Modal.Button color="orange">탈퇴하기</Modal.Button>
+        </Modal>
+      )}
+      {signOutModal && (
+        <Modal onClose={() => setSignOutModal(false)}>
+          <Modal.Title text="로그아웃\n하시겠습니까?" />
+          <Modal.Button color="orange">로그아웃</Modal.Button>
+        </Modal>
+      )}
     </Wrapper>
   );
 };
@@ -133,6 +157,15 @@ const MenuBox = styled.div`
 
 const MenuSVG = styled.img`
   height: 100%;
+`;
+
+const MenuBackground = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(217, 217, 217, 0.8);
+  left: 0;
+  top: 0;
 `;
 
 const StateOrangeBox = styled.div`

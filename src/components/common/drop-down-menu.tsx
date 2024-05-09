@@ -1,10 +1,19 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import { ButtonHTMLAttributes, Children, PropsWithChildren } from "react";
 import { styled } from "styled-components";
 
 import { colorTheme } from "@/style/color-theme";
 
 export const DropDownMenu = ({ children }: PropsWithChildren) => {
-  return <MenuContainer>{children}</MenuContainer>;
+  return (
+    <Container>
+      {Children.map(children, (child, i) => (
+        <>
+          {child}
+          {i % 2 === 0 && <Divider />}
+        </>
+      ))}
+    </Container>
+  );
 };
 
 const MenuItem = ({
@@ -16,25 +25,28 @@ const MenuItem = ({
 
 DropDownMenu.MenuItem = MenuItem;
 
-const MenuContainer = styled.div`
+const Container = styled.div`
   position: absolute;
   display: flex;
-  width: auto;
-  max-width: 100px;
-  padding: 10px 7px;
-  box-shadow: 0px 0px 8px 2px ${colorTheme.blue300};
+  min-width: 260px;
+  margin-top: 5px;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 1.3rem 0 1.3rem 1.3rem;
   flex-direction: column;
-  gap: 10px;
   top: 100%;
   right: 0;
+  z-index: 10;
 `;
 
 const MenuItemWrapper = styled.button`
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 10px;
-  font-size: 1rem;
+  font-size: 1.38rem;
+  color: ${colorTheme.orange400};
+`;
+
+const Divider = styled.div`
+  height: 2px;
+  background-color: ${colorTheme.orange300};
 `;
