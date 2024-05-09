@@ -56,6 +56,7 @@ export const GenderPage = ({ nextStep }: GenderPageProps) => {
             <GenderCardFront width="100%" src={FemaleSVG} />
             <GenderCardBack style={{ backgroundColor: colorTheme.orange400 }} />
           </GenderCardInner>
+          <span>여성</span>
         </GenderCardWrapper>
         <GenderCardWrapper>
           <GenderCardInner
@@ -71,8 +72,8 @@ export const GenderPage = ({ nextStep }: GenderPageProps) => {
           >
             <GenderCardFront width="100%" src={MaleSVG} />
             <GenderCardBack style={{ backgroundColor: colorTheme.blue900 }} />
-            <span>남성</span>
           </GenderCardInner>
+          <span>남성</span>
         </GenderCardWrapper>
       </GenderContainer>
     </ContentLayout>
@@ -100,6 +101,14 @@ const GenderCardWrapper = styled.div`
   width: 35vw;
   perspective: 1000px;
   aspect-ratio: 0.89;
+  font-size: 1.38rem;
+  & span {
+    position: absolute;
+    left: 50%;
+    bottom: -40px;
+    transform: translateX(-50%);
+    font-size: 1.39rem;
+  }
 `;
 
 const GenderCardInner = styled.div`
@@ -107,13 +116,13 @@ const GenderCardInner = styled.div`
   width: 100%;
   height: 100%;
   flex: 1;
-  font-size: 1.39rem;
 `;
 
 const GenderCardFront = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
+  left: 0;
   object-fit: cover;
   border-radius: 29px;
   -webkit-backface-visibility: hidden;
