@@ -43,9 +43,13 @@ export default class PostApi {
   }
 
   static async getPostList(data: PostListPageable) {
-    const response = await Instance.get(
-      `/haetsal-service/api/v2/market/post?page=${data.page}&size=${data.size}`,
-    );
+    const response = data.search
+      ? await Instance.get(
+          `/haetsal-service/api/v2/market/post?page=${data.page}&size=${data.size}&search=${data.search}`,
+        )
+      : await Instance.get(
+          `/haetsal-service/api/v2/market/post?page=${data.page}&size=${data.size}`,
+        );
 
     if (response) {
       const temp = response.data as ResponsePostListProps;

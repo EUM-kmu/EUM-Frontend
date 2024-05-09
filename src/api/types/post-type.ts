@@ -70,4 +70,5 @@ export type ResponsePostListProps = FinalResponse<PostType[]>;
 export type PostListPageable = {
   page: number;
   size: number;
+  search?: string;
 };
