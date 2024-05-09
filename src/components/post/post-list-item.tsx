@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { PostListItemProps } from "./type";
@@ -13,24 +13,28 @@ import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
-  const [readyModal, setReadyModal] = useState<boolean>(false);
-  // const navigate = useNavigate();
+  // const [readyModal, setReadyModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <Wrapper
       onClick={() => {
-        // navigate(`/post/${props.postId}`);
+        navigate(`/post/${props.postId}`);
         // setReadyModal(true);
       }}
     >
       <RowBox>
-        {props.status == "RECRUITING" && <StateIng>모집중</StateIng>}
-        {props.status == "RECRUITMENT_COMPLETED" && (
+        {props.status == "RECRUITING" && !props.deleted && (
+          <StateIng>모집중</StateIng>
+        )}
+        {props.status == "RECRUITMENT_COMPLETED" && !props.deleted && (
           <StateFin>모집완료</StateFin>
         )}
-        {props.status == "TRANSACTION_COMPLETED" && (
+        {props.status == "TRANSACTION_COMPLETED" && !props.deleted && (
           <StateFin>거래완료</StateFin>
         )}
+        {props.deleted && <StateFin>삭제된 글</StateFin>}
+
         <TopIcon src={ApplicantSVG} />
         <StateSpan>
           {props.currentApplicant}/{props.maxNumOfPeople}명
@@ -55,15 +59,6 @@ export const PostListItem = (props: PostListItemProps) => {
           onClick={() => console.log("user: ", props.writerId)}
         />
       </BottomRowBox>
-      {readyModal && (
-        <Modal
-          onClose={() => {
-            setReadyModal(false);
-          }}
-        >
-          <Modal.Title text="지금 급한 이슈를\n처리하는중이에요!🫣" />
-        </Modal>
-      )}
     </Wrapper>
   );
 };

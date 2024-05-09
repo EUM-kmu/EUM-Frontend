@@ -137,7 +137,7 @@ const ApplyButtonNotClick = styled.div`
   border: 0;
   border-radius: 15px;
   background-color: #e4e8f1;
-  color: ${colorTheme.blue500};
+  color: ${colorTheme.gray300};
   font-size: 0.8rem;
   justify-content: center;
   align-items: center;

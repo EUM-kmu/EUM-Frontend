@@ -9,4 +9,5 @@ export type PostListItemProps = {
   maxNumOfPeople: number;
   writerProfileImg: string;
   writerId: number;
+  deleted: boolean;
 };

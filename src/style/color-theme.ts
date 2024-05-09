@@ -9,4 +9,5 @@ export const colorTheme = {
   orange200: "#f9c4b0",
   orange100: "#fdebe5",
   shade: "#828282",
+  gray300: "#ababab",
 };

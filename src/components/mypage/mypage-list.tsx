@@ -21,6 +21,7 @@ export const MypageList = ({ type }: { type: string }) => {
           maxNumOfPeople={item.maxNumOfPeople}
           writerId={item.writerInfo.profileId}
           writerProfileImg={item.writerInfo.profileImage}
+          deleted={item.deleted}
         />
       ))}
     </Wrapper>
