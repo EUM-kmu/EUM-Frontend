@@ -11,6 +11,7 @@ export const ChatItem = ({
   userName,
   setProfileModal,
   setProfileUserId,
+  setDeletedProfileModal,
 }: ChatItemType) => {
   const tempId = localStorage.getItem("userId");
   const myId = tempId ? Number(tempId) : -1;
@@ -27,6 +28,8 @@ export const ChatItem = ({
             if (userId !== -2) {
               setProfileUserId(Number(userId));
               setProfileModal(true);
+            } else {
+              setDeletedProfileModal(true);
             }
           }}
           src={imgurl}

@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { ApplicantItemDetailProps } from "./type";
 
 import LocationSVG from "@/assets/icons/location.svg";
+import DeletedUserBackExistSVG from "@/assets/images/deleted-user-back-exist.svg";
 import { colorTheme } from "@/style/color-theme";
 
 export const ApplicantItem = (props: ApplicantItemDetailProps) => {
@@ -27,18 +28,31 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
     <ApplicantItemWrapper>
       <ApplicantImage>
         {/* <img src={profileImage} /> */}
-        <img src={props.applicantInfo.profileImage} />
+        <img
+          src={
+            props.isDeletedUser
+              ? DeletedUserBackExistSVG
+              : props.applicantInfo.profileImage
+          }
+        />
       </ApplicantImage>
-      <ApplicantInfo>
-        <ApplicantLocation>{props.applicantInfo.address}</ApplicantLocation>
-        <ApplicantNickname>{props.applicantInfo.nickName}</ApplicantNickname>
-        <ApplicantMoreInfo>
-          도움횟수 16 <Bullet />{" "}
-          {props.applicantInfo.gender === "male" ? "남" : "여"} <Bullet />{" "}
-          {props.applicantInfo.ageRange * 10}대
-        </ApplicantMoreInfo>
-      </ApplicantInfo>
-      {props.isDeleted ? (
+      {props.isDeletedUser && (
+        <ApplicantInfo>
+          <ApplicantDeletedUserDiv>알 수 없음</ApplicantDeletedUserDiv>
+        </ApplicantInfo>
+      )}
+      {!props.isDeletedUser && (
+        <ApplicantInfo>
+          <ApplicantLocation>{props.applicantInfo.address}</ApplicantLocation>
+          <ApplicantNickname>{props.applicantInfo.nickName}</ApplicantNickname>
+          <ApplicantMoreInfo>
+            도움횟수 16 <Bullet />{" "}
+            {props.applicantInfo.gender === "male" ? "남" : "여"} <Bullet />{" "}
+            {props.applicantInfo.ageRange * 10}대
+          </ApplicantMoreInfo>
+        </ApplicantInfo>
+      )}
+      {props.isDeleted || props.isDeletedUser ? (
         <ApplyButtonNotClick>선택불가</ApplyButtonNotClick>
       ) : (
         <ApplyButton $selected={props.selected} onClick={props.onSelect}>
@@ -141,4 +155,9 @@ const ApplyButtonNotClick = styled.div`
   font-size: 0.8rem;
   justify-content: center;
   align-items: center;
+`;
+
+const ApplicantDeletedUserDiv = styled.div`
+  font-size: 1.11rem;
+  color: #d9d9d9;
 `;

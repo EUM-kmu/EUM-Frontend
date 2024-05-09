@@ -11,6 +11,7 @@ export type ChatItemType = {
   userName: string;
   setProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
   setProfileUserId: React.Dispatch<React.SetStateAction<number>>;
+  setDeletedProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type InputType = {
