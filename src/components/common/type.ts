@@ -55,7 +55,7 @@ export type RightButtonProps = {
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 export type ProfileModalType = {
-  userId: number;
+  userId?: number;
   onClose: () => void;
 };
 
