@@ -291,8 +291,7 @@ const PaddingWrapper = styled.div<{ $isWriter: boolean }>`
   width: 100%;
   height: auto;
   min-height: 100%;
-  padding: ${({ $isWriter }) =>
-    $isWriter ? "0 1.6rem 120px" : "0 1.6rem 6rem"};
+  padding-bottom: ${({ $isWriter }) => ($isWriter ? "120px" : "6rem")};
   flex-direction: column;
 `;
 
