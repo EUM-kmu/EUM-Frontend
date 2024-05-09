@@ -1,20 +1,11 @@
-import { ButtonHTMLAttributes, Children, PropsWithChildren } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 import { styled } from "styled-components";
 
 import { colorTheme } from "@/style/color-theme";
 import { fadeInDown } from "@/style/keyframes";
 
 export const DropDownMenu = ({ children }: PropsWithChildren) => {
-  return (
-    <Container>
-      {Children.map(children, (child, i) => (
-        <>
-          {i !== 0 && <Divider />}
-          {child}
-        </>
-      ))}
-    </Container>
-  );
+  return <Container>{children}</Container>;
 };
 
 const MenuItem = ({
@@ -38,6 +29,12 @@ const Container = styled.div`
   right: 0;
   z-index: 10;
   animation: ${fadeInDown} 1s;
+  & > button {
+    border-top: 1px solid ${colorTheme.orange300};
+  }
+  & > button:first-child {
+    border: 0;
+  }
 `;
 
 const MenuItemWrapper = styled.button`
@@ -46,9 +43,4 @@ const MenuItemWrapper = styled.button`
   border: 1px solid transparent;
   font-size: 1.38rem;
   color: ${colorTheme.orange400};
-`;
-
-const Divider = styled.div`
-  height: 2px;
-  background-color: ${colorTheme.orange300};
 `;
