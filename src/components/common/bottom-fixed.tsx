@@ -60,6 +60,7 @@ BottomFixed.Button = Button;
 const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   display: flex;
   position: fixed;
+  margin: 0 2rem;
   flex-direction: ${({ $alignDirection }) => $alignDirection};
   gap: 11px;
   left: 0;
@@ -71,7 +72,7 @@ const StyledButton = styled.button<{
   color: "blue" | "orange";
 }>`
   position: relative;
-  width: calc(100% - 3.2rem);
+  width: 100%;
   max-width: calc(480px - 3.2rem);
   margin: auto;
   padding: 12px;
