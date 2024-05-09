@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 
 import { ReactComponent as CloseSVG } from "@/assets/icons/modal-close.svg";
 import { colorTheme } from "@/style/color-theme";
+import { fadeInDown } from "@/style/keyframes";
 
 type CloseButtonType = {
   onClick: MouseEventHandler<HTMLDivElement>;
@@ -138,6 +139,7 @@ const Content = styled.div`
   text-align: center;
   gap: 30px;
   z-index: 100;
+  animation: ${fadeInDown} 1s;
   & > * {
     flex: 1;
   }

@@ -9,8 +9,8 @@ export const DropDownMenu = ({ children }: PropsWithChildren) => {
     <Container>
       {Children.map(children, (child, i) => (
         <>
+          {i !== 0 && <Divider />}
           {child}
-          {i % 2 === 0 && <Divider />}
         </>
       ))}
     </Container>

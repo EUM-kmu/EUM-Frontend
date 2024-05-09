@@ -19,7 +19,7 @@ export const scaleUpDown = keyframes`
 
 export const fadeInDown = keyframes`
 0% {
-    top: 0;
+    transform:translateY(-20px); 
     opacity: 0;
   }
   100% {
