@@ -6,6 +6,7 @@ import FemaleSVG from "@/assets/images/female.svg";
 import MaleSVG from "@/assets/images/male.svg";
 import { Header } from "@/components/profile/header";
 import { profileState } from "@/recoil/atoms/profile-state";
+import { colorTheme } from "@/style/color-theme";
 
 type GenderPageProps = {
   nextStep: () => void;
@@ -15,6 +16,7 @@ type GenderType = "male" | "female";
 
 export const GenderPage = ({ nextStep }: GenderPageProps) => {
   const [gender, setGender] = useState<GenderType>();
+  const [flipEffect, setFlipEffect] = useState<boolean>(false);
 
   const setProfile = useSetRecoilState(profileState);
 
@@ -24,22 +26,54 @@ export const GenderPage = ({ nextStep }: GenderPageProps) => {
         ...profile,
         gender,
       }));
-      nextStep();
+      setFlipEffect(true);
     }
   }, [gender]);
+
+  useEffect(() => {
+    if (flipEffect)
+      setTimeout(() => {
+        nextStep();
+      }, 1300);
+  }, [flipEffect]);
 
   return (
     <ContentLayout>
       <Header text="성별을 골라주세요!" />
       <GenderContainer>
-        <GenderCard onClick={() => setGender("female")}>
-          <img width="100%" src={FemaleSVG} />
-          <span>여성</span>
-        </GenderCard>
-        <GenderCard onClick={() => setGender("male")}>
-          <img width="100%" src={MaleSVG} />
-          <span>남성</span>
-        </GenderCard>
+        <GenderCardWrapper>
+          <GenderCardInner
+            onClick={() => setGender("female")}
+            style={{
+              ...(flipEffect &&
+                gender === "female" && {
+                  transition: "transform 1.3s",
+                  transform: "rotateY(360deg)",
+                  transformStyle: "preserve-3d",
+                }),
+            }}
+          >
+            <GenderCardFront width="100%" src={FemaleSVG} />
+            <GenderCardBack style={{ backgroundColor: colorTheme.orange400 }} />
+          </GenderCardInner>
+        </GenderCardWrapper>
+        <GenderCardWrapper>
+          <GenderCardInner
+            onClick={() => setGender("male")}
+            style={{
+              ...(flipEffect &&
+                gender === "male" && {
+                  transition: "transform 1.3s",
+                  transform: "rotateY(360deg)",
+                  transformStyle: "preserve-3d",
+                }),
+            }}
+          >
+            <GenderCardFront width="100%" src={MaleSVG} />
+            <GenderCardBack style={{ backgroundColor: colorTheme.blue900 }} />
+            <span>남성</span>
+          </GenderCardInner>
+        </GenderCardWrapper>
       </GenderContainer>
     </ContentLayout>
   );
@@ -56,17 +90,44 @@ const ContentLayout = styled.div`
 `;
 
 const GenderContainer = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 20px;
 `;
 
-const GenderCard = styled.div`
+const GenderCardWrapper = styled.div`
+  width: 35vw;
+  perspective: 1000px;
+  aspect-ratio: 0.89;
+`;
+
+const GenderCardInner = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  text-align: center;
   font-size: 1.39rem;
+`;
+
+const GenderCardFront = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 29px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+`;
+
+const GenderCardBack = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(180deg);
+  transition: transform 1.3s;
+  border-radius: 29px;
+  background-color: ${colorTheme.orange400};
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 `;
