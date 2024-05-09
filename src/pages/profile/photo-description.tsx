@@ -1,4 +1,4 @@
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 
 import CameraSVG from "@/assets/icons/camera.svg";
 import { Description as OriginDescription } from "@/components/profile/description";
