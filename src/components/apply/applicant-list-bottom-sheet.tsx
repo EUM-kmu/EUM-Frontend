@@ -1,42 +1,42 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ChatMakeRequest, ChatMakeRoom } from "@/api/types/chat-type";
-import { ApplicantItemList } from "@/components/apply/applicant-item-list";
-import { ApplicantModifyModal } from "@/components/apply/applicant-modify-modal";
-import { ApplicantOnlyDelete } from "@/components/apply/applicant-only-delete";
-import { ApplyListType } from "@/components/apply/type";
+import { ApplicantItemList } from "./applicant-item-list";
+import { ApplicantModifyModal } from "./applicant-modify-modal";
+import { ApplicantOnlyDelete } from "./applicant-only-delete";
+import { ApplicantListBottomSheetProps, ApplyListType } from "./type";
+
 import { BottomFixed } from "@/components/common/bottom-fixed";
 import { Modal } from "@/components/common/modal";
-import { useCheckChatMake } from "@/hooks/chat/useCheckChatMake";
 import { useGetApplyList } from "@/hooks/queries/useGetApplyList";
 import { useGetPostDetail } from "@/hooks/queries/useGetPostDetail";
 import { usePostApplyAccept } from "@/hooks/queries/usePostApplyAccept";
-import { usePostMakeChat } from "@/hooks/queries/usePostMakeChat";
 import { usePutChatNewMember } from "@/hooks/queries/usePutChatNewMember";
 import { checkChange } from "@/utils/apply-list-change-check";
 
-export const ApplicantList = ({ postId }: { postId: string }) => {
-  const [applyModal, setApplyModal] = useState<string>("");
+export const ApplicantListBottomSheet = ({
+  postId,
+  chatId,
+  onFinishApply,
+  isApplyChange,
+  setApplyLength,
+}: ApplicantListBottomSheetProps) => {
   const [originApplyIds, setOriginApplyIds] = useState<ApplyListType[]>([]);
   const [applyIds, setApplyIds] = useState<ApplyListType[]>([]);
-  const { mutate: putNewMember } = usePutChatNewMember();
-
-  const { data } = useGetApplyList(postId);
-  const { mutate: accept } = usePostApplyAccept(postId);
-  const { data: postData } = useGetPostDetail(postId);
-
-  const { mutate: makeChat } = usePostMakeChat();
-  const chatRoomId = useCheckChatMake(postId);
-  const [chatMakeRoomId, setChatMakeRoomId] = useState<ChatMakeRoom | null>(
-    null,
-  );
-  const navigate = useNavigate();
 
   const [isApplyError, setIsApplyError] = useState("");
   const [isApplyChangeCheck, setIsApplyChangeCheck] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [applyModal, setApplyModal] = useState<string>("");
   const [isStatusChange, setIsStatusChange] = useState(false);
+
+  const { data } = useGetApplyList(postId);
+  const { data: postData } = useGetPostDetail(postId);
+  const { mutate: accept } = usePostApplyAccept(postId);
+  const { mutate: putNewMember } = usePutChatNewMember();
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  const navigate = useNavigate();
 
   const isRecruiting = postData
     ? postData.marketPostResponse.status === "RECRUITING"
@@ -66,29 +66,17 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
     }
   }, [data, isDataLoaded]);
 
-  const GoToChatRoom = () => {
-    const myId = localStorage.getItem("userId");
-    if (chatMakeRoomId !== null && myId !== null) {
-      navigate(`/chat/detail`, {
-        state: {
-          roomId: chatMakeRoomId.roomId,
-          postId: chatMakeRoomId.postId,
-          memberCount: chatMakeRoomId.memberCount,
-          creatorId: myId,
-        },
-      });
-    }
-  };
-
   return (
-    <>
-      <ApplicantItemList
-        data={data!}
-        applyIds={applyIds}
-        setApplyIds={setApplyIds}
-        isRecruiting={isRecruiting}
-        setApplyModal={setIsApplyError}
-      />
+    <div style={{ height: "100%", width: "100%" }}>
+      {isDataLoaded && (
+        <ApplicantItemList
+          data={data!}
+          applyIds={applyIds}
+          setApplyIds={setApplyIds}
+          isRecruiting={isRecruiting}
+          setApplyModal={setApplyModal}
+        />
+      )}
       <BottomFixed>
         <BottomFixed.Button
           color="orange"
@@ -105,39 +93,22 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
                     const tempList: string[] = applyIds.map((id) => {
                       return id.userId.toString();
                     });
-                    if (chatRoomId === "") {
-                      const tempData: ChatMakeRequest = {
+                    const tempData = {
+                      chatRoomId: chatId,
+                      addingData: {
                         postId: Number(postId),
                         memberIds: tempList,
-                      };
-                      makeChat(tempData, {
-                        onSuccess: (res) => {
-                          setApplyModal("PostNewMember");
-                          setChatMakeRoomId(res);
-                          console.log("makeChat: ", res);
-                        },
-                        onError: () => {
-                          setIsApplyError("APPLY_CHAT_ERROR");
-                        },
-                      });
-                    } else {
-                      const tempData = {
-                        chatRoomId: chatRoomId,
-                        addingData: {
-                          postId: Number(postId),
-                          memberIds: tempList,
-                        },
-                      };
-                      putNewMember(tempData, {
-                        onSuccess: (res) => {
-                          setApplyModal("PostNewMember");
-                          setChatMakeRoomId(res);
-                        },
-                        onError: () => {
-                          setIsApplyError("APPLY_CHAT_ERROR");
-                        },
-                      });
-                    }
+                      },
+                    };
+                    putNewMember(tempData, {
+                      onSuccess: () => {
+                        setApplyModal("PostNewMember");
+                        setApplyLength(applyIds.length);
+                      },
+                      onError: () => {
+                        setIsApplyError("APPLY_CHAT_ERROR");
+                      },
+                    });
                   },
                   onError: () => {
                     setIsApplyError("APPLY_ID_LENGTH_OVER");
@@ -162,48 +133,6 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
           {applyIds.length}명 수락하기
         </BottomFixed.Button>
       </BottomFixed>
-      {applyModal !== "" && (
-        <Modal
-          onClose={() => {
-            setApplyModal("");
-          }}
-        >
-          {(applyModal === "PostNewMember" ||
-            applyModal === "ChangeNewMember") && (
-            <Modal.Title text="신청 수락 완료" />
-          )}
-          {applyModal === "Finish" && (
-            <Modal.Title text="이 게시물은 [모집완료] 상태가 되었습니다" />
-          )}
-          {applyModal === "KeepStatus" && (
-            <Modal.Title text="이 게시물은 [모집중] 상태가 되었습니다" />
-          )}
-          <Modal.Button
-            color="orange"
-            onClick={() => {
-              GoToChatRoom();
-            }}
-          >
-            채팅방 가기
-          </Modal.Button>
-          <Modal.Button
-            color="orange"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            게시글 돌아가기
-          </Modal.Button>
-          <Modal.Button
-            color="orange"
-            onClick={() => {
-              navigate("/post");
-            }}
-          >
-            홈화면 가기
-          </Modal.Button>
-        </Modal>
-      )}
       {isApplyError !== "" && (
         <Modal onClose={() => setIsApplyError("")}>
           {isApplyError === "APPLY_ID_LENGTH_ZERO" && (
@@ -229,9 +158,7 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
           applyIds={applyIds}
           originApplyIds={originApplyIds}
           postId={postId}
-          chatRoomId={chatRoomId}
-          isPage={true}
-          setChatMakeRoomId={setChatMakeRoomId}
+          chatRoomId={chatId}
           setApplyModal={setApplyModal}
           setStatusChangeModal={setIsStatusChange}
           setIsApplyError={setIsApplyError}
@@ -240,15 +167,52 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
           }
         />
       )}
+      {applyModal !== "" && (
+        <Modal
+          onClose={() => {
+            setApplyModal("");
+          }}
+        >
+          {(applyModal === "PostNewMember" ||
+            applyModal === "ChangeNewMember") && (
+            <Modal.Title text="신청 수락 완료" />
+          )}
+          {applyModal === "Finish" && (
+            <Modal.Title text="이 게시물은 [모집완료] 상태가 되었습니다" />
+          )}
+          {applyModal === "KeepStatus" && (
+            <Modal.Title text="이 게시물은 [모집중] 상태가 되었습니다" />
+          )}
+          <Modal.Button
+            onClick={() => {
+              onFinishApply();
+              isApplyChange();
+            }}
+          >
+            확인
+          </Modal.Button>
+          <Modal.Button
+            color="orange"
+            onClick={() => {
+              navigate("/post");
+            }}
+          >
+            홈화면 가기
+          </Modal.Button>
+        </Modal>
+      )}
       {isStatusChange && (
         <ApplicantOnlyDelete
           applyIds={applyIds}
           postId={postId}
           setApplyModal={setApplyModal}
-          setStatusChangeModal={setIsStatusChange}
-          isPage={true}
+          setStatusChangeModal={setIsApplyChangeCheck}
+          onFinishApply={() => {
+            onFinishApply();
+            isApplyChange();
+          }}
         />
       )}
-    </>
+    </div>
   );
 };

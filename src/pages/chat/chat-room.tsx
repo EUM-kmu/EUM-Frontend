@@ -4,10 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
-import { ChatRoomSubMessage } from "./type";
+import { ChatRoomData, ChatRoomSubMessage } from "./type";
 
-import { ChatMakeRoom } from "@/api/types/chat-type";
+import { ApplicantListBottomSheet } from "@/components/apply/applicant-list-bottom-sheet";
 import { ChatAppBar } from "@/components/chat/chat-app-bar";
+import { ChatAppBarBlock } from "@/components/chat/chat-app-bar-block";
+import { ChatEntryExit } from "@/components/chat/chat-entry-exit";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatItem } from "@/components/chat/chat-item";
 import { BottomSheet } from "@/components/common/bottom-sheet";
@@ -23,7 +25,7 @@ import { FormatDateString } from "@/utils/format-date-string";
 export const ChatRoom = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as ChatMakeRoom;
+  const state = location.state as ChatRoomData;
 
   const [transfer] = useRecoilState(transferState);
   const [newRoomMsgs, setNewRoomMsgs] = useState<ChatRoomSubMessage[]>([]);
@@ -32,6 +34,7 @@ export const ChatRoom = () => {
 
   const [appBarHeight, setAppBarHeight] = useState(0);
   const [appBerVisibility, setAppBarVisibility] = useState(true);
+  const chatListRef = useRef<HTMLDivElement | null>(null);
 
   const [isBottomSheetOpened, setIsBottomSheetOpened] = useState(false);
   const [isTransfer, setIsTransfer] = useState(false);
@@ -39,8 +42,11 @@ export const ChatRoom = () => {
   const [reportModal, setReportModal] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const [transferErrorModal, setTransferErrorModal] = useState(false);
 
   const [profileUserId, setProfileUserId] = useState<number>(0);
+  const [isApplySheet, setIsApplySheet] = useState(false);
+  const [applyLength, setApplyLength] = useState(0);
 
   const client = useRef<CompatClient | null>(null);
   const { mutate: sendMsg } = UseSendMessages();
@@ -58,14 +64,41 @@ export const ChatRoom = () => {
         setNewRoomMsgs((prevHistory) => {
           return prevHistory ? [...prevHistory, temp] : [];
         });
-        console.log("newMessage:", message.body);
       });
     });
   };
 
   useEffect(() => {
+    scrollToBottom();
+    setNewRoomMsgs([]);
+  }, [roomMsgs]);
+
+  useEffect(() => {
     connectHandler();
   }, []);
+
+  const scrollToBottom = () => {
+    if (chatListRef.current !== null)
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [newRoomMsgs]);
+
+  const refreshPage = () => {
+    navigate(`/chat/detail`, {
+      state: {
+        roomId: state.roomId,
+        postId: state.postId,
+        memberCount: applyLength + 1,
+        creatorId: state.creatorId,
+        deletedPost: state.deletedPost,
+        blockedRoom: state.blockedRoom,
+      },
+      replace: true,
+    });
+  };
 
   const sendHandler = (inputValue: string) => {
     if (client.current && client.current.connected) {
@@ -73,7 +106,6 @@ export const ChatRoom = () => {
         type: "CHAT",
         roomIdx: state.roomId,
         message: inputValue,
-        // senderName: localStorage.getItem("nickName"),
         userId: myId,
         createdAt: FormatDateString(new Date()),
       };
@@ -92,9 +124,8 @@ export const ChatRoom = () => {
 
   return (
     <PageContainer>
-      {appBerVisibility && (
+      {appBerVisibility && !state.blockedRoom && !state.deletedPost && (
         <ChatAppBar
-          name="test"
           onClickTransfer={() => {
             setIsBottomSheetOpened(true);
             setIsTransfer(true);
@@ -108,81 +139,136 @@ export const ChatRoom = () => {
           setErrorModal={() => {
             setErrorModal(true);
           }}
+          creatorId={state.creatorId}
+          onClickApply={() => {
+            setIsBottomSheetOpened(true);
+            setIsApplySheet(true);
+          }}
+          memberCount={state.memberCount}
+          setTransferErrorModal={() => {
+            setTransferErrorModal(true);
+          }}
+        />
+      )}
+      {(state.blockedRoom || state.deletedPost) && (
+        <ChatAppBarBlock
+          setAppBarHeight={setAppBarHeight}
+          isDelted={state.deletedPost}
+          isBlocked={state.blockedRoom}
         />
       )}
       <ChatList
+        ref={chatListRef}
         style={{
           paddingTop: appBerVisibility ? `${appBarHeight + 10}px` : "10px",
         }}
       >
         {roomMsgs?.map((item, index) => {
-          return (
-            <ChatItem
-              key={index}
-              userId={item.senderInfo.userId}
-              userName={item.senderInfo.nickName}
-              setProfileModal={setProfileModal}
-              setProfileUserId={setProfileUserId}
-              imgurl={item.senderInfo.profileImage}
-            >
-              {item.message.replace(/^"(.*)"$/, "$1")}
-            </ChatItem>
-          );
+          if (item.senderInfo !== null) {
+            return (
+              <ChatItem
+                key={index}
+                userId={item.senderInfo.deleted ? -2 : item.senderInfo.userId}
+                userName={
+                  item.senderInfo.deleted
+                    ? "(알 수 없음)"
+                    : item.senderInfo.nickName
+                }
+                setProfileModal={setProfileModal}
+                setProfileUserId={setProfileUserId}
+                imgurl={
+                  item.senderInfo.deleted
+                    ? undefined
+                    : item.senderInfo.profileImage
+                }
+              >
+                {item.message.replace(/^"(.*)"$/, "$1")}
+              </ChatItem>
+            );
+          } else if (item.type === "JOIN" || item.type === "LEAVE") {
+            return <ChatEntryExit key={index} msg={item.message} />;
+          }
         })}
         {newRoomMsgs?.map((item, index) => {
           const temp = transfer.users.find((e) => {
             if (e.userId === Number(item.userId)) return e;
           });
-          return (
-            <ChatItem
-              key={index}
-              userId={
-                temp
-                  ? Number(item.userId)
-                  : item.userId === myId
-                    ? Number(myId)
-                    : -2
-              }
-              userName={temp ? temp.nickName : "(알 수 없음)"}
-              setProfileModal={setProfileModal}
-              setProfileUserId={setProfileUserId}
-              imgurl={temp ? temp.profileImage : undefined}
-            >
-              {item.message.replace(/^"(.*)"$/, "$1")}
-            </ChatItem>
-          );
+          if (item.type === "CHAT") {
+            return (
+              <ChatItem
+                key={index}
+                userId={
+                  temp
+                    ? Number(item.userId)
+                    : item.userId === myId
+                      ? Number(myId)
+                      : -2
+                }
+                userName={temp ? temp.nickName : "(알 수 없음)"}
+                setProfileModal={setProfileModal}
+                setProfileUserId={setProfileUserId}
+                imgurl={temp ? temp.profileImage : undefined}
+              >
+                {item.message.replace(/^"(.*)"$/, "$1")}
+              </ChatItem>
+            );
+          } else {
+            return <ChatEntryExit key={index} msg={item.message} />;
+          }
         })}
       </ChatList>
-      <ChatInput onFocus={setAppBarVisibility} onClick={handleSendMessage} />
-      <BottomSheet
-        style={{ height: window.innerHeight > 720 ? "81%" : "90%" }}
-        isOpened={isBottomSheetOpened}
-        onChangeIsOpened={() => {
-          setIsBottomSheetOpened(false);
-          setIsReport(false);
-          setIsTransfer(false);
-        }}
-      >
-        {isTransfer && (
-          <Transfer
-            onClick={() => {
-              setIsBottomSheetOpened(false);
-              setIsTransfer(false);
-            }}
-            memberCount={state.memberCount}
-          />
-        )}
-        {isReport && (
-          <Report
-            postId=""
-            onSuccessReport={() => {
-              setIsBottomSheetOpened(false);
-              setIsReport(false);
-              setReportModal(true);
-            }}
-          />
-        )}
-      </BottomSheet>
+      <ChatInput
+        onFocus={setAppBarVisibility}
+        onClick={handleSendMessage}
+        blockedRoom={state.blockedRoom}
+      />
+      {!state.deletedPost && !state.blockedRoom && (
+        <BottomSheet
+          style={{ height: window.innerHeight > 720 ? "81%" : "90%" }}
+          isOpened={isBottomSheetOpened}
+          onChangeIsOpened={() => {
+            setIsBottomSheetOpened(false);
+            setIsReport(false);
+            setIsTransfer(false);
+            setIsApplySheet(false);
+          }}
+        >
+          {isTransfer && (
+            <Transfer
+              onClick={() => {
+                setIsBottomSheetOpened(false);
+                setIsTransfer(false);
+              }}
+              memberCount={state.memberCount}
+            />
+          )}
+          {isReport && (
+            <Report
+              postId={state.postId.toString()}
+              onSuccessReport={() => {
+                setIsBottomSheetOpened(false);
+                setIsReport(false);
+                setReportModal(true);
+              }}
+              creatorId={state.creatorId}
+            />
+          )}
+          {isApplySheet && (
+            <ApplicantListBottomSheet
+              postId={state.postId.toString()}
+              chatId={state.roomId}
+              onFinishApply={() => {
+                setIsApplySheet(false);
+                setIsBottomSheetOpened(false);
+              }}
+              isApplyChange={() => {
+                refreshPage();
+              }}
+              setApplyLength={setApplyLength}
+            />
+          )}
+        </BottomSheet>
+      )}
       {reportModal && (
         <Modal
           onClose={() => {
@@ -208,6 +294,15 @@ export const ChatRoom = () => {
           }}
         >
           <Modal.Title text="아직 지원하지 않는 \n 서비스입니다." />
+        </Modal>
+      )}
+      {transferErrorModal && (
+        <Modal
+          onClose={() => {
+            setTransferErrorModal(false);
+          }}
+        >
+          <Modal.Title text="채팅방에 소속된 유저가 없어 \n 송금할 수 없습니다." />
         </Modal>
       )}
     </PageContainer>

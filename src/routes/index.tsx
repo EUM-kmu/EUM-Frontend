@@ -5,10 +5,10 @@ import { GlobalLayout } from "@/components/layout/global-layout";
 import { KakaoAuth } from "@/components/login/kakao-auth";
 import { Chat } from "@/pages/chat/chat";
 import { ChatRoom } from "@/pages/chat/chat-room";
-import { WrongAccessPage } from "@/pages/error/wrong-access";
+// import { WrongAccessPage } from "@/pages/error/wrong-access";
 import { LoginPage } from "@/pages/login";
 import { Mypage } from "@/pages/mypage/mypage";
-import { ApplicantListPage } from "@/pages/post/applicant-list";
+import { ApplicantListPage } from "@/pages/post/applicant-list-page";
 import { PostDetailPage } from "@/pages/post/post-detail";
 import { PostEditPage } from "@/pages/post/post-edit";
 import { PostList } from "@/pages/post/post-list";
@@ -135,7 +135,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <GlobalLayout />,
-    errorElement: <WrongAccessPage />,
+    // errorElement: <WrongAccessPage />,
     children: routeChildren.map(({ path, element, auth }) => {
       if (auth) return { path, element: <AuthLayout>{element}</AuthLayout> };
       return { path, element };

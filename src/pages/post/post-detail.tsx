@@ -8,11 +8,12 @@ import BackBlackSVG from "@/assets/icons/back-black.svg";
 import { ActivityBox } from "@/components/common/activity-box";
 import { AppBar } from "@/components/common/app-bar";
 import { BottomFixed } from "@/components/common/bottom-fixed";
-import { BottomSheet } from "@/components/common/bottom-sheet";
+// import { BottomSheet } from "@/components/common/bottom-sheet";
 import { Button } from "@/components/common/button";
 import { Modal } from "@/components/common/modal";
 import { DefaultLayout } from "@/components/layout/default-layout";
-import { Report } from "@/components/report/report";
+// import { Report } from "@/components/report/report";
+import { useCheckChatMakePost } from "@/hooks/chat/useCheckChatMakePost";
 import { useDeleteApply } from "@/hooks/queries/useDeleteApply";
 import { useDeletePost } from "@/hooks/queries/useDeletePost";
 import { useGetPostDetail } from "@/hooks/queries/useGetPostDetail";
@@ -37,11 +38,12 @@ export const PostDetailPage = () => {
   const [statusModal, setStatusModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [repostModal, setRepostModal] = useState(false);
-  const [reportBottomSheet, setReportBottomSheet] = useState(false);
+  // const [reportBottomSheet, setReportBottomSheet] = useState(false);
 
   const [applyModal, setApplyModal] = useState<boolean>(false);
 
   const { data } = useGetPostDetail(postId!);
+  const chatData = useCheckChatMakePost(postId!);
   const setPost = useSetRecoilState(postState);
   const { mutate: deletePost } = useDeletePost(postId!);
   const { mutate: applyActivity } = usePostApply(postId!);
@@ -105,7 +107,7 @@ export const PostDetailPage = () => {
           <DoneWrapper>모집완료</DoneWrapper>
         )}
         <ActivityBox data={{ ...data?.marketPostResponse } as PostType} />
-        {!data?.userCurrentStatus.isWriter && (
+        {/* {!data?.userCurrentStatus.isWriter && (
           <ButtonWrapper>
             <Button
               rounded
@@ -115,10 +117,10 @@ export const PostDetailPage = () => {
               신고
             </Button>
           </ButtonWrapper>
-        )}
+        )} */}
 
         {/** Bottom sheet */}
-        <BottomSheet
+        {/* <BottomSheet
           style={{ height: window.innerHeight > 720 ? "81%" : "90%" }}
           isOpened={reportBottomSheet}
           onChangeIsOpened={() => setReportBottomSheet(false)}
@@ -130,8 +132,9 @@ export const PostDetailPage = () => {
               setReportBottomSheet(false);
               setReportModal(true);
             }}
+            creatorId={data ? data.writerInfo.userId.toString() : "-1"}
           />
-        </BottomSheet>
+        </BottomSheet> */}
         {reportModal && (
           <Modal
             onClose={() => {
@@ -155,13 +158,30 @@ export const PostDetailPage = () => {
                 </BottomFixed.Button>
               </>
             ) : (
-              <BottomFixed.Button
-                onClick={() => {
-                  // TODO: 채팅방으로 이동
-                }}
-              >
-                채팅방으로 가기
-              </BottomFixed.Button>
+              <>
+                <BottomFixed.Button
+                  onClick={() => {
+                    if (chatData !== null) {
+                      navigate(`/chat/detail`, {
+                        state: {
+                          roomId: chatData.roomId,
+                          postId: chatData.postId,
+                          memberCount: chatData.memberCount,
+                          creatorId: chatData.creatorId,
+                        },
+                      });
+                    }
+                  }}
+                >
+                  채팅방으로 가기
+                </BottomFixed.Button>
+                {data?.marketPostResponse.status ===
+                  "RECRUITMENT_COMPLETED" && (
+                  <BottomFixed.Button onClick={() => navigate("applicant")}>
+                    참여관리
+                  </BottomFixed.Button>
+                )}
+              </>
             )
           ) : data?.marketPostResponse.status === "RECRUITING" ? (
             !data?.userCurrentStatus.isApplicant ? (
@@ -340,10 +360,10 @@ const DoneWrapper = styled.div`
   text-align: center;
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+// const ButtonWrapper = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+// `;
 
 const EmptyBox = styled.div`
   padding: 10px;

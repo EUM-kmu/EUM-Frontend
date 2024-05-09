@@ -37,8 +37,8 @@ export const MypageListProfile = () => {
             src={myProfile?.gender == "male" ? MaleSVG : FemaleSVG}
           />
           <SexAge>
-            {myProfile?.gender == "male" ? "남" : "여"} / {myProfile?.ageRange}
-            대
+            {myProfile?.gender == "male" ? "남" : "여"} /{" "}
+            {Number(myProfile?.ageRange) * 10}대
           </SexAge>
           <MenuBox>
             <MenuSVG src={DotMenuSVG} onClick={() => setShow(!show)} />
