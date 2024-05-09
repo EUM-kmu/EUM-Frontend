@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { BottomFixed } from "@/components/common/bottom-fixed";
+import { Modal } from "@/components/common/modal";
 import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
 import { PostingInput } from "@/components/posting/posting-input";
@@ -12,6 +13,8 @@ import { postingState } from "@/recoil/atoms/posting-state";
 export const Posting6 = () => {
   const [posting, setPosting] = useRecoilState(postingState);
   const [title, setTitle] = useState(posting.title);
+  const [errorModal, setErrorModal] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSave = () => {
@@ -31,6 +34,11 @@ export const Posting6 = () => {
           setTitle(e.target.value);
         }}
       />
+      {errorModal && (
+        <Modal onClose={() => setErrorModal(false)}>
+          <Modal.Title text="활동 제목은\n필수 항목입니다." />
+        </Modal>
+      )}
       <BottomFixed alignDirection="row">
         <BottomFixed.Button
           color="blue"
@@ -45,6 +53,10 @@ export const Posting6 = () => {
           color="blue"
           onClick={() => {
             handleSave();
+            if (!title.length) {
+              setErrorModal(true);
+              return;
+            }
             navigate("/posting/7");
           }}
         >
