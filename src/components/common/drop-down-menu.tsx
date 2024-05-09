@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, Children, PropsWithChildren } from "react";
 import { styled } from "styled-components";
 
 import { colorTheme } from "@/style/color-theme";
+import { fadeInDown } from "@/style/keyframes";
 
 export const DropDownMenu = ({ children }: PropsWithChildren) => {
   return (
@@ -36,6 +37,7 @@ const Container = styled.div`
   top: 100%;
   right: 0;
   z-index: 10;
+  animation: ${fadeInDown} 1s;
 `;
 
 const MenuItemWrapper = styled.button`

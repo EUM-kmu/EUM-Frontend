@@ -49,7 +49,6 @@ export const MypageListProfile = () => {
                     onClick={() => {
                       setShow(false);
                       setWithDrawalModal(true);
-                      withdrawal();
                     }}
                   >
                     탈퇴하기
@@ -58,7 +57,6 @@ export const MypageListProfile = () => {
                     onClick={() => {
                       setShow(false);
                       setSignOutModal(true);
-                      signOut();
                     }}
                   >
                     로그아웃하기
@@ -91,13 +89,17 @@ export const MypageListProfile = () => {
       {withdrawalModal && (
         <Modal onClose={() => setWithDrawalModal(false)}>
           <Modal.Title text="탈퇴하시겠습니까?" />
-          <Modal.Button color="orange">탈퇴하기</Modal.Button>
+          <Modal.Button color="orange" onClick={() => withdrawal()}>
+            탈퇴하기
+          </Modal.Button>
         </Modal>
       )}
       {signOutModal && (
         <Modal onClose={() => setSignOutModal(false)}>
           <Modal.Title text="로그아웃\n하시겠습니까?" />
-          <Modal.Button color="orange">로그아웃</Modal.Button>
+          <Modal.Button color="orange" onClick={() => signOut()}>
+            로그아웃
+          </Modal.Button>
         </Modal>
       )}
     </Wrapper>

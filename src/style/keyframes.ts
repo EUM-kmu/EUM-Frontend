@@ -16,3 +16,22 @@ export const scaleUpDown = keyframes`
         box-shadow: 0 0 10px 0px ${colorTheme.orange400};
     }
 `;
+
+export const fadeInDown = keyframes`
+0% {
+    top: 0;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+`;
+export const fadeOut = keyframes`
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+  }
+`;
