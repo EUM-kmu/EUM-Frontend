@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 
 import { ReactComponent as CloseSVG } from "@/assets/icons/modal-close.svg";
 import { colorTheme } from "@/style/color-theme";
+import { fadeInDown } from "@/style/keyframes";
 
 type CloseButtonType = {
   onClick: MouseEventHandler<HTMLDivElement>;
@@ -124,9 +125,10 @@ const ModalBackground = styled.div`
 const Content = styled.div`
   position: relative;
   display: flex;
+  min-width: 70%;
   max-width: 90%;
   max-height: 90%;
-  padding: 40px;
+  padding: 45px 40px 40px;
   background-color: #f5f5f5;
   border-radius: 35px;
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.25);
@@ -137,6 +139,7 @@ const Content = styled.div`
   text-align: center;
   gap: 30px;
   z-index: 100;
+  animation: ${fadeInDown} 1s;
   & > * {
     flex: 1;
   }

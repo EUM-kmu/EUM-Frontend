@@ -11,6 +11,7 @@ import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
+
   const navigate = useNavigate();
 
   return (

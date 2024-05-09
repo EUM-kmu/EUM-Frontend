@@ -1,17 +1,30 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 
+import DotMenuSVG from "@/assets/icons/dots-menu.svg";
 import FemaleSVG from "@/assets/icons/female.svg";
 import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
 import LocationWhiteBackSVG from "@/assets/icons/location-white-back.svg";
 import MaleSVG from "@/assets/icons/male.svg";
+import { DropDownMenu } from "@/components/common/drop-down-menu";
+import { Modal } from "@/components/common/modal";
 // import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
+import { useSignOut } from "@/hooks/queries/useSignOut";
+import { useWithdrawal } from "@/hooks/queries/useWithdrawal";
 import { colorTheme } from "@/style/color-theme";
 
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();
   const { data: bankAccount } = useGetBankData();
+  // TODO: 연동
+  const { mutate: signOut } = useSignOut();
+  const { mutate: withdrawal } = useWithdrawal();
+  const [show, setShow] = useState<boolean>(false);
+
+  const [withdrawalModal, setWithDrawalModal] = useState<boolean>(false);
+  const [signOutModal, setSignOutModal] = useState<boolean>(false);
 
   return (
     <Wrapper>
@@ -26,7 +39,33 @@ export const MypageListProfile = () => {
             {myProfile?.gender == "male" ? "남" : "여"} /{" "}
             {Number(myProfile?.ageRange) * 10}대
           </SexAge>
+          <MenuBox>
+            <MenuSVG src={DotMenuSVG} onClick={() => setShow(!show)} />
+            {show && (
+              <>
+                <DropDownMenu>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      setShow(false);
+                      setWithDrawalModal(true);
+                    }}
+                  >
+                    탈퇴하기
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      setShow(false);
+                      setSignOutModal(true);
+                    }}
+                  >
+                    로그아웃하기
+                  </DropDownMenu.MenuItem>
+                </DropDownMenu>
+              </>
+            )}
+          </MenuBox>
         </ProfileRowBox>
+        {show && <MenuBackground onClick={() => setShow(false)} />}
         <StateOrangeBox>
           <PriceStateBox>
             <KnotIconImg src={KnotWhiteBackSVG} />
@@ -44,6 +83,24 @@ export const MypageListProfile = () => {
           </OtherStateColumnBox>
         </StateOrangeBox>
       </ColumnBox>
+
+      {/** Modal */}
+      {withdrawalModal && (
+        <Modal onClose={() => setWithDrawalModal(false)}>
+          <Modal.Title text="탈퇴하시겠습니까?" />
+          <Modal.Button color="orange" onClick={() => withdrawal()}>
+            탈퇴하기
+          </Modal.Button>
+        </Modal>
+      )}
+      {signOutModal && (
+        <Modal onClose={() => setSignOutModal(false)}>
+          <Modal.Title text="로그아웃\n하시겠습니까?" />
+          <Modal.Button color="orange" onClick={() => signOut()}>
+            로그아웃
+          </Modal.Button>
+        </Modal>
+      )}
     </Wrapper>
   );
 };
@@ -75,11 +132,13 @@ const ColumnBox = styled.div`
 `;
 
 const ProfileRowBox = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 1%;
+  white-space: nowrap;
 `;
 
 const Name = styled.div`
@@ -89,6 +148,25 @@ const Name = styled.div`
 const SexAge = styled.div`
   font-size: 0.56rem;
   color: ${colorTheme.shade};
+`;
+
+const MenuBox = styled.div`
+  position: absolute;
+  right: 3.3%;
+  height: 25px;
+`;
+
+const MenuSVG = styled.img`
+  height: 100%;
+`;
+
+const MenuBackground = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(217, 217, 217, 0.8);
+  left: 0;
+  top: 0;
 `;
 
 const StateOrangeBox = styled.div`

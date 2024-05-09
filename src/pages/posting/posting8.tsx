@@ -21,7 +21,6 @@ export const Posting8 = () => {
             onClick={() => {
               resetRecoil();
               localStorage.removeItem("postId");
-              navigate("/post");
             }}
           />
         </AppBar.AppBarNavigate>
@@ -36,7 +35,7 @@ export const Posting8 = () => {
           color="orange"
           onClick={() => {
             resetRecoil();
-            navigate(`/post/${state.postId}`);
+            navigate(`/post/${state.postId}`, { state: { replace: "/post" } });
           }}
         >
           게시물 보러가기
