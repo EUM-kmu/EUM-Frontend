@@ -14,7 +14,7 @@ export default class ChatApi {
   // 메세지 보내기
   static async sendChatMessages({ message, roomId }: ChatSendRequest) {
     const response = await Instance.post(
-      `/chat-service/api/chats/${roomId}/message`,
+      `/chat-service/api/chatrooms/${roomId}/message`,
       message,
     );
     if (response) {
@@ -26,7 +26,7 @@ export default class ChatApi {
 
   // 채팅방 리스트 가져오기
   static async getChatList() {
-    const response = await Instance.get(`/chat-service/api/chats`);
+    const response = await Instance.get(`/chat-service/api/chatrooms`);
     console.log(response);
     if (response) {
       const temp = response.data as ChatListResponse;
@@ -39,7 +39,7 @@ export default class ChatApi {
   // 채팅방 디테일 멤버 정보랑 채팅내역 가져오기
   static async getChatRoomData(chatRoomId: string) {
     const response = await Instance.get(
-      `/chat-service/api/chats/${chatRoomId}`,
+      `/chat-service/api/chatrooms/${chatRoomId}`,
     );
     if (response) {
       const temp = response.data as ChatRoomResponse;
@@ -51,7 +51,7 @@ export default class ChatApi {
 
   // 채팅방 새로 만들기
   static async postChatMake(data: ChatMakeRequest) {
-    const response = await Instance.post(`/chat-service/api/chats`, data);
+    const response = await Instance.post(`/chat-service/api/chatrooms`, data);
     if (response) {
       const temp = response.data as ChatFinalResponse<ChatMakeRoom>;
       return temp.result;
@@ -86,7 +86,7 @@ export default class ChatApi {
     addingData: ChatMakeRequest;
   }) {
     const response = await axios.patch(
-      `${process.env.REACT_APP_CHAT_API_BASE_URL}/chat-service/api/chats/${data.chatRoomId}/members`,
+      `${process.env.REACT_APP_CHAT_API_BASE_URL}/chat-service/api/chatrooms/${data.chatRoomId}/members`,
       { postId: data.addingData.postId, memberIds: data.addingData.memberIds },
       {
         headers: {
