@@ -4,10 +4,11 @@ export const postState = atom({
   key: "postState",
   default: {
     userCurrentStatus: {
-      isWriter: false,
-      isApplicant: false,
+      writer: false,
+      applicant: false,
       applyId: 0,
       applyStatus: "",
+      report: false,
     },
     marketPostResponse: {
       postId: -1,

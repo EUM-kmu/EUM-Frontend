@@ -17,17 +17,17 @@ export const TransferOnePersonDetail = ({ setScreen }: TransferDetailProps) => {
       <CheckMsg>
         {lastTransfer.users[0].nickName}님께
         <br />
-        매듭을 송금할까요?
+        타임을 송금할까요?
       </CheckMsg>
       <TransferExplainRowBox style={{ width: "57.7%" }}>
         <div style={{ width: "22%" }} />
         <NumberBigText>
           {lastTransfer.member * lastTransfer.price}
         </NumberBigText>
-        <div style={{ width: "22%", textAlign: "right" }}>매듭</div>
+        <div style={{ width: "22%", textAlign: "right" }}>타임</div>
       </TransferExplainRowBox>
       <div style={{ color: colorTheme.orange400 }}>
-        지금 내 잔액은 {lastTransfer.availableBudget + transfer.price}매듭
+        지금 내 잔액은 {lastTransfer.availableBudget + transfer.price}타임
         입니다
       </div>
       <BottomFixed alignDirection="column">
@@ -37,7 +37,7 @@ export const TransferOnePersonDetail = ({ setScreen }: TransferDetailProps) => {
             setScreen("transfer-detail-price");
           }}
         >
-          매듭 변경하기
+          타임 변경하기
         </BottomFixed.Button>
         <BottomFixed.Button
           style={{ backgroundColor: colorTheme.blue900 }}

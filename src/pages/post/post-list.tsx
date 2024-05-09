@@ -11,7 +11,7 @@ export const PostList = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
-  const { data } = useGetPostList();
+  const { data, fetchNextPage } = useGetPostList();
 
   useEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
@@ -20,6 +20,12 @@ export const PostList = () => {
       if (wrapperRef.current) {
         const isScrollingDown = wrapperRef.current.scrollTop > headerHeight;
         setMiniButtonVisible(isScrollingDown);
+        if (
+          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight ===
+          wrapperRef.current.scrollHeight
+        ) {
+          void fetchNextPage();
+        }
       }
     };
 
@@ -39,21 +45,23 @@ export const PostList = () => {
         </SmallHeader>
         <PostPostingButton />
       </div>
-      {data?.map((item, index) => (
-        <PostListItem
-          key={index}
-          postId={item.postId}
-          title={item.title}
-          location={item.location}
-          startDate={item.startDate}
-          pay={item.pay}
-          status={item.status}
-          currentApplicant={item.currentApplicant}
-          maxNumOfPeople={item.maxNumOfPeople}
-          writerProfileImg={item.writerInfo.profileImage}
-          writerId={item.writerInfo.profileId}
-        />
-      ))}
+      {data?.pages.map((page, idx) =>
+        page.map((item, index) => (
+          <PostListItem
+            key={`${idx}-${index}`}
+            postId={item.postId}
+            title={item.title}
+            location={item.location}
+            startDate={item.startDate}
+            pay={item.pay}
+            status={item.status}
+            currentApplicant={item.currentApplicant}
+            maxNumOfPeople={item.maxNumOfPeople}
+            writerProfileImg={item.writerInfo.profileImage}
+            writerId={item.writerInfo.profileId}
+          />
+        )),
+      )}
     </Wrapper>
   );
 };

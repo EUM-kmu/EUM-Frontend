@@ -77,9 +77,9 @@ export const PostDetailPage = () => {
         </AppBar>
       }
     >
-      <PaddingWrapper $isWriter={data?.userCurrentStatus.isWriter ?? false}>
+      <PaddingWrapper $isWriter={data?.userCurrentStatus.writer ?? false}>
         {data?.marketPostResponse.status === "RECRUITING" ? (
-          data?.userCurrentStatus.isWriter ? (
+          data?.userCurrentStatus.writer ? (
             <JustifyWrapper>
               <Button
                 color="orange"
@@ -105,7 +105,7 @@ export const PostDetailPage = () => {
           <DoneWrapper>모집완료</DoneWrapper>
         )}
         <ActivityBox data={{ ...data?.marketPostResponse } as PostType} />
-        {!data?.userCurrentStatus.isWriter && (
+        {!data?.userCurrentStatus.writer && (
           <ButtonWrapper>
             <Button
               rounded
@@ -151,7 +151,7 @@ export const PostDetailPage = () => {
 
         {/** BottomFixed Buttons */}
         <BottomFixed alignDirection="column">
-          {data?.userCurrentStatus.isWriter ? (
+          {data?.userCurrentStatus.writer ? (
             data?.marketPostResponse.status === "RECRUITING" ? (
               <>
                 <BottomFixed.Button onClick={() => setRepostModal(true)}>
@@ -188,7 +188,7 @@ export const PostDetailPage = () => {
               </>
             )
           ) : data?.marketPostResponse.status === "RECRUITING" ? (
-            !data?.userCurrentStatus.isApplicant ? (
+            !data?.userCurrentStatus.applicant ? (
               <BottomFixed.Button
                 color="orange"
                 onClick={() => {
@@ -214,7 +214,7 @@ export const PostDetailPage = () => {
 
         {/** Modal */}
         {applyModal &&
-          (!data?.userCurrentStatus.isApplicant ? (
+          (!data?.userCurrentStatus.applicant ? (
             <Modal
               onClose={() => {
                 setApplyModal(false);

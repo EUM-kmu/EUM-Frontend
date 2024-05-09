@@ -52,8 +52,9 @@ export type PostType = {
 export type ResponsePostDetail = FinalResponse<PostDetailType>;
 
 export type UserCurrentStatusType = {
-  isWriter: boolean;
-  isApplicant: boolean;
+  report: boolean;
+  writer: boolean;
+  applicant: boolean;
   applyId: number;
   applyStatus: string;
 };
@@ -65,3 +66,8 @@ export type PostDetailType = {
 };
 
 export type ResponsePostListProps = FinalResponse<PostType[]>;
+
+export type PostListPageable = {
+  page: number;
+  size: number;
+};

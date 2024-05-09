@@ -47,7 +47,7 @@ export const Posting4 = () => {
       {isError && !isErrorText && (
         <ErrorMsg>
           {`잔액이 모자랍니다!
-          소요시간은 1~${availableBudget}분 사이로
+          소요시간은 최소 30분 ~ 최대 ${availableBudget}분 사이로
           설정해주세요`}
         </ErrorMsg>
       )}
@@ -59,18 +59,18 @@ export const Posting4 = () => {
           isError={isError}
           setIsError={setIsError}
           maximum={availableBudget}
-          minimum={0}
+          minimum={30}
           gap={"3%"}
         >
           분
         </CommonInput.InputInner>
       </CommonInput>
-      <BalanceText>활동시간 1분당 1매듭이 소요됩니다</BalanceText>
+      <BalanceText>활동시간 10분당 10타임이 소요됩니다</BalanceText>
       <BalanceText style={{ color: colorTheme.orange400 }}>
-        인당 {price} 매듭 소요
+        인당 {price} 타임 소요
       </BalanceText>
       <BalanceText style={{ color: colorTheme.orange400, marginTop: "5%" }}>
-        지금 내 사용 가능 잔액은 {data?.availableBudget}매듭입니다
+        지금 내 사용 가능 잔액은 {data?.availableBudget}타임입니다
       </BalanceText>
       <BottomFixed alignDirection="row">
         <BottomFixed.Button

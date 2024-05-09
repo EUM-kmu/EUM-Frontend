@@ -26,7 +26,7 @@ export const TransferDetail = ({ setScreen }: TransferDetailProps) => {
         <TransferExplainRowBox>
           <div style={{ width: "34%" }}>인당</div>
           <NumberText>{lastTransfer.price}</NumberText>
-          <div style={{ width: "22%", textAlign: "right" }}>매듭</div>
+          <div style={{ width: "22%", textAlign: "right" }}>타임</div>
         </TransferExplainRowBox>
         <TransferExplainRowBox>
           <div style={{ width: "34%" }}>활동인원</div>
@@ -39,14 +39,14 @@ export const TransferDetail = ({ setScreen }: TransferDetailProps) => {
         <NumberBigText>
           {lastTransfer.member * lastTransfer.price}
         </NumberBigText>
-        <div style={{ width: "22%", textAlign: "right" }}>매듭</div>
+        <div style={{ width: "22%", textAlign: "right" }}>타임</div>
       </TransferExplainRowBox>
       <div style={{ color: colorTheme.orange400 }}>
         송금 후 내 잔액은{" "}
         {lastTransfer.availableBudget +
           transfer.price -
           lastTransfer.member * lastTransfer.price}
-        매듭 입니다
+        타임 입니다
       </div>
       <BottomFixed alignDirection="column">
         <BottomFixed.Button
