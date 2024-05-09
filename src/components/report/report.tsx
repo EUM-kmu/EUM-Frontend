@@ -12,11 +12,7 @@ import { usePostBlock } from "@/hooks/queries/usePostBlock";
 import { usePostReport } from "@/hooks/queries/usePostReport";
 
 export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
-  const { data: profileData } = useGetProfile(
-    Number(creatorId) > -1
-      ? Number(creatorId)
-      : Number(localStorage.getItem("userId")),
-  );
+  const { data: profileData } = useGetProfile(Number(creatorId));
   const postBlock = usePostBlock();
   const [checkBlock, setCheckBlock] = useState(false);
   const [blockFinish, setBlockFinish] = useState(false);
@@ -81,7 +77,7 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
           <Modal.Title text="신고가 접수되었습니다." />
           <Modal.Button
             onClick={() => {
-              navigate("/chat");
+              navigate("/post");
             }}
           >
             홈화면으로 이동
