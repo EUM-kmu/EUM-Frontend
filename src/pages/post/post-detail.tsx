@@ -8,16 +8,15 @@ import BackBlackSVG from "@/assets/icons/back-black.svg";
 import { ActivityBox } from "@/components/common/activity-box";
 import { AppBar } from "@/components/common/app-bar";
 import { BottomFixed } from "@/components/common/bottom-fixed";
-// import { BottomSheet } from "@/components/common/bottom-sheet";
+import { BottomSheet } from "@/components/common/bottom-sheet";
 import { Button } from "@/components/common/button";
 import { Modal } from "@/components/common/modal";
 import { DefaultLayout } from "@/components/layout/default-layout";
-// import { Report } from "@/components/report/report";
+import { Report } from "@/components/report/report";
 import { useCheckChatMakePost } from "@/hooks/chat/useCheckChatMakePost";
 import { useDeleteApply } from "@/hooks/queries/useDeleteApply";
 import { useDeletePost } from "@/hooks/queries/useDeletePost";
 import { useGetPostDetail } from "@/hooks/queries/useGetPostDetail";
-import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { usePostApply } from "@/hooks/queries/usePostApply";
 import { usePullUp } from "@/hooks/queries/usePullUp";
 import { postState } from "@/recoil/atoms/post-state";
@@ -30,15 +29,16 @@ type LocationType = {
 };
 export const PostDetailPage = () => {
   const { postId } = useParams();
-  const { data: profile } = useGetProfile();
 
   const [editModal, setEditModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false); // TODO: remove this
   const [deleteModal, setDeleteModal] = useState(false);
   const [statusModal, setStatusModal] = useState(false);
-  const [reportModal, setReportModal] = useState(false);
+  // const [reportModal, setReportModal] = useState(false);
   const [repostModal, setRepostModal] = useState(false);
-  // const [reportBottomSheet, setReportBottomSheet] = useState(false);
+  const [reportBottomSheet, setReportBottomSheet] = useState(false);
+  const [reportBottomSheetRendering, setReportBottomSheetRendering] =
+    useState(false);
 
   const [applyModal, setApplyModal] = useState<boolean>(false);
 
@@ -49,8 +49,6 @@ export const PostDetailPage = () => {
   const { mutate: applyActivity } = usePostApply(postId!);
   const { mutate: cancelActivity } = useDeleteApply(postId!);
   const { mutate: pullUp } = usePullUp(postId!);
-  // deprecated
-  // const { mutate: changeStatus } = useChangeStatus(postId!);
 
   const navigate = useNavigate();
   const location = useLocation() as LocationType;
@@ -107,35 +105,41 @@ export const PostDetailPage = () => {
           <DoneWrapper>모집완료</DoneWrapper>
         )}
         <ActivityBox data={{ ...data?.marketPostResponse } as PostType} />
-        {/* {!data?.userCurrentStatus.isWriter && (
+        {!data?.userCurrentStatus.isWriter && (
           <ButtonWrapper>
             <Button
               rounded
               color="orange"
-              onClick={() => setReportBottomSheet(true)}
+              onClick={() => {
+                setReportBottomSheet(true);
+                setReportBottomSheetRendering(true);
+              }}
             >
               신고
             </Button>
           </ButtonWrapper>
-        )} */}
-
-        {/** Bottom sheet */}
-        {/* <BottomSheet
+        )}
+        <BottomSheet
           style={{ height: window.innerHeight > 720 ? "81%" : "90%" }}
           isOpened={reportBottomSheet}
-          onChangeIsOpened={() => setReportBottomSheet(false)}
+          onChangeIsOpened={() => {
+            setReportBottomSheetRendering(false);
+            setReportBottomSheet(false);
+          }}
         >
-          <Report
-            postId={data?.marketPostResponse.postId.toString() ?? ""}
-            onSuccessReport={() => {
-              console.log("신고가 접수!");
-              setReportBottomSheet(false);
-              setReportModal(true);
-            }}
-            creatorId={data ? data.writerInfo.userId.toString() : "-1"}
-          />
-        </BottomSheet> */}
-        {reportModal && (
+          {reportBottomSheetRendering && (
+            <Report
+              postId={data?.marketPostResponse.postId.toString() ?? ""}
+              onSuccessReport={() => {
+                setReportBottomSheetRendering(false);
+                setReportBottomSheet(false);
+                // setReportModal(true);
+              }}
+              creatorId={data?.marketPostResponse.writerInfo.userId.toString()}
+            />
+          )}
+        </BottomSheet>
+        {/* {reportModal && (
           <Modal
             onClose={() => {
               setReportModal(false);
@@ -143,7 +147,7 @@ export const PostDetailPage = () => {
           >
             <Modal.Title text="신고가 접수되었습니다." />
           </Modal>
-        )}
+        )} */}
 
         {/** BottomFixed Buttons */}
         <BottomFixed alignDirection="column">
@@ -227,10 +231,11 @@ export const PostDetailPage = () => {
               <Modal.Button
                 color="orange"
                 onClick={() => {
-                  if (profile)
+                  const userIdTemp = localStorage.getItem("userId");
+                  if (userIdTemp)
                     cancelActivity({
                       applyId: data.userCurrentStatus.applyId,
-                      userId: profile?.userId,
+                      userId: Number(userIdTemp),
                     });
                   setApplyModal(false);
                 }}
@@ -360,10 +365,10 @@ const DoneWrapper = styled.div`
   text-align: center;
 `;
 
-// const ButtonWrapper = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-// `;
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
 const EmptyBox = styled.div`
   padding: 10px;

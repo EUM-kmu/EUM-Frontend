@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -8,19 +7,17 @@ import ApplicantSVG from "@/assets/icons/applicant.svg";
 import DateSVG from "@/assets/icons/date.svg";
 import KnotSVG from "@/assets/icons/knot.svg";
 import LocationSVG from "@/assets/icons/location.svg";
-import { Modal } from "@/components/common/modal";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
-  const [readyModal, setReadyModal] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   return (
     <Wrapper
       onClick={() => {
         navigate(`/post/${props.postId}`);
-        setReadyModal(true);
       }}
     >
       <RowBox>
@@ -55,15 +52,6 @@ export const PostListItem = (props: PostListItemProps) => {
           onClick={() => console.log("user: ", props.writerId)}
         />
       </BottomRowBox>
-      {readyModal && (
-        <Modal
-          onClose={() => {
-            setReadyModal(false);
-          }}
-        >
-          <Modal.Title text="지금 급한 이슈를\n처리하는중이에요!🫣" />
-        </Modal>
-      )}
     </Wrapper>
   );
 };
