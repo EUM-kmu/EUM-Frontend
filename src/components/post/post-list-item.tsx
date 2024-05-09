@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { PostListItemProps } from "./type";
@@ -14,13 +14,13 @@ import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
   const [readyModal, setReadyModal] = useState<boolean>(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Wrapper
       onClick={() => {
-        // navigate(`/post/${props.postId}`);
-        // setReadyModal(true);
+        navigate(`/post/${props.postId}`);
+        setReadyModal(true);
       }}
     >
       <RowBox>
