@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 
@@ -22,6 +22,11 @@ import { usePullUp } from "@/hooks/queries/usePullUp";
 import { postState } from "@/recoil/atoms/post-state";
 import { colorTheme } from "@/style/color-theme";
 
+type LocationType = {
+  state: {
+    replace?: string;
+  };
+};
 export const PostDetailPage = () => {
   const { postId } = useParams();
   const { data: profile } = useGetProfile();
@@ -46,9 +51,11 @@ export const PostDetailPage = () => {
   // const { mutate: changeStatus } = useChangeStatus(postId!);
 
   const navigate = useNavigate();
+  const location = useLocation() as LocationType;
 
   useEffect(() => {
     if (data) setPost(data);
+    console.log(location);
   }, [data]);
 
   return (
@@ -57,7 +64,13 @@ export const PostDetailPage = () => {
       appbar={
         <AppBar>
           <AppBar.AppBarNavigate>
-            <StyledButton onClick={() => navigate("/post")}>
+            <StyledButton
+              onClick={() => {
+                location.state?.replace
+                  ? navigate(location.state.replace)
+                  : navigate(-1);
+              }}
+            >
               <BackButtonSVG src={BackBlackSVG} />
             </StyledButton>
           </AppBar.AppBarNavigate>
