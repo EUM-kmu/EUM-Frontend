@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import OriginCamera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import { styled } from "styled-components";
+import "./camera.css";
 
 type CameraProps = {
   setDataUri: Dispatch<SetStateAction<string>>;
@@ -33,15 +34,11 @@ export default Camera;
 const CameraWrapper = styled.div`
   width: 100%;
   overflow: hidden;
-  & .react-html5-camera-photo {
-    width: 100%;
-  }
-  & video {
-    width: 100%;
-    height: 100%;
-  }
+  // 플래쉬 화면 이후 잠깐 뜨는 캡처 이미지
   & img {
     width: 100% !important;
+    aspect-ratio: 1;
+    object-fit: cover;
   }
   // 촬영 버튼
   & #container-circles {
