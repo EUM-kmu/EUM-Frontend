@@ -19,6 +19,7 @@ type ButtonType = {
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 type ModalType = {
+  bottomFixed?: boolean;
   onClose: MouseEventHandler<HTMLDivElement>;
   children: ReactNode;
 };
@@ -47,12 +48,16 @@ const Button = ({ color = "blue", children, ...props }: ButtonType) => {
   );
 };
 
-export const Modal = ({ onClose, children }: ModalType) => {
+export const Modal = ({
+  bottomFixed = false,
+  onClose,
+  children,
+}: ModalType) => {
   return (
     <>
       {createPortal(
         <ModalBackground>
-          <Content>
+          <Content $bottomFixed={bottomFixed}>
             <CloseButton onClick={onClose} />
             {children}
           </Content>
@@ -85,6 +90,7 @@ const TitleWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.button<{ color?: string }>`
+  width: 100%;
   padding: 20px;
   background-color: #f17547;
   border: 1px solid transparent;
@@ -122,7 +128,7 @@ const ModalBackground = styled.div`
   z-index: 80;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ $bottomFixed: boolean }>`
   position: relative;
   display: flex;
   min-width: 70%;
@@ -143,4 +149,5 @@ const Content = styled.div`
   & > * {
     flex: 1;
   }
+  ${({ $bottomFixed }) => $bottomFixed && `position: absolute; bottom: 40%;`}
 `;

@@ -7,7 +7,7 @@ import { type Swiper as SwiperCore } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// import { BirthModal } from "./birth-modal";
+import { BirthModal } from "./birth-modal";
 import { InputWrapper } from "./input-wrapper";
 
 import { ProfileData } from "@/api/types/profile-type";
@@ -19,6 +19,7 @@ import { colorTheme } from "@/style/color-theme";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
+import { calculateAge } from "@/utils/date-utils";
 // import { useEditProfile } from "@/hooks/queries/useEditProfile";
 
 type ProfileEditModalProps = {
@@ -33,7 +34,7 @@ export const ProfileEditModal = ({
   onClose,
 }: ProfileEditModalProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  // const [birthEditModal, setBirthEditModal] = useState<boolean>(false);
+  const [birthEditModal, setBirthEditModal] = useState<boolean>(false);
   const [readyModal, setReadyModal] = useState<boolean>(false);
 
   const [profileEdit, setProfileEdit] = useRecoilState(profileEditState);
@@ -44,7 +45,7 @@ export const ProfileEditModal = ({
       nickName: profileData.nickName,
       gender: profileData.gender,
       address: profileData.address,
-      birth: "2001-03-12", // TODO: after api updated, it'll be changed
+      birth: profileData.birth,
       fileByte: profileData.profileImage,
     }));
   }, [profileData]);
@@ -86,11 +87,11 @@ export const ProfileEditModal = ({
                 <InputWrapper>
                   <button
                     onClick={() => {
-                      // setEditMode(false);
-                      // setBirthEditModal(true);
+                      setEditMode(false);
+                      setBirthEditModal(true);
                     }}
                   >
-                    {profileData.ageRange * 10}대
+                    {calculateAge(profileEdit.birth)}세
                   </button>
                 </InputWrapper>
               </RowBox>
@@ -137,14 +138,14 @@ export const ProfileEditModal = ({
             </Modal.Button>
           </ModalInner>
         </Modal>
+      ) : birthEditModal ? (
+        <BirthModal
+          onClose={() => {
+            setBirthEditModal(false);
+            setEditMode(true);
+          }}
+        />
       ) : (
-        // ) : birthEditModal ? (
-        //   <BirthModal
-        //     onClose={() => {
-        //       setBirthEditModal(false);
-        //       setEditMode(true);
-        //     }}
-        //   />
         <MyProfileModal
           profileData={profileData}
           onEdit={() => setEditMode(true)}

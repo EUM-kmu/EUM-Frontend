@@ -5,6 +5,7 @@ export type ProfileData = {
   nickName: string;
   gender: "male" | "female";
   address: string;
+  birth: string;
   ageRange: number;
   accountNumber: string;
   profileImage: string;

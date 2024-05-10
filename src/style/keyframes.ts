@@ -17,6 +17,16 @@ export const scaleUpDown = keyframes`
     }
 `;
 
+export const fadeIn = keyframes`
+0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+`;
+
 export const fadeInDown = keyframes`
 0% {
     transform:translateY(-20px); 
@@ -28,11 +38,33 @@ export const fadeInDown = keyframes`
 }
 `;
 
-export const fadeOut = keyframes`
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
+export const fadeInUp = keyframes`
+0% {
+    transform:translateY(20px); 
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+`;
+
+export const slideUp = keyframes`
+from {
+  transform: translateY(100%);
+}
+  to {
+    transform: translateY(0);
+  }
+`;
+
+export const widthUp = keyframes`
+0% {
+  width: 0;
+    flex: 0;
+  }
+  100% {
+    flex: 1;
+  }
+}
 `;
