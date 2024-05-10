@@ -11,7 +11,6 @@ import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
-
   const navigate = useNavigate();
 
   return (
@@ -37,7 +36,7 @@ export const PostListItem = (props: PostListItemProps) => {
           {props.currentApplicant}/{props.maxNumOfPeople}명
         </StateSpan>
         <TopIcon src={KnotSVG} />
-        <StateSpan>{props.pay}매듭</StateSpan>
+        <StateSpan>{props.pay}타임</StateSpan>
       </RowBox>
       <Title>{props.title}</Title>
       <BottomRowBox>

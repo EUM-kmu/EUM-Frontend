@@ -122,7 +122,7 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
                       });
                     } else {
                       const tempData = {
-                        chatRoomId: chatRoomId,
+                        chatRoomId: chatRoomId!,
                         addingData: {
                           postId: Number(postId),
                           memberIds: tempList,
@@ -229,7 +229,7 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
           applyIds={applyIds}
           originApplyIds={originApplyIds}
           postId={postId}
-          chatRoomId={chatRoomId}
+          chatRoomId={chatRoomId!}
           isPage={true}
           setChatMakeRoomId={setChatMakeRoomId}
           setApplyModal={setApplyModal}

@@ -26,7 +26,7 @@ export const TransferFinish = ({ onClick }: { onClick: () => void }) => {
           ? `${lastTransfer.users[0].nickName}님 외 ${lastTransfer.member - 1}분께`
           : `${lastTransfer.users[0].nickName}님께`}
         <br />
-        {lastTransfer.price * lastTransfer.member}매듭을
+        {lastTransfer.price * lastTransfer.member}타임을
         <br />
         송금하였습니다!
       </TransferExplainBox>
@@ -36,7 +36,7 @@ export const TransferFinish = ({ onClick }: { onClick: () => void }) => {
         {lastTransfer.availableBudget +
           transfer.price -
           lastTransfer.member * lastTransfer.price}
-        매듭 입니다
+        타임 입니다
       </div>
       <BottomFixed alignDirection="column">
         <BottomFixed.Button color="blue" onClick={onClick}>
