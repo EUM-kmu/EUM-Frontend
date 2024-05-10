@@ -115,8 +115,8 @@ export const ProfileEditModal = ({
                     nextEl: ".next",
                   }}
                   modules={[Pagination, Navigation]}
-                  bulletClass="swiper-bullet"
-                  bulletActiveClass="swiper-acitve-bullet"
+                  bulletclass="swiper-bullet"
+                  bulletactiveclass="swiper-acitve-bullet"
                 >
                   {ADDRESS.map((location) => (
                     <SwiperSlide key={location} className="next">

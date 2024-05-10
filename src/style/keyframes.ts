@@ -18,32 +18,32 @@ export const scaleUpDown = keyframes`
 `;
 
 export const fadeIn = keyframes`
-0% {
+from {
     opacity: 0;
   }
-  100% {
+to {
     opacity: 1;
   }
 }
 `;
 
 export const fadeInDown = keyframes`
-0% {
+from {
     transform:translateY(-20px); 
     opacity: 0;
   }
-  100% {
+to {
     opacity: 1;
   }
 }
 `;
 
 export const fadeInUp = keyframes`
-0% {
+from {
     transform:translateY(20px); 
     opacity: 0;
   }
-  100% {
+to {
     opacity: 1;
   }
 }
@@ -59,11 +59,24 @@ from {
 `;
 
 export const widthUp = keyframes`
-0% {
+from {
   width: 0;
     flex: 0;
   }
-  100% {
+to {
+    width: 50%;
+    flex: 1;
+  }
+}
+`;
+
+export const widthDown = keyframes`
+from {
+  width: 100%;
+  flex: 1;
+  }
+to {
+  width: 50%;
     flex: 1;
   }
 }

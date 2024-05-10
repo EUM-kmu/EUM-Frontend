@@ -158,8 +158,9 @@ export const BirthInput = ({
 };
 
 const ModalInner = styled.div`
-  width: 85%;
-  max-width: 480px;
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
@@ -175,7 +176,6 @@ const InputWrapper = styled.div<{
   appearEffect: "down" | "fadeIn" | "widthUp";
   moveEffect: "none" | "up";
 }>`
-  position: relative;
   flex: 1;
   display: flex;
   font-size: 1.1rem;
@@ -228,6 +228,7 @@ const InputWrapper = styled.div<{
 
 const RowBox = styled.div`
   display: flex;
+  margin-top: -0.5rem;
   gap: 0.83rem;
 `;
 
