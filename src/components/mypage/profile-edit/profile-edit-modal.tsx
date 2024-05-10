@@ -7,7 +7,7 @@ import { type Swiper as SwiperCore } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { BirthModal } from "./birth-modal";
+// import { BirthModal } from "./birth-modal";
 import { InputWrapper } from "./input-wrapper";
 
 import { ProfileData } from "@/api/types/profile-type";
@@ -19,7 +19,7 @@ import { colorTheme } from "@/style/color-theme";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
-import { useEditProfile } from "@/hooks/queries/useEditProfile";
+// import { useEditProfile } from "@/hooks/queries/useEditProfile";
 
 type ProfileEditModalProps = {
   profileData: ProfileData;
@@ -34,6 +34,7 @@ export const ProfileEditModal = ({
 }: ProfileEditModalProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   // const [birthEditModal, setBirthEditModal] = useState<boolean>(false);
+  const [readyModal, setReadyModal] = useState<boolean>(false);
 
   const [profileEdit, setProfileEdit] = useRecoilState(profileEditState);
   const activeIdx = useRef<number>(0);
@@ -128,10 +129,11 @@ export const ProfileEditModal = ({
               color="orange"
               onClick={() => {
                 // mutate();
+                setReadyModal(true);
                 console.log(profileEdit);
               }}
             >
-              편집완료하기
+              편집 완료하기
             </Modal.Button>
           </ModalInner>
         </Modal>
@@ -148,6 +150,11 @@ export const ProfileEditModal = ({
           onEdit={() => setEditMode(true)}
           onClose={() => onClose()}
         />
+      )}
+      {readyModal && (
+        <Modal onClose={() => setReadyModal(false)}>
+          <Modal.Title text="프로필 편집은\n5/11부터 사용가능합니다\n\n조금만 기다려주세요🫣" />
+        </Modal>
       )}
     </>
   );
