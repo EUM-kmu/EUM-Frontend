@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-import { ProfileModalType } from "./type";
+import { MyProfileModalType, ProfileModalType } from "./type";
 
 import LocationSVG from "@/assets/icons/location.svg";
 import { Modal } from "@/components/common/modal";
@@ -9,6 +9,38 @@ import { useDeleteBlock } from "@/hooks/queries/useDeleteBlock";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { usePostBlock } from "@/hooks/queries/usePostBlock";
 import { colorTheme } from "@/style/color-theme";
+
+export const MyProfileModal = ({
+  profileData,
+  onEdit,
+  onClose,
+}: MyProfileModalType) => {
+  return (
+    <Modal
+      onClose={() => {
+        onClose();
+      }}
+    >
+      <ModalDiv>
+        <ModalHeader>
+          <span>{profileData.nickName}</span>
+          <ModalHeaderLine />
+          <span>{profileData.gender === "male" ? "남" : "여"}</span>
+          <ModalHeaderLine />
+          <span>{Number(profileData.ageRange) * 10 + "대"}</span>
+        </ModalHeader>
+        <Img src={profileData.profileImage} />
+        <AddressSpan>
+          <img style={{ width: "1rem", height: "1rem" }} src={LocationSVG} />
+          {profileData?.address}
+        </AddressSpan>
+      </ModalDiv>
+      <Modal.Button color="orange" onClick={() => onEdit()}>
+        프로필 수정하기
+      </Modal.Button>
+    </Modal>
+  );
+};
 
 export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
   const { data: profileData } = useGetProfile(userId);
@@ -28,13 +60,13 @@ export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
 
   const handleBlock = () => {
     isBlocked
-      ? deleteBlock.mutate(userId!, {
+      ? deleteBlock.mutate(+userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);
           },
         })
-      : postBlock.mutate(userId!, {
+      : postBlock.mutate(+userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);
@@ -81,7 +113,7 @@ export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
             <ModalHeader>
               <span>{profileData?.nickName}</span>
               <ModalHeaderLine />
-              <span>{profileData?.gender}</span>
+              <span>{profileData?.gender === "male" ? "남" : "여"}</span>
               <ModalHeaderLine />
               <span>{Number(profileData?.ageRange) * 10 + "대"}</span>
             </ModalHeader>
@@ -135,11 +167,12 @@ const ModalHeaderLine = styled.div`
 `;
 
 const Img = styled.img`
-  width: 8rem;
-  height: 8rem;
+  width: 50vw;
+  max-width: 500px;
+  aspect-ratio: 1;
   border-radius: 1.17rem;
-  border-width: 0.56rem;
-  border-color: ${colorTheme.blue300};
+  border: 10px solid ${colorTheme.blue100};
+  object-fit: cover;
 `;
 
 const AddressSpan = styled.span`

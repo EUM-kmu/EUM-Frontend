@@ -1,0 +1,33 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible !important;
+}
+
+.swiper-slide {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.swiper-pagination {
+  position: absolute;
+  margin-bottom: -30px;
+  z-index: 100;
+}
+
+.swiper-pagination-bullet {
+  height: 3px;
+  width: 3px;
+  margin-bottom: -20px;
+  background-color: #c3cee6;
+  z-index: 100;
+}
+
+.swiper-pagination-bullet-active {
+  height: 3px;
+  width: 3px;
+  background-color: #f17547;
+}
