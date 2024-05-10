@@ -40,7 +40,7 @@ const InputInner = ({
         if (isPrice) {
           let roundedValue: number;
           if (inputValue < 30) {
-            roundedValue = 30;
+            roundedValue = inputValue;
           } else if (inputValue % 10 >= 1 && inputValue % 10 <= 4) {
             roundedValue = inputValue - (inputValue % 10);
           } else if (inputValue % 10 >= 5 && inputValue % 10 <= 9) {

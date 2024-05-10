@@ -49,12 +49,11 @@ export const Posting4 = () => {
       <TimeText>{`인당 ${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분\n= ${Number(price)}분(타임) 소요`}</TimeText>
       {isError && !isErrorText && (
         <ErrorMsg>
-          {`잔액이 모자랍니다!
-          소요시간은 최소 30분 ~ 최대 ${availableBudget}분 사이로
+          {` 소요시간은 최소 30분 ~ 최대 ${availableBudget}분 사이로
           설정해주세요`}
         </ErrorMsg>
       )}
-      {isErrorText && <ErrorMsg>소요시간을 지정해주세요!</ErrorMsg>}
+      {isErrorText && <ErrorMsg>소요시간을 다시 지정해주세요!</ErrorMsg>}
       <CommonInput style={{ paddingLeft: "15%" }}>
         <CommonInput.InputInner
           value={price}
@@ -88,7 +87,7 @@ export const Posting4 = () => {
         <BottomFixed.Button
           color="blue"
           onClick={() => {
-            if (price === "" || price === "0") {
+            if (price === "" || price === "0" || Number(price) < 30) {
               setIsErrorText(true);
               setIsError(true);
             } else {
