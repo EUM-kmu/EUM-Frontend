@@ -56,7 +56,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <Modal bottomFixed onClose={onClose}>
+    <Modal bottomFixed icon="back" onClose={onClose}>
       <ModalInner>
         <Modal.Title text="생년월일을\n입력해주세요" />
         {errorMsg !== "INITIAL" ? (

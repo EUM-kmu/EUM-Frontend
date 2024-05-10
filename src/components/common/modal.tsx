@@ -2,11 +2,13 @@ import { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 
+import { ReactComponent as BackSVG } from "@/assets/icons/modal-back.svg";
 import { ReactComponent as CloseSVG } from "@/assets/icons/modal-close.svg";
 import { colorTheme } from "@/style/color-theme";
 import { fadeInDown } from "@/style/keyframes";
 
 type CloseButtonType = {
+  icon: "close" | "back";
   onClick: MouseEventHandler<HTMLDivElement>;
 };
 
@@ -20,13 +22,14 @@ type ButtonType = {
 
 type ModalType = {
   bottomFixed?: boolean;
+  icon?: "close" | "back";
   onClose: MouseEventHandler<HTMLDivElement>;
   children: ReactNode;
 };
 
-const CloseButton = ({ onClick }: CloseButtonType) => (
+const CloseButton = ({ icon, onClick }: CloseButtonType) => (
   <CloseButtonWrapper className="modal-close-button" onClick={onClick}>
-    <CloseSVG />
+    {{ close: <CloseSVG />, back: <BackSVG /> }[icon]}
   </CloseButtonWrapper>
 );
 
@@ -50,6 +53,7 @@ const Button = ({ color = "blue", children, ...props }: ButtonType) => {
 
 export const Modal = ({
   bottomFixed = false,
+  icon = "close",
   onClose,
   children,
 }: ModalType) => {
@@ -58,7 +62,7 @@ export const Modal = ({
       {createPortal(
         <ModalBackground>
           <Content $bottomFixed={bottomFixed}>
-            <CloseButton onClick={onClose} />
+            <CloseButton icon={icon} onClick={onClose} />
             {children}
           </Content>
         </ModalBackground>,
