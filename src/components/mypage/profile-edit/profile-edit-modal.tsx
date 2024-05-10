@@ -40,7 +40,7 @@ export const ProfileEditModal = ({
   const activeIdx = useRef<number>(0);
 
   useEffect(() => {
-    setProfileEdit((prev) => ({
+    setProfileEdit(() => ({
       nickName: profileData.nickName,
       gender: profileData.gender,
       address: profileData.address,
