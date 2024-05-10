@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { BirthModal } from "./birth-modal";
 import { InputWrapper } from "./input-wrapper";
+import { RetakePhotoPage } from "./retake-photo";
 
 import { ProfileData } from "@/api/types/profile-type";
 import LocationSVG from "@/assets/icons/location.svg";
@@ -35,8 +36,8 @@ export const ProfileEditModal = ({
   onClose,
 }: ProfileEditModalProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [birthEditModal, setBirthEditModal] = useState<boolean>(false);
-  const [readyModal, setReadyModal] = useState<boolean>(false);
+  const [birthEditMode, setBirthEditMode] = useState<boolean>(false);
+  const [photoEditMode, setPhotoEditMode] = useState<boolean>(false);
 
   const [profileEdit, setProfileEdit] = useRecoilState(profileEditState);
   const activeIdx = useRef<number>(0);
@@ -89,14 +90,17 @@ export const ProfileEditModal = ({
                   <button
                     onClick={() => {
                       setEditMode(false);
-                      setBirthEditModal(true);
+                      setBirthEditMode(true);
                     }}
                   >
                     {calculateAge(profileEdit.birth)}세
                   </button>
                 </InputWrapper>
               </RowBox>
-              <Image src={profileData.profileImage} />
+              <Image
+                src={profileEdit.fileByte}
+                onClick={() => setPhotoEditMode(true)}
+              />
               <InputWrapper>
                 <Swiper
                   initialSlide={0}
@@ -130,7 +134,13 @@ export const ProfileEditModal = ({
             <Modal.Button
               color="orange"
               onClick={() => {
-                mutate();
+                mutate({
+                  ...profileEdit,
+                  fileByte: profileEdit.fileByte.replace(
+                    "data:image/jpeg;base64,",
+                    "",
+                  ),
+                });
                 setEditMode(false);
                 // setReadyModal(true);
                 console.log(profileEdit);
@@ -140,10 +150,10 @@ export const ProfileEditModal = ({
             </Modal.Button>
           </ModalInner>
         </Modal>
-      ) : birthEditModal ? (
+      ) : birthEditMode ? (
         <BirthModal
           onClose={() => {
-            setBirthEditModal(false);
+            setBirthEditMode(false);
             setEditMode(true);
           }}
         />
@@ -154,10 +164,8 @@ export const ProfileEditModal = ({
           onClose={() => onClose()}
         />
       )}
-      {readyModal && (
-        <Modal onClose={() => setReadyModal(false)}>
-          <Modal.Title text="프로필 편집은\n5/11부터 사용가능합니다\n\n조금만 기다려주세요🫣" />
-        </Modal>
+      {photoEditMode && (
+        <RetakePhotoPage onClose={() => setPhotoEditMode(false)} />
       )}
     </>
   );

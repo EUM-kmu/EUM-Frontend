@@ -32,10 +32,7 @@ export default class ProfileApi {
   }
 
   static async editProfile(profile: ProfilePutRequest) {
-    return await Instance.put("/haetsal-service/api/v2/profile", {
-      ...profile,
-      fileByte: null,
-    })
+    return await Instance.put("/haetsal-service/api/v2/profile", profile)
       .then((res) => res.data as FinalResponse<ProfileData>)
       .catch(() => {
         throw new Error("Invalid response from server");

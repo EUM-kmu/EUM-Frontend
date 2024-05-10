@@ -34,10 +34,10 @@ export const MyProfileModal = ({
           <img style={{ width: "1rem", height: "1rem" }} src={LocationSVG} />
           {profileData?.address}
         </AddressSpan>
+        <Modal.Button color="orange" onClick={() => onEdit()}>
+          프로필 수정하기
+        </Modal.Button>
       </ModalDiv>
-      <Modal.Button color="orange" onClick={() => onEdit()}>
-        프로필 수정하기
-      </Modal.Button>
     </Modal>
   );
 };
