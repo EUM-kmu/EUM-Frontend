@@ -44,6 +44,7 @@ export const ApplicantItemList = ({
                 }
               }
             }}
+            isDeletedUser={applicant.applicantInfo.profileImage === ""}
           />
         );
       })}

@@ -82,6 +82,7 @@ export const PostList = () => {
             maxNumOfPeople={item.maxNumOfPeople}
             writerProfileImg={item.writerInfo.profileImage}
             writerId={item.writerInfo.profileId}
+            deleted={item.deleted}
           />
         )),
       )}

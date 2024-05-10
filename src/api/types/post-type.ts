@@ -47,6 +47,7 @@ export type PostType = {
   dealId: number;
   viewsCount: number;
   writerInfo: WriterInfo;
+  deleted: boolean;
 };
 
 export type ResponsePostDetail = FinalResponse<PostDetailType>;

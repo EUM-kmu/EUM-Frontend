@@ -28,13 +28,13 @@ export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
 
   const handleBlock = () => {
     isBlocked
-      ? deleteBlock.mutate(userId, {
+      ? deleteBlock.mutate(userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);
           },
         })
-      : postBlock.mutate(userId, {
+      : postBlock.mutate(userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);
@@ -138,6 +138,8 @@ const Img = styled.img`
   width: 8rem;
   height: 8rem;
   border-radius: 1.17rem;
+  border-width: 0.56rem;
+  border-color: ${colorTheme.blue300};
 `;
 
 const AddressSpan = styled.span`

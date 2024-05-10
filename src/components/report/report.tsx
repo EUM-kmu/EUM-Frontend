@@ -33,7 +33,11 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
     });
     reportPost(
       { postId: postId, reportMsg: temp ? temp.content : "" },
-      { onSuccess: () => onSuccessReport() },
+      {
+        onSuccess: () => {
+          setReportModal(true);
+        },
+      },
     );
   };
 
@@ -72,6 +76,7 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
         <Modal
           onClose={() => {
             setReportModal(false);
+            onSuccessReport();
           }}
         >
           <Modal.Title text="신고가 접수되었습니다." />
@@ -82,7 +87,16 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
           >
             홈화면으로 이동
           </Modal.Button>
-          {!profileData?.blocked && <Modal.Button>작성자 차단</Modal.Button>}
+          {!profileData?.blocked && (
+            <Modal.Button
+              onClick={() => {
+                setCheckBlock(true);
+                setReportModal(false);
+              }}
+            >
+              작성자 차단
+            </Modal.Button>
+          )}
         </Modal>
       )}
       {checkBlock && (
@@ -100,15 +114,17 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
               if (Number(creatorId) > -1) {
                 postBlock.mutate(Number(creatorId), {
                   onSuccess: () => {
-                    setCheckBlock(false);
                     setBlockFinish(true);
+                    setCheckBlock(false);
                   },
                   onError: () => {
                     setIsError(true);
+                    setCheckBlock(false);
                   },
                 });
               } else {
                 setIsError(true);
+                setCheckBlock(false);
               }
             }}
           >
@@ -120,6 +136,7 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
         <Modal
           onClose={() => {
             setBlockFinish(false);
+            onSuccessReport();
           }}
         >
           <Modal.Title
@@ -138,6 +155,7 @@ export const Report = ({ postId, onSuccessReport, creatorId }: ReportProps) => {
         <Modal
           onClose={() => {
             setIsError(false);
+            onSuccessReport();
           }}
         >
           <Modal.Title text="알 수 없는 오류가 발생했습니다 \n 다시 시도해주세요." />

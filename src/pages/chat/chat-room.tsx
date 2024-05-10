@@ -13,6 +13,7 @@ import { ChatEntryExit } from "@/components/chat/chat-entry-exit";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatItem } from "@/components/chat/chat-item";
 import { BottomSheet } from "@/components/common/bottom-sheet";
+import { DeletedProfileModal } from "@/components/common/deleted-profile-modal";
 import { Modal } from "@/components/common/modal";
 import { ProfileModal } from "@/components/common/profile-modal";
 import { Report } from "@/components/report/report";
@@ -41,6 +42,7 @@ export const ChatRoom = () => {
   const [isReport, setIsReport] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
+  const [deletedProfileModal, setDeletedProfileModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [transferErrorModal, setTransferErrorModal] = useState(false);
 
@@ -181,6 +183,7 @@ export const ChatRoom = () => {
                     ? undefined
                     : item.senderInfo.profileImage
                 }
+                setDeletedProfileModal={setDeletedProfileModal}
               >
                 {item.message.replace(/^"(.*)"$/, "$1")}
               </ChatItem>
@@ -208,6 +211,7 @@ export const ChatRoom = () => {
                 setProfileModal={setProfileModal}
                 setProfileUserId={setProfileUserId}
                 imgurl={temp ? temp.profileImage : undefined}
+                setDeletedProfileModal={setDeletedProfileModal}
               >
                 {item.message.replace(/^"(.*)"$/, "$1")}
               </ChatItem>
@@ -304,6 +308,13 @@ export const ChatRoom = () => {
         >
           <Modal.Title text="채팅방에 소속된 유저가 없어 \n 송금할 수 없습니다." />
         </Modal>
+      )}
+      {deletedProfileModal && (
+        <DeletedProfileModal
+          onClose={() => {
+            setDeletedProfileModal(false);
+          }}
+        />
       )}
     </PageContainer>
   );
