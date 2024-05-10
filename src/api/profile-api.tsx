@@ -1,8 +1,11 @@
 import Instance from "./axios-instance";
+import { FinalResponse } from "./types/common-type";
 import {
+  ProfileData,
   ProfileGetResponse,
   ProfilePostRequest,
   ProfilePostResponse,
+  ProfilePutRequest,
 } from "./types/profile-type";
 
 export default class ProfileApi {
@@ -23,6 +26,14 @@ export default class ProfileApi {
   static async postProfile(profile: ProfilePostRequest) {
     return await Instance.post("/auth-service/api/v2/profile", profile)
       .then((res) => res.data as ProfilePostResponse)
+      .catch(() => {
+        throw new Error("Invalid response from server");
+      });
+  }
+
+  static async editProfile(profile: ProfilePutRequest) {
+    return await Instance.post("/haetsal-service/api/v2/profile", profile)
+      .then((res) => res.data as FinalResponse<ProfileData>)
       .catch(() => {
         throw new Error("Invalid response from server");
       });

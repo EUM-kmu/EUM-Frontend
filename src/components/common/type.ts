@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction, ChangeEvent } from "react";
 
+import { ProfileData } from "@/api/types/profile-type";
+
 export type TimeType = "오전" | "오후" | "무관";
 
 export type ActivityBoxContextType = {
@@ -53,6 +55,12 @@ export type AppBarProps = {
 export type RightButtonProps = {
   imgSrc: string;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
+
+export type MyProfileModalType = {
+  profileData: ProfileData;
+  onEdit: () => void;
+  onClose: () => void;
+};
 
 export type ProfileModalType = {
   userId: number;

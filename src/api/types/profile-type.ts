@@ -3,7 +3,7 @@ import { FinalResponse } from "./common-type";
 export type ProfileData = {
   userId: number;
   nickName: string;
-  gender: string;
+  gender: "male" | "female";
   address: string;
   ageRange: number;
   accountNumber: string;
@@ -40,3 +40,11 @@ export type ProfilePostResponse = FinalResponse<{
     role: string;
   };
 }>;
+
+export type ProfilePutRequest = {
+  nickName: string;
+  birth: string;
+  gender: string;
+  address: string;
+  fileByte: string;
+};

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
+import { ProfileEditModal } from "./profile-edit/profile-edit-modal";
+
 import DotMenuSVG from "@/assets/icons/dots-menu.svg";
 import FemaleSVG from "@/assets/icons/female.svg";
 import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
@@ -23,12 +25,17 @@ export const MypageListProfile = () => {
   const { mutate: withdrawal } = useWithdrawal();
   const [show, setShow] = useState<boolean>(false);
 
+  const [profileModal, setProfileModal] = useState<boolean>(false);
+
   const [withdrawalModal, setWithDrawalModal] = useState<boolean>(false);
   const [signOutModal, setSignOutModal] = useState<boolean>(false);
 
   return (
     <Wrapper>
-      <ProfileImg src={myProfile?.profileImage} />
+      <ProfileImg
+        src={myProfile?.profileImage}
+        onClick={() => setProfileModal(true)}
+      />
       <ColumnBox>
         <ProfileRowBox>
           <Name>{myProfile?.nickName}</Name>
@@ -85,6 +92,12 @@ export const MypageListProfile = () => {
       </ColumnBox>
 
       {/** Modal */}
+      {profileModal && (
+        <ProfileEditModal
+          profileData={myProfile!}
+          onClose={() => setProfileModal(false)}
+        />
+      )}
       {withdrawalModal && (
         <Modal onClose={() => setWithDrawalModal(false)}>
           <Modal.Title text="탈퇴하시겠습니까?" />

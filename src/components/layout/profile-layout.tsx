@@ -10,7 +10,7 @@ export const ProfileLayout = ({ children }: { children: ReactNode }) => {
   const [_, setProfile] = useState<ProfileData>({
     userId: 0,
     nickName: "",
-    gender: "",
+    gender: "male",
     address: "",
     ageRange: 0,
     accountNumber: "",
