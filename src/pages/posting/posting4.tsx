@@ -38,12 +38,15 @@ export const Posting4 = () => {
   return (
     <PageContainer>
       <PostingAppBar onClick={() => handleSave()} nowPage={4} />
-      <PostingBoldText style={{ marginBottom: "1.8rem" }}>
+      <PostingBoldText style={{ marginBottom: "1.4rem" }}>
         활동의 소요시간을
         <br />
         입력해주세요
       </PostingBoldText>
-      <TimeText>{`${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분`}</TimeText>
+      <TipMsg
+        style={{ color: `${colorTheme.orange400}` }}
+      >{`※최소 단위는 30분(타임)입니다※`}</TipMsg>
+      <TimeText>{`인당 ${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분\n= ${Number(price)}분(타임) 소요`}</TimeText>
       {isError && !isErrorText && (
         <ErrorMsg>
           {`잔액이 모자랍니다!
@@ -59,16 +62,16 @@ export const Posting4 = () => {
           isError={isError}
           setIsError={setIsError}
           maximum={availableBudget}
-          minimum={30}
+          isPrice={true}
           gap={"3%"}
         >
           분
         </CommonInput.InputInner>
       </CommonInput>
+      <TipMsg>
+        {`10분 단위로 신청할 수 있기 때문에 \n 자동으로 10분 단위로 맞춰드리고 있습니다`}
+      </TipMsg>
       <BalanceText>활동시간 10분당 10타임이 소요됩니다</BalanceText>
-      <BalanceText style={{ color: colorTheme.orange400 }}>
-        인당 {price} 타임 소요
-      </BalanceText>
       <BalanceText style={{ color: colorTheme.orange400, marginTop: "5%" }}>
         지금 내 사용 가능 잔액은 {data?.availableBudget}타임입니다
       </BalanceText>
@@ -119,6 +122,9 @@ const TimeText = styled.span`
   color: ${colorTheme.orange400};
   font-size: 1.33rem;
   margin-bottom: 7%;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.7rem;
 `;
 
 const ErrorMsg = styled.div`
@@ -128,4 +134,12 @@ const ErrorMsg = styled.div`
   font-weight: bold;
   line-height: 1.1rem;
   white-space: pre-line;
+`;
+
+const TipMsg = styled.div`
+  font-size: 0.7rem;
+  color: ${colorTheme.shade};
+  text-align: center;
+  white-space: pre-line;
+  margin-bottom: 0.3rem;
 `;

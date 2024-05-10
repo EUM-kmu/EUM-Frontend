@@ -10,7 +10,7 @@ export const useGetPostList = (search: string) => {
         PostApi.getPostList({ page: pageParam, size: 10, search: search }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.length ? allPages.length + 1 : undefined;
+        return lastPage.length === 10 ? allPages.length : undefined;
       },
     });
   } else {
@@ -20,7 +20,7 @@ export const useGetPostList = (search: string) => {
         PostApi.getPostList({ page: pageParam, size: 10 }),
       initialPageParam: 0,
       getNextPageParam: (lastPage, allPages) => {
-        return lastPage.length ? allPages.length + 1 : undefined;
+        return lastPage.length === 10 ? allPages.length : undefined;
       },
     });
   }

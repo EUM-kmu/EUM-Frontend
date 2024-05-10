@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
+import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
@@ -39,6 +40,11 @@ export const PostList = () => {
     };
   }, [headerHeight]);
 
+  const handleMiniButton = () => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollTop = 0;
+    }
+  };
   return (
     <Wrapper ref={wrapperRef}>
       <div style={{ width: "100%" }} ref={headerRef}>
@@ -79,6 +85,7 @@ export const PostList = () => {
           />
         )),
       )}
+      {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
     </Wrapper>
   );
 };
@@ -118,7 +125,6 @@ const InputInnerWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
   padding: 0.16rem 0.16rem 0.16rem 0.4rem;
 `;
 

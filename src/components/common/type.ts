@@ -72,4 +72,5 @@ export type InputInnerProps = {
   minimum?: number;
   isError: boolean;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
+  isPrice?: boolean;
 };

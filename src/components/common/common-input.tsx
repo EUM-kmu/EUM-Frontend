@@ -19,31 +19,40 @@ const InputInner = ({
   minimum,
   isError,
   setIsError,
+  isPrice = false,
 }: InputInnerProps) => {
-  // const [inputValue, setInputValue] = useState(value||"");
-  // const [isInnerError, setIsInnerError] = useState(false);
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > maximum) {
-      // setInputValue(maximum.toString());
       setValue(maximum.toString());
       setIsError(true);
-      // setIsInnerError(true);
     } else if (e.target.value === "") {
       setValue("");
       setIsError(false);
     } else {
-      if (minimum) {
-        if (Number(e.target.value) < minimum) {
-          setValue(isError ? e.target.value : minimum.toString());
-          setIsError(true);
-        } else {
-          setValue(e.target.value);
-          setIsError(false);
-        }
+      if (minimum && Number(e.target.value) < minimum) {
+        setValue(isError ? e.target.value : minimum.toString());
+        setIsError(true);
       } else {
         setValue(e.target.value);
         setIsError(false);
+        const inputValue = Number(e.target.value);
+
+        if (isPrice) {
+          let roundedValue: number;
+          if (inputValue < 30) {
+            roundedValue = 30;
+          } else if (inputValue % 10 >= 1 && inputValue % 10 <= 4) {
+            roundedValue = inputValue - (inputValue % 10);
+          } else if (inputValue % 10 >= 5 && inputValue % 10 <= 9) {
+            roundedValue = Math.ceil(inputValue / 10) * 10;
+          } else {
+            roundedValue = inputValue;
+          }
+
+          setTimeout(() => {
+            setValue(roundedValue.toString());
+          }, 600);
+        }
       }
     }
   };

@@ -104,4 +104,16 @@ export default class ChatApi {
       throw new Error("Invalid response from server");
     }
   }
+
+  static async postIdToChatRoom(postId: string | number) {
+    const response = await Instance.get(
+      `/chat-service/api/chatrooms/post/${postId}`,
+    );
+    if (response) {
+      const temp = response.data as ChatFinalResponse<{ ids: string[] }>;
+      return temp.result;
+    } else {
+      throw new Error("Invalid response from server");
+    }
+  }
 }
