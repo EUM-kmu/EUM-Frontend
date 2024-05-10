@@ -7,14 +7,14 @@ import { BirthPage } from "./birth";
 import { GenderPage } from "./gender";
 import { NamePage } from "./name";
 import { NicknamePage } from "./nickname";
-import { PasswordPage } from "./password";
+// import { PasswordPage } from "./password";
 import { PhotoDescriptionPage } from "./photo-description";
 import { TakePhotoPage } from "./take-photo";
 
 import { Modal } from "@/components/common/modal";
 import { DefaultLayout } from "@/components/layout/default-layout";
 
-const STEPSIZE = 7;
+const STEPSIZE = 6;
 
 type ProgressDotsType = {
   activeIdx: number;
@@ -85,8 +85,8 @@ export const ProfilePage = () => {
       {step === 5 && (
         <BirthPage nextStep={nextStep} onModal={() => setRequiredModal(true)} />
       )}
-      {step === 6 && <AddressPage nextStep={nextStep} />}
-      {step === 7 && <PasswordPage />}
+      {step === 6 && <AddressPage />}
+      {/* {step === 7 && <PasswordPage />} */}
       {requiredModal && (
         <Modal onClose={() => setRequiredModal(false)}>
           <Modal.Title text={`${requiredElem}은\\n필수 항목입니다.`} />

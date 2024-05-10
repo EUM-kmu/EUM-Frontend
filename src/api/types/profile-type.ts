@@ -15,12 +15,10 @@ export type ProfileGetResponse = FinalResponse<ProfileData>;
 
 export type ProfilePostRequest = {
   nickName: string;
-  password: string;
   name: string;
   birth: string;
   gender: string;
   address: string;
-  file: string;
   fileByte: string;
 };
 

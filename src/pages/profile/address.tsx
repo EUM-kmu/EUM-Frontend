@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { BottomFixed } from "@/components/common/bottom-fixed";
 import { Header } from "@/components/profile/header";
+import { usePostProfile } from "@/hooks/queries/usePostProfile";
 import { profileState } from "@/recoil/atoms/profile-state";
 import { colorTheme } from "@/style/color-theme";
 
-type AddressPageProps = {
-  nextStep: () => void;
-};
-
 const ADDRESS = ["정릉1동", "정릉2동", "정릉3동", "정릉4동"];
 
-export const AddressPage = ({ nextStep }: AddressPageProps) => {
+export const AddressPage = () => {
   const [address, setAddress] = useState<string>();
 
-  const setProfile = useSetRecoilState(profileState);
+  const [profile, setProfile] = useRecoilState(profileState);
+
+  const { mutate } = usePostProfile();
 
   useEffect(() => {
     if (address !== undefined) {
@@ -39,8 +38,14 @@ export const AddressPage = ({ nextStep }: AddressPageProps) => {
         ))}
       </AddressContainer>
       <BottomFixed>
-        <BottomFixed.Button color="orange" onClick={() => nextStep()}>
-          다음
+        <BottomFixed.Button
+          color="orange"
+          onClick={() =>
+            // nextStep()
+            mutate(profile)
+          }
+        >
+          완료
         </BottomFixed.Button>
       </BottomFixed>
     </ContentLayout>

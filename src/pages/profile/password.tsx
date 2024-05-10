@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+// import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 
 import { Header } from "@/components/profile/header";
-import { usePostProfile } from "@/hooks/queries/usePostProfile";
-import { profileState } from "@/recoil/atoms/profile-state";
+// import { usePostProfile } from "@/hooks/queries/usePostProfile";
+// import { profileState } from "@/recoil/atoms/profile-state";
 import { colorTheme } from "@/style/color-theme";
 
 const PASSWORD_LENGTH = 4;
@@ -18,9 +18,9 @@ export const PasswordPage = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
-  const profile = useRecoilValue(profileState);
+  // const profile = useRecoilValue(profileState);
 
-  const { mutate: submitProfile } = usePostProfile();
+  // const { mutate: submitProfile } = usePostProfile();
 
   const onChange = (
     type: "password" | "confirmPassword",
@@ -49,8 +49,8 @@ export const PasswordPage = () => {
   useEffect(() => {
     if (confirmPassword.length === PASSWORD_LENGTH) {
       setTimeout(() => {
-        if (password === confirmPassword)
-          submitProfile({ ...profile, password });
+        if (password === confirmPassword) console.log("deprecated code");
+        // submitProfile({ ...profile, password });
         else {
           setPassword("");
           setConfirmPassword("");
