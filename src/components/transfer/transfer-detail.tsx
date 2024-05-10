@@ -1,16 +1,21 @@
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { TransferDetailProps } from "./type";
 
+import { transferRequest } from "@/api/types/bank-type";
 import { BottomFixed } from "@/components/common/bottom-fixed";
+import { usePostChatTransfer } from "@/hooks/queries/usePostChatTransfer";
 import { lastTransferState } from "@/recoil/atoms/last-transfet-state";
 import { transferState } from "@/recoil/atoms/transfer-state";
 import { colorTheme } from "@/style/color-theme";
 
 export const TransferDetail = ({ setScreen }: TransferDetailProps) => {
-  const [lastTransfer] = useRecoilState(lastTransferState);
+  const [lastTransfer, setLastTransfer] = useRecoilState(lastTransferState);
   const [transfer] = useRecoilState(transferState);
+  const { mutate: postTransfer } = usePostChatTransfer();
+  const [isError500, setIsError500] = useState(false);
 
   return (
     <Wrapper>
@@ -48,6 +53,10 @@ export const TransferDetail = ({ setScreen }: TransferDetailProps) => {
           lastTransfer.member * lastTransfer.price}
         타임 입니다
       </div>
+      {isError500 && (
+        <ErrorMessage>{`오류가 발생했습니다
+      다시 시도해주세요`}</ErrorMessage>
+      )}
       <BottomFixed alignDirection="column">
         <BottomFixed.Button
           color="blue"
@@ -60,7 +69,34 @@ export const TransferDetail = ({ setScreen }: TransferDetailProps) => {
         <BottomFixed.Button
           color="blue"
           onClick={() => {
-            setScreen("transfer-detail-password");
+            const tempList = lastTransfer.users.map((item) => ({
+              receiverAccountNumber: item.accountNumber,
+              amount: lastTransfer.price,
+            }));
+            const temp: transferRequest = {
+              dealId: lastTransfer.dealId,
+              password: "1234",
+              receiverAndAmounts: tempList,
+              totalAmount: tempList.length * lastTransfer.price,
+            };
+            postTransfer(
+              { postId: lastTransfer.postId, transferRequest: temp },
+              {
+                onSuccess: () => {
+                  setScreen("transfer-finish");
+                  setLastTransfer((prevLastTransfer) => {
+                    const updatedLastTransfer = {
+                      ...prevLastTransfer,
+                      transferState: true,
+                    };
+                    return updatedLastTransfer;
+                  });
+                },
+                onError: () => {
+                  setIsError500(true);
+                },
+              },
+            );
           }}
         >
           송금하기
@@ -116,4 +152,13 @@ const NumberBigText = styled.div`
   width: 56%;
   text-align: right;
   color: ${colorTheme.orange400};
+`;
+
+const ErrorMessage = styled.div`
+  font-size: 1rem;
+  color: ${colorTheme.orange400};
+  text-align: center;
+  line-height: 120%;
+  margin-top: 10%;
+  white-space: pre-line;
 `;
