@@ -158,6 +158,8 @@ export const BirthInput = ({
 };
 
 const ModalInner = styled.div`
+  width: 85%;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;

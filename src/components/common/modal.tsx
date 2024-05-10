@@ -131,7 +131,6 @@ const ModalBackground = styled.div`
 const Content = styled.div<{ $bottomFixed: boolean }>`
   position: relative;
   display: flex;
-  min-width: 70%;
   max-width: 90%;
   max-height: 90%;
   padding: 45px 40px 40px;
@@ -145,7 +144,7 @@ const Content = styled.div<{ $bottomFixed: boolean }>`
   text-align: center;
   gap: 30px;
   z-index: 100;
-  animation: ${fadeInDown} 1s;
+  animation: ${fadeInDown} 0.8s;
   & > * {
     flex: 1;
   }

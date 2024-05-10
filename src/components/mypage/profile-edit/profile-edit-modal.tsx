@@ -131,7 +131,7 @@ export const ProfileEditModal = ({
               color="orange"
               onClick={() => {
                 mutate();
-                // TODO: remove edit modal
+                setEditMode(false);
                 // setReadyModal(true);
                 console.log(profileEdit);
               }}
@@ -164,7 +164,9 @@ export const ProfileEditModal = ({
 };
 
 const ModalInner = styled.div`
-  max-width: 100%;
+  width: 85%;
+  max-width: 480px;
+  margin: auto;
 `;
 
 const FormContainer = styled.div`
@@ -204,8 +206,7 @@ const GenderInput = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50vw;
-  max-width: 500px;
+  width: 100%;
   aspect-ratio: 1;
   border-radius: 1.17rem;
   border: 10px solid ${colorTheme.blue100};
