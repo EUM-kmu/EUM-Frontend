@@ -14,13 +14,14 @@ import { ProfileData } from "@/api/types/profile-type";
 import LocationSVG from "@/assets/icons/location.svg";
 import { Modal } from "@/components/common/modal";
 import { MyProfileModal } from "@/components/common/profile-modal";
+import { useEditProfile } from "@/hooks/queries/useEditProfile";
 import { profileEditState } from "@/recoil/atoms/profile-edit-state";
 import { colorTheme } from "@/style/color-theme";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
 import { calculateAge } from "@/utils/date-utils";
-// import { useEditProfile } from "@/hooks/queries/useEditProfile";
+// eslint-disable-next-line import/order
 
 type ProfileEditModalProps = {
   profileData: ProfileData;
@@ -50,7 +51,7 @@ export const ProfileEditModal = ({
     }));
   }, [profileData]);
 
-  // const { mutate } = useEditProfile();
+  const { mutate } = useEditProfile();
 
   return (
     <>
@@ -129,8 +130,9 @@ export const ProfileEditModal = ({
             <Modal.Button
               color="orange"
               onClick={() => {
-                // mutate();
-                setReadyModal(true);
+                mutate();
+                // TODO: remove edit modal
+                // setReadyModal(true);
                 console.log(profileEdit);
               }}
             >
