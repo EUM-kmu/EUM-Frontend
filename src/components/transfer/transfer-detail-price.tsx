@@ -40,18 +40,19 @@ export const TransferDetailPrice = ({
     <Wrapper>
       <CheckMsg>
         {lastTransfer.member !== 1
-          ? `${lastTransfer.users[0].nickName}님 외 ${lastTransfer.member - 1}분께`
+          ? `${lastTransfer.users[0].nickName}님 외 ${lastTransfer.member - 1}분께 각각`
           : `${lastTransfer.users[0].nickName}님께`}
         <br />
-        얼마의 햇살을 송금할까요?
+        얼마의 타임을 송금할까요?
       </CheckMsg>
+      <TimeText>{`인당 ${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분\n= ${Number(price)}분(타임)`}</TimeText>
       {isPriceError && !isError && (
         <ErrorMsg>
-          {`송금할 매듭은 1~${Math.floor(lastTransfer.availableBudget / lastTransfer.member)}매듭 사이로
+          {`송금할 타임(분)은 최소 30타임 ~ ${Math.floor(lastTransfer.availableBudget / lastTransfer.member)}타임 사이로
           설정해주세요`}
         </ErrorMsg>
       )}
-      {isError && <ErrorMsg>송금할 매듭을 정해주세요!</ErrorMsg>}
+      {isError && <ErrorMsg>송금할 타임을 정해주세요!</ErrorMsg>}
       <CommonInput style={{ paddingLeft: "20%" }}>
         <CommonInput.InputInner
           value={price}
@@ -59,13 +60,13 @@ export const TransferDetailPrice = ({
           isError={isPriceError}
           setIsError={setIsPriceError}
           maximum={lastTransfer.availableBudget + transfer.price}
-          minimum={1}
+          isPrice={true}
         >
-          매듭
+          타임
         </CommonInput.InputInner>
       </CommonInput>
       <div style={{ marginTop: "20px" }}>
-        지금 내 잔액은 {lastTransfer.availableBudget + transfer.price}매듭
+        지금 내 잔액은 {lastTransfer.availableBudget + transfer.price}타임
         입니다
       </div>
       <BottomFixed alignDirection="column">
@@ -116,4 +117,13 @@ const ErrorMsg = styled.div`
   font-weight: bold;
   line-height: 1.1rem;
   white-space: pre-line;
+`;
+
+const TimeText = styled.span`
+  color: ${colorTheme.orange400};
+  font-size: 1.33rem;
+  margin-bottom: 5%;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.7rem;
 `;

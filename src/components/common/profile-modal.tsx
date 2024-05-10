@@ -60,13 +60,13 @@ export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
 
   const handleBlock = () => {
     isBlocked
-      ? deleteBlock.mutate(userId, {
+      ? deleteBlock.mutate(+userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);
           },
         })
-      : postBlock.mutate(userId, {
+      : postBlock.mutate(+userId!, {
           onSuccess: () => {
             setCheckBlock(false);
             setBlockFinish(true);

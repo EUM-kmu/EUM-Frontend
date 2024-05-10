@@ -45,7 +45,7 @@ export const ActivityBox = ({ data, editMode = false }: ActivityBoxType) => {
         <HeadCount>
           {data.currentApplicant}/{data.maxNumOfPeople}명
         </HeadCount>
-        <KnotPay>{data.pay} 매듭</KnotPay>
+        <KnotPay>{data.pay} 타임</KnotPay>
       </Progress>
 
       <PostInfo>

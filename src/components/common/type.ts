@@ -63,7 +63,7 @@ export type MyProfileModalType = {
 };
 
 export type ProfileModalType = {
-  userId: number;
+  userId?: number;
   onClose: () => void;
 };
 
@@ -80,4 +80,5 @@ export type InputInnerProps = {
   minimum?: number;
   isError: boolean;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
+  isPrice?: boolean;
 };

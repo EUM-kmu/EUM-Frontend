@@ -77,7 +77,7 @@ export const MypageListProfile = () => {
           <PriceStateBox>
             <KnotIconImg src={KnotWhiteBackSVG} />
             <KnotPriceState>{bankAccount?.totalBudget}</KnotPriceState>
-            <KnotPriceWon>매듭</KnotPriceWon>
+            <KnotPriceWon>타임</KnotPriceWon>
           </PriceStateBox>
           <OtherStateColumnBox>
             <PriceStateBox style={{ width: "5rem" }}>

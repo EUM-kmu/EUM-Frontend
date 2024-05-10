@@ -64,16 +64,16 @@ export const Posting5 = () => {
           설정해주세요`}
         {isErrorText && `필요 인원을 1명 이상 정해주세요!`}{" "}
       </ErrorMsg>
-      <BalanceText>지금 내 잔액은 {availableBudget}매듭 입니다.</BalanceText>
+      <BalanceText>지금 내 잔액은 {availableBudget}타임 입니다.</BalanceText>
       <SumContainer>
         <SumText>합계</SumText>
         <SumNumberText>{posting.price * Number(member)}</SumNumberText>
-        <SumText>매듭</SumText>
+        <SumText>타임</SumText>
       </SumContainer>
       <BalanceText style={{ marginTop: "3%" }}>
         게시물 작성 후 내 잔액은{" "}
         {availableBudget - posting.price * Number(member)}
-        매듭입니다.
+        타임입니다.
       </BalanceText>
       <BottomFixed alignDirection="row">
         <BottomFixed.Button

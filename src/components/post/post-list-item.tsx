@@ -11,7 +11,6 @@ import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
 export const PostListItem = (props: PostListItemProps) => {
-
   const navigate = useNavigate();
 
   return (
@@ -21,19 +20,23 @@ export const PostListItem = (props: PostListItemProps) => {
       }}
     >
       <RowBox>
-        {props.status == "RECRUITING" && <StateIng>모집중</StateIng>}
-        {props.status == "RECRUITMENT_COMPLETED" && (
+        {props.status == "RECRUITING" && !props.deleted && (
+          <StateIng>모집중</StateIng>
+        )}
+        {props.status == "RECRUITMENT_COMPLETED" && !props.deleted && (
           <StateFin>모집완료</StateFin>
         )}
-        {props.status == "TRANSACTION_COMPLETED" && (
+        {props.status == "TRANSACTION_COMPLETED" && !props.deleted && (
           <StateFin>거래완료</StateFin>
         )}
+        {props.deleted && <StateFin>삭제된 글</StateFin>}
+
         <TopIcon src={ApplicantSVG} />
         <StateSpan>
           {props.currentApplicant}/{props.maxNumOfPeople}명
         </StateSpan>
         <TopIcon src={KnotSVG} />
-        <StateSpan>{props.pay}매듭</StateSpan>
+        <StateSpan>{props.pay}타임</StateSpan>
       </RowBox>
       <Title>{props.title}</Title>
       <BottomRowBox>

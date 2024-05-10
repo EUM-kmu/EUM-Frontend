@@ -7,6 +7,7 @@ export type ApplicantItemDetailProps = {
   selected: boolean;
   onSelect: (event: MouseEvent<HTMLButtonElement>) => void;
   isDeleted: boolean;
+  isDeletedUser: boolean;
 } & ApplyType;
 
 export type ApplicantItemProps = {
