@@ -6,7 +6,7 @@ import { KakaoAuth } from "@/components/login/kakao-auth";
 import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { Chat } from "@/pages/chat/chat";
 import { ChatRoom } from "@/pages/chat/chat-room";
-// import { WrongAccessPage } from "@/pages/error/wrong-access";
+import { WrongAccessPage } from "@/pages/error/wrong-access";
 import { LoginPage } from "@/pages/login";
 import { Mypage } from "@/pages/mypage/mypage";
 import { ApplicantListPage } from "@/pages/post/applicant-list-page";
@@ -147,7 +147,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <GlobalLayout />,
-    // errorElement: <WrongAccessPage />,
+    errorElement: <WrongAccessPage />,
     children: routeChildren.map(({ path, element, auth }) => {
       if (auth) return { path, element: <AuthLayout>{element}</AuthLayout> };
       return { path, element };
