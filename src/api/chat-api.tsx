@@ -14,7 +14,7 @@ export default class ChatApi {
   // 메세지 보내기
   static async sendChatMessages({ message, roomId }: ChatSendRequest) {
     const response = await Instance.post(
-      `/chat-service/api/chatrooms/${roomId}/message`,
+      `/chat-service/api/chats/${roomId}/message`,
       message,
     );
     if (response) {
@@ -39,7 +39,7 @@ export default class ChatApi {
   // 채팅방 디테일 멤버 정보랑 채팅내역 가져오기
   static async getChatRoomData(chatRoomId: string) {
     const response = await Instance.get(
-      `/chat-service/api/chatrooms/${chatRoomId}`,
+      `/chat-service/api/chats/${chatRoomId}`,
     );
     if (response) {
       const temp = response.data as ChatRoomResponse;
@@ -92,7 +92,6 @@ export default class ChatApi {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
           "Content-Type": "application/json",
-          // "X-Requested-With": "XMLHttpRequest",
         },
         withCredentials: true,
       },

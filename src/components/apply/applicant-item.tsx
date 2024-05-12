@@ -37,7 +37,7 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
         />
       </ApplicantImage>
       {props.isDeletedUser && (
-        <ApplicantInfo>
+        <ApplicantInfo style={{ justifyContent: "center" }}>
           <ApplicantDeletedUserDiv>알 수 없음</ApplicantDeletedUserDiv>
         </ApplicantInfo>
       )}
@@ -46,9 +46,10 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
           <ApplicantLocation>{props.applicantInfo.address}</ApplicantLocation>
           <ApplicantNickname>{props.applicantInfo.nickName}</ApplicantNickname>
           <ApplicantMoreInfo>
-            도움횟수 16 <Bullet />{" "}
-            {props.applicantInfo.gender === "male" ? "남" : "여"} <Bullet />{" "}
-            {props.applicantInfo.ageRange * 10}대
+            {/* 도움횟수 16 <Bullet />{" "} */}
+            {props.applicantInfo.gender === "male"
+              ? "남"
+              : "여"} <Bullet /> {props.applicantInfo.ageRange * 10}대
           </ApplicantMoreInfo>
         </ApplicantInfo>
       )}
@@ -69,16 +70,17 @@ const ApplicantItemWrapper = styled.div`
   padding: 20px 25px;
   gap: 10px;
   border-top: 1px solid #e4e8f1;
+  align-items: center;
 `;
 
 const ApplicantImage = styled.div`
   height: 100%;
   display: flex;
   position: relative;
-  flex: 1.2;
-  align-items: start;
+  align-items: center;
   & img {
-    width: 100%;
+    width: 3.944rem;
+    height: 3.944rem;
     aspect-ratio: 1/1;
     border-radius: 10px;
   }
@@ -90,6 +92,8 @@ const ApplicantInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 2px;
+  height: 80%;
+  /* height: 100%; */
 `;
 
 const ApplicantLocation = styled.div`

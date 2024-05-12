@@ -80,6 +80,8 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
     }
   };
 
+  console.log("chatroomid: ", chatRoomId);
+
   return (
     <>
       <ApplicantItemList
@@ -105,7 +107,7 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
                     const tempList: string[] = applyIds.map((id) => {
                       return id.userId.toString();
                     });
-                    if (chatRoomId === "") {
+                    if (chatRoomId === "" || chatRoomId === undefined) {
                       const tempData: ChatMakeRequest = {
                         postId: Number(postId),
                         memberIds: tempList,
@@ -122,7 +124,7 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
                       });
                     } else {
                       const tempData = {
-                        chatRoomId: chatRoomId!,
+                        chatRoomId: chatRoomId,
                         addingData: {
                           postId: Number(postId),
                           memberIds: tempList,
