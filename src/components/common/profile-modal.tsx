@@ -9,6 +9,7 @@ import { useDeleteBlock } from "@/hooks/queries/useDeleteBlock";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { usePostBlock } from "@/hooks/queries/usePostBlock";
 import { colorTheme } from "@/style/color-theme";
+import { calculateAge } from "@/utils/date-utils";
 
 export const MyProfileModal = ({
   profileData,
@@ -27,7 +28,7 @@ export const MyProfileModal = ({
           <ModalHeaderLine />
           <span>{profileData.gender === "male" ? "남" : "여"}</span>
           <ModalHeaderLine />
-          <span>{Number(profileData.ageRange) * 10 + "대"}</span>
+          <span>{`${calculateAge(profileData.birth)}세`}</span>
         </ModalHeader>
         <Img src={profileData.profileImage} />
         <AddressSpan>
