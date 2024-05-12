@@ -19,6 +19,7 @@ import { ProfileModal } from "@/components/common/profile-modal";
 import { Report } from "@/components/report/report";
 import { Transfer } from "@/components/transfer/transfer";
 import { useChatDataSetting } from "@/hooks/chat/useChatDataSetting";
+import { useGetChatRoomData } from "@/hooks/queries/useGetChatRoomData";
 import { UseSendMessages } from "@/hooks/queries/useSendMessages";
 import { transferState } from "@/recoil/atoms/transfer-state";
 import { FormatDateString } from "@/utils/format-date-string";
@@ -31,7 +32,8 @@ export const ChatRoom = () => {
   const [transfer] = useRecoilState(transferState);
   const [newRoomMsgs, setNewRoomMsgs] = useState<ChatRoomSubMessage[]>([]);
 
-  const roomMsgs = useChatDataSetting(state);
+  useChatDataSetting(state);
+  const { data: roomData, fetchNextPage } = useGetChatRoomData(state.roomId);
 
   const [appBarHeight, setAppBarHeight] = useState(0);
   const [appBerVisibility, setAppBarVisibility] = useState(true);
@@ -71,12 +73,20 @@ export const ChatRoom = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
-    setNewRoomMsgs([]);
-  }, [roomMsgs]);
-
-  useEffect(() => {
     connectHandler();
+
+    const handleScroll = () => {
+      if (chatListRef.current) {
+        if (chatListRef.current.scrollTop === 0) {
+          void fetchNextPage();
+        }
+      }
+    };
+
+    chatListRef.current?.addEventListener("scroll", handleScroll);
+    return () => {
+      chatListRef.current?.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const scrollToBottom = () => {
@@ -165,33 +175,46 @@ export const ChatRoom = () => {
           paddingTop: appBerVisibility ? `${appBarHeight + 10}px` : "10px",
         }}
       >
-        {roomMsgs?.map((item, index) => {
-          if (item.senderInfo !== null) {
-            return (
-              <ChatItem
-                key={index}
-                userId={item.senderInfo.deleted ? -2 : item.senderInfo.userId}
-                userName={
-                  item.senderInfo.deleted
-                    ? "(알 수 없음)"
-                    : item.senderInfo.nickName
+        {roomData?.pages
+          .slice(0)
+          .reverse()
+          .map((page, idx) =>
+            page.messages
+              .slice(0)
+              .reverse()
+              .map((item, index) => {
+                if (item.senderInfo !== null) {
+                  return (
+                    <ChatItem
+                      key={`${idx}-${index}`}
+                      userId={
+                        item.senderInfo.deleted ? -2 : item.senderInfo.userId
+                      }
+                      userName={
+                        item.senderInfo.deleted
+                          ? "(알 수 없음)"
+                          : item.senderInfo.nickName
+                      }
+                      setProfileModal={setProfileModal}
+                      setProfileUserId={setProfileUserId}
+                      imgurl={
+                        item.senderInfo.deleted
+                          ? undefined
+                          : item.senderInfo.profileImage
+                      }
+                      setDeletedProfileModal={setDeletedProfileModal}
+                      date={item.createdAt}
+                    >
+                      {item.message.replace(/^"(.*)"$/, "$1")}
+                    </ChatItem>
+                  );
+                } else if (item.type === "JOIN" || item.type === "LEAVE") {
+                  return (
+                    <ChatEntryExit key={`${idx}-${index}`} msg={item.message} />
+                  );
                 }
-                setProfileModal={setProfileModal}
-                setProfileUserId={setProfileUserId}
-                imgurl={
-                  item.senderInfo.deleted
-                    ? undefined
-                    : item.senderInfo.profileImage
-                }
-                setDeletedProfileModal={setDeletedProfileModal}
-              >
-                {item.message.replace(/^"(.*)"$/, "$1")}
-              </ChatItem>
-            );
-          } else if (item.type === "JOIN" || item.type === "LEAVE") {
-            return <ChatEntryExit key={index} msg={item.message} />;
-          }
-        })}
+              }),
+          )}
         {newRoomMsgs?.map((item, index) => {
           const temp = transfer.users.find((e) => {
             if (e.userId === Number(item.userId)) return e;
@@ -212,6 +235,7 @@ export const ChatRoom = () => {
                 setProfileUserId={setProfileUserId}
                 imgurl={temp ? temp.profileImage : undefined}
                 setDeletedProfileModal={setDeletedProfileModal}
+                date={item.createdAt}
               >
                 {item.message.replace(/^"(.*)"$/, "$1")}
               </ChatItem>

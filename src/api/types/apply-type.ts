@@ -7,6 +7,7 @@ export type ApplyType = {
     address: string;
     gender: string;
     ageRange: number;
+    dealCount: number;
   };
   createdTime: string;
   status:

@@ -46,10 +46,9 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
           <ApplicantLocation>{props.applicantInfo.address}</ApplicantLocation>
           <ApplicantNickname>{props.applicantInfo.nickName}</ApplicantNickname>
           <ApplicantMoreInfo>
-            {/* 도움횟수 16 <Bullet />{" "} */}
-            {props.applicantInfo.gender === "male"
-              ? "남"
-              : "여"} <Bullet /> {props.applicantInfo.ageRange * 10}대
+            도움횟수 {props.applicantInfo.dealCount} <Bullet />{" "}
+            {props.applicantInfo.gender === "male" ? "남" : "여"} <Bullet />{" "}
+            {props.applicantInfo.ageRange * 10}대
           </ApplicantMoreInfo>
         </ApplicantInfo>
       )}

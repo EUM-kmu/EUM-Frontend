@@ -14,18 +14,20 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
   const { data: roomData } = useGetChatRoomData(props.roomId);
   const { data: bankData } = useGetBankData();
 
-  console.log("roomData: ", roomData);
+  console.log("roomData: ", roomData?.pages[0]);
 
   useEffect(() => {
     const myId = localStorage.getItem("userId") || "0";
     const users: ChatRoomMember[] =
-      roomData?.userInfos?.filter((item) => item.userId !== Number(myId)) || [];
-    const price: number = roomData ? roomData.postInfo.pay : -1;
+      roomData?.pages[0].userInfos?.filter(
+        (item) => item.userId !== Number(myId),
+      ) || [];
+    const price: number = roomData ? roomData.pages[0].postInfo.pay : -1;
     const status: boolean =
-      roomData?.postInfo.status === "TRANSACTION_COMPLETED";
-    const dealId: number = roomData ? roomData.postInfo.dealId : -1;
+      roomData?.pages[0].postInfo.status === "TRANSACTION_COMPLETED";
+    const dealId: number = roomData ? roomData.pages[0].postInfo.dealId : -1;
     const availableBudget: number = bankData ? bankData.availableBudget : -1;
-    const title: string = roomData ? roomData.postInfo.title : "";
+    const title: string = roomData ? roomData.pages[0].postInfo.title : "";
 
     console.log("availableBudget!!!: ", availableBudget);
     setTransfer({
@@ -51,5 +53,5 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
     });
   }, [roomData, bankData]);
 
-  return roomData?.messages;
+  // return roomData?.pages[0].messages;
 };

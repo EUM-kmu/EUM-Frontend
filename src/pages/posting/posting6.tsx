@@ -26,7 +26,7 @@ export const Posting6 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onClick={() => handleSave()} nowPage={6} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={6} />
       <PostingBoldText>활동 제목을 적어보세요</PostingBoldText>
       <PostingInput.InputTitle
         value={title}

@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { ChatItemType } from "./type";
 
 import { colorTheme } from "@/style/color-theme";
+import { ChatdateToMsgtype } from "@/utils/chatdate-to-msgtype";
 
 export const ChatItem = ({
   children,
@@ -12,6 +13,7 @@ export const ChatItem = ({
   setProfileModal,
   setProfileUserId,
   setDeletedProfileModal,
+  date,
 }: ChatItemType) => {
   const tempId = localStorage.getItem("userId");
   const myId = tempId ? Number(tempId) : -1;
@@ -22,6 +24,9 @@ export const ChatItem = ({
         justifyContent: userId === myId ? "flex-end" : "flex-start",
       }}
     >
+      {userId === myId && (
+        <DateDiv>{date ? ChatdateToMsgtype(date) : ""}</DateDiv>
+      )}
       {userId !== myId && (
         <ProfileImg
           onClick={() => {
@@ -50,6 +55,9 @@ export const ChatItem = ({
           <ChatText>{children}</ChatText>
         </ChatBox>
       </ChatColumnBox>
+      {userId !== myId && (
+        <DateDiv>{date ? ChatdateToMsgtype(date) : ""}</DateDiv>
+      )}
     </Container>
   );
 };
@@ -60,6 +68,8 @@ const Container = styled.div`
   height: auto;
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
 `;
 
 const ProfileImg = styled.img`
@@ -74,25 +84,30 @@ const ChatBox = styled.div`
   max-width: 100%;
   height: auto;
   width: auto;
-  padding: 3.6% 4.7%;
-  margin-right: 6%;
+  padding: 0.5rem 0.61rem;
+  margin-right: 1.28rem;
   border-radius: 0.28rem;
 `;
 
 const ChatText = styled.div`
   color: black;
   font-size: 1.2rem;
-  word-break: break-all;
+  white-space: pre-wrap;
 `;
 
 const ChatColumnBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 62.1%;
+  max-width: 62.1%;
   gap: 0.4rem;
 `;
 
 const NameDiv = styled.div`
   font-size: 0.83rem;
+  color: #707379;
+`;
+
+const DateDiv = styled.div`
+  font-size: 0.56rem;
   color: #707379;
 `;

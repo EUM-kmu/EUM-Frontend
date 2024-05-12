@@ -10,6 +10,7 @@ export type ProfileData = {
   accountNumber: string;
   profileImage: string;
   blocked: boolean;
+  dealCount: number;
 };
 
 export type ProfileGetResponse = FinalResponse<ProfileData>;

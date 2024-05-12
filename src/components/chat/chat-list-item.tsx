@@ -52,7 +52,7 @@ export const ChatListItem = (props: ChatRoomItemType) => {
                 : ""}
           </TitleText>
           <ItemText style={{ color: "#828282" }}>
-            <IconImg />
+            {/* <IconImg /> */}
             {" " + props.creatorNickname + "   "} <IconImg src={dateSVG} />
             {" " + BackdateToItemtype(props.startDate) + "   "}
             <IconImg src={locationSVG} />
@@ -115,7 +115,7 @@ const LeftColumnDiv = styled.div`
   display: flex;
   height: 2.7rem;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 0 0 0 4.61%;
   gap: 0.33rem;
 `;

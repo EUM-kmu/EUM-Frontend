@@ -4,7 +4,6 @@ import { styled } from "styled-components";
 import { ApplicantList } from "./applicant-list";
 
 import { AppBar } from "@/components/common/app-bar";
-import { DefaultLayout } from "@/components/layout/default-layout";
 
 export const ApplicantListPage = () => {
   const { postId } = useParams();

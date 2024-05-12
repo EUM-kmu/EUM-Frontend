@@ -30,7 +30,7 @@ export const Posting2 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onClick={() => handleSave()} nowPage={2} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={2} />
       <PostingBoldText style={{ marginBottom: "0.56rem" }}>
         날짜를 선택해주세요
       </PostingBoldText>

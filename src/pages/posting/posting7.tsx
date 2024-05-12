@@ -41,7 +41,7 @@ export const Posting7 = () => {
   return (
     <PageContainer>
       <PostingAppBar
-        onClick={() => {
+        onCustomClick={() => {
           handleSave();
           navigate(-1);
         }}

@@ -33,13 +33,18 @@ const AppBarNavigate = (props: AppBarProps) => {
   return <NavigateWrapper {...props}>{props.children}</NavigateWrapper>;
 };
 
-const BackButton = ({ isColorMode = false, ...props }: AppBarProps) => {
-  const { onClick, ...restProps } = props;
+const BackButton = ({
+  isColorMode = false,
+  isBack = true,
+  ...props
+}: AppBarProps) => {
+  const { onClick, onCustomClick, ...restProps } = props;
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(-1);
+    if (isBack) navigate(-1);
     if (onClick) onClick;
+    if (onCustomClick) onCustomClick();
   };
   return (
     <StyledButton onClick={handleClick} {...restProps}>

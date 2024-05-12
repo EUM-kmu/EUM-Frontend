@@ -37,9 +37,13 @@ export default class ChatApi {
   }
 
   // 채팅방 디테일 멤버 정보랑 채팅내역 가져오기
-  static async getChatRoomData(chatRoomId: string) {
+  static async getChatRoomData(data: {
+    chatRoomId: string;
+    page: number;
+    size: number;
+  }) {
     const response = await Instance.get(
-      `/chat-service/api/chats/${chatRoomId}`,
+      `/chat-service/api/chats/${data.chatRoomId}?pagingIndex=${data.page}&pagingSize=${data.size}`,
     );
     if (response) {
       const temp = response.data as ChatRoomResponse;

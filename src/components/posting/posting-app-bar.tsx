@@ -10,7 +10,7 @@ export const PostingAppBar = (props: PostingAppBarProps) => {
   return (
     <AppBar isBorderExist={true}>
       <AppBar.AppBarNavigate>
-        <AppBar.BackButton onClick={props.onClick} />
+        <AppBar.BackButton onCustomClick={props.onCustomClick} />
         <AppBar.HeaderText>{props.nowPage}/7</AppBar.HeaderText>
         <div style={{ width: "30px" }} />
       </AppBar.AppBarNavigate>
