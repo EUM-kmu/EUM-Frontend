@@ -17,22 +17,67 @@ export const scaleUpDown = keyframes`
     }
 `;
 
-export const fadeInDown = keyframes`
-0% {
-    transform:translateY(-20px); 
+export const fadeIn = keyframes`
+from {
     opacity: 0;
   }
-  100% {
+to {
     opacity: 1;
   }
 }
 `;
 
-export const fadeOut = keyframes`
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
+export const fadeInDown = keyframes`
+from {
+    transform:translateY(-20px); 
+    opacity: 0;
   }
+to {
+    opacity: 1;
+  }
+}
+`;
+
+export const fadeInUp = keyframes`
+from {
+    transform:translateY(20px); 
+    opacity: 0;
+  }
+to {
+    opacity: 1;
+  }
+}
+`;
+
+export const slideUp = keyframes`
+from {
+  transform: translateY(100%);
+}
+  to {
+    transform: translateY(0);
+  }
+`;
+
+export const widthUp = keyframes`
+from {
+  width: 0;
+    flex: 0;
+  }
+to {
+    width: 50%;
+    flex: 1;
+  }
+}
+`;
+
+export const widthDown = keyframes`
+from {
+  width: 100%;
+  flex: 1;
+  }
+to {
+  width: 50%;
+    flex: 1;
+  }
+}
 `;

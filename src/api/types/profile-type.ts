@@ -5,6 +5,7 @@ export type ProfileData = {
   nickName: string;
   gender: "male" | "female";
   address: string;
+  birth: string;
   ageRange: number;
   accountNumber: string;
   profileImage: string;
@@ -44,5 +45,5 @@ export type ProfilePutRequest = {
   birth: string;
   gender: string;
   address: string;
-  fileByte: string;
+  fileByte: string | null;
 };

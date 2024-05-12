@@ -2,11 +2,13 @@ import { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 
+import { ReactComponent as BackSVG } from "@/assets/icons/modal-back.svg";
 import { ReactComponent as CloseSVG } from "@/assets/icons/modal-close.svg";
 import { colorTheme } from "@/style/color-theme";
 import { fadeInDown } from "@/style/keyframes";
 
 type CloseButtonType = {
+  icon: "close" | "back";
   onClick: MouseEventHandler<HTMLDivElement>;
 };
 
@@ -19,13 +21,15 @@ type ButtonType = {
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 type ModalType = {
+  bottomFixed?: boolean;
+  icon?: "close" | "back";
   onClose: MouseEventHandler<HTMLDivElement>;
   children: ReactNode;
 };
 
-const CloseButton = ({ onClick }: CloseButtonType) => (
+const CloseButton = ({ icon, onClick }: CloseButtonType) => (
   <CloseButtonWrapper className="modal-close-button" onClick={onClick}>
-    <CloseSVG />
+    {{ close: <CloseSVG />, back: <BackSVG /> }[icon]}
   </CloseButtonWrapper>
 );
 
@@ -47,13 +51,18 @@ const Button = ({ color = "blue", children, ...props }: ButtonType) => {
   );
 };
 
-export const Modal = ({ onClose, children }: ModalType) => {
+export const Modal = ({
+  bottomFixed = false,
+  icon = "close",
+  onClose,
+  children,
+}: ModalType) => {
   return (
     <>
       {createPortal(
         <ModalBackground>
-          <Content>
-            <CloseButton onClick={onClose} />
+          <Content $bottomFixed={bottomFixed}>
+            <CloseButton icon={icon} onClick={onClose} />
             {children}
           </Content>
         </ModalBackground>,
@@ -85,6 +94,7 @@ const TitleWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.button<{ color?: string }>`
+  width: 100%;
   padding: 20px;
   background-color: #f17547;
   border: 1px solid transparent;
@@ -122,10 +132,9 @@ const ModalBackground = styled.div`
   z-index: 80;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ $bottomFixed: boolean }>`
   position: relative;
   display: flex;
-  min-width: 70%;
   max-width: 90%;
   max-height: 90%;
   padding: 45px 40px 40px;
@@ -139,8 +148,9 @@ const Content = styled.div`
   text-align: center;
   gap: 30px;
   z-index: 100;
-  animation: ${fadeInDown} 1s;
+  animation: ${fadeInDown} 0.8s;
   & > * {
     flex: 1;
   }
+  ${({ $bottomFixed }) => $bottomFixed && `position: absolute; bottom: 40%;`}
 `;

@@ -14,7 +14,10 @@
 
 .swiper-pagination {
   position: absolute;
-  margin-bottom: -30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -1.7rem;
   z-index: 100;
 }
 
@@ -23,11 +26,12 @@
   width: 3px;
   margin-bottom: -20px;
   background-color: #c3cee6;
+  opacity: 1;
   z-index: 100;
 }
 
 .swiper-pagination-bullet-active {
-  height: 3px;
-  width: 3px;
+  height: 5px;
+  width: 5px;
   background-color: #f17547;
 }

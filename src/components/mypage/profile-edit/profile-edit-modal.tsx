@@ -7,19 +7,22 @@ import { type Swiper as SwiperCore } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// import { BirthModal } from "./birth-modal";
+import { BirthModal } from "./birth-modal";
 import { InputWrapper } from "./input-wrapper";
+import { RetakePhotoPage } from "./retake-photo";
 
 import { ProfileData } from "@/api/types/profile-type";
 import LocationSVG from "@/assets/icons/location.svg";
 import { Modal } from "@/components/common/modal";
 import { MyProfileModal } from "@/components/common/profile-modal";
+import { useEditProfile } from "@/hooks/queries/useEditProfile";
 import { profileEditState } from "@/recoil/atoms/profile-edit-state";
 import { colorTheme } from "@/style/color-theme";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
-// import { useEditProfile } from "@/hooks/queries/useEditProfile";
+import { calculateAge } from "@/utils/date-utils";
+// eslint-disable-next-line import/order
 
 type ProfileEditModalProps = {
   profileData: ProfileData;
@@ -33,8 +36,8 @@ export const ProfileEditModal = ({
   onClose,
 }: ProfileEditModalProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  // const [birthEditModal, setBirthEditModal] = useState<boolean>(false);
-  const [readyModal, setReadyModal] = useState<boolean>(false);
+  const [birthEditMode, setBirthEditMode] = useState<boolean>(false);
+  const [photoEditMode, setPhotoEditMode] = useState<boolean>(false);
 
   const [profileEdit, setProfileEdit] = useRecoilState(profileEditState);
   const activeIdx = useRef<number>(0);
@@ -44,12 +47,12 @@ export const ProfileEditModal = ({
       nickName: profileData.nickName,
       gender: profileData.gender,
       address: profileData.address,
-      birth: "2001-03-12", // TODO: after api updated, it'll be changed
+      birth: profileData.birth,
       fileByte: profileData.profileImage,
     }));
   }, [profileData]);
 
-  // const { mutate } = useEditProfile();
+  const { mutate } = useEditProfile();
 
   return (
     <>
@@ -86,15 +89,18 @@ export const ProfileEditModal = ({
                 <InputWrapper>
                   <button
                     onClick={() => {
-                      // setEditMode(false);
-                      // setBirthEditModal(true);
+                      setEditMode(false);
+                      setBirthEditMode(true);
                     }}
                   >
-                    {profileData.ageRange * 10}대
+                    {calculateAge(profileEdit.birth)}세
                   </button>
                 </InputWrapper>
               </RowBox>
-              <Image src={profileData.profileImage} />
+              <Image
+                src={profileEdit.fileByte}
+                onClick={() => setPhotoEditMode(true)}
+              />
               <InputWrapper>
                 <Swiper
                   initialSlide={0}
@@ -113,8 +119,8 @@ export const ProfileEditModal = ({
                     nextEl: ".next",
                   }}
                   modules={[Pagination, Navigation]}
-                  bulletClass="swiper-bullet"
-                  bulletActiveClass="swiper-acitve-bullet"
+                  bulletclass="swiper-bullet"
+                  bulletactiveclass="swiper-acitve-bullet"
                 >
                   {ADDRESS.map((location) => (
                     <SwiperSlide key={location} className="next">
@@ -128,8 +134,19 @@ export const ProfileEditModal = ({
             <Modal.Button
               color="orange"
               onClick={() => {
-                // mutate();
-                setReadyModal(true);
+                const isChanged =
+                  profileEdit.fileByte !== profileData.profileImage;
+                mutate({
+                  ...profileEdit,
+                  fileByte: isChanged
+                    ? profileEdit.fileByte.replace(
+                        "data:image/jpeg;base64,",
+                        "",
+                      )
+                    : null,
+                });
+                setEditMode(false);
+                // setReadyModal(true);
                 console.log(profileEdit);
               }}
             >
@@ -137,31 +154,31 @@ export const ProfileEditModal = ({
             </Modal.Button>
           </ModalInner>
         </Modal>
+      ) : birthEditMode ? (
+        <BirthModal
+          onClose={() => {
+            setBirthEditMode(false);
+            setEditMode(true);
+          }}
+        />
       ) : (
-        // ) : birthEditModal ? (
-        //   <BirthModal
-        //     onClose={() => {
-        //       setBirthEditModal(false);
-        //       setEditMode(true);
-        //     }}
-        //   />
         <MyProfileModal
           profileData={profileData}
           onEdit={() => setEditMode(true)}
           onClose={() => onClose()}
         />
       )}
-      {readyModal && (
-        <Modal onClose={() => setReadyModal(false)}>
-          <Modal.Title text="프로필 편집은\n5/11부터 사용가능합니다\n\n조금만 기다려주세요🫣" />
-        </Modal>
+      {photoEditMode && (
+        <RetakePhotoPage onClose={() => setPhotoEditMode(false)} />
       )}
     </>
   );
 };
 
 const ModalInner = styled.div`
-  max-width: 100%;
+  width: 85%;
+  max-width: 480px;
+  margin: auto;
 `;
 
 const FormContainer = styled.div`
@@ -201,8 +218,7 @@ const GenderInput = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50vw;
-  max-width: 500px;
+  width: 100%;
   aspect-ratio: 1;
   border-radius: 1.17rem;
   border: 10px solid ${colorTheme.blue100};

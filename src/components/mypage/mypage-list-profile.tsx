@@ -134,6 +134,8 @@ const ProfileImg = styled.img`
   width: 4.33rem;
   height: 4.33rem;
   border-radius: 0.56rem;
+  border: 3px solid ${colorTheme.orange400};
+  object-fit: cover;
 `;
 
 const ColumnBox = styled.div`
@@ -190,7 +192,7 @@ const StateOrangeBox = styled.div`
   border-top-left-radius: 1.11rem;
   border-bottom-left-radius: 1.11rem;
   width: 100%;
-  background-color: ${colorTheme.orange400};
+  background-color: ${colorTheme.orange300};
   color: white;
   padding: 0.66rem 6% 0.66rem 4.5%;
 `;
@@ -200,6 +202,7 @@ const PriceStateBox = styled.div`
   flex-direction: row;
   align-items: flex-end;
   gap: 3%;
+  font-size: 0.5rem;
 `;
 
 const KnotIconImg = styled.img`

@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { Button } from "@/components/common/button";
-import Camera from "@/components/profile/camera";
+import Camera from "@/components/common/camera/camera";
 import { profileState } from "@/recoil/atoms/profile-state";
 
 type TakePhotoPageProps = {
@@ -41,7 +41,10 @@ export const TakePhotoPage = ({ nextStep, onModal }: TakePhotoPageProps) => {
           }}
         >
           {dataUri.length ? (
-            <img src={dataUri} style={{ width: "100%" }} />
+            <img
+              src={dataUri}
+              style={{ width: "100%", aspectRatio: 1, objectFit: "cover" }}
+            />
           ) : (
             <Camera setDataUri={setDataUri} />
           )}
@@ -54,7 +57,6 @@ export const TakePhotoPage = ({ nextStep, onModal }: TakePhotoPageProps) => {
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 20px;
 `;
 
 const ContentLayout = styled.div`

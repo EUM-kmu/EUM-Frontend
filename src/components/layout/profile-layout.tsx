@@ -12,6 +12,7 @@ export const ProfileLayout = ({ children }: { children: ReactNode }) => {
     nickName: "",
     gender: "male",
     address: "",
+    birth: "",
     ageRange: 0,
     accountNumber: "",
     profileImage: "",
