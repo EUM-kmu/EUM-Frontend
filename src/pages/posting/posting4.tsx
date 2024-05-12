@@ -37,7 +37,7 @@ export const Posting4 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onClick={() => handleSave()} nowPage={4} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={4} />
       <PostingBoldText style={{ marginBottom: "1.4rem" }}>
         활동의 소요시간을
         <br />

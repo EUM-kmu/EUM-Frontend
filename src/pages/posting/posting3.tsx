@@ -57,7 +57,7 @@ export const Posting3 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onClick={() => handleSave()} nowPage={3} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={3} />
       <PostingBoldText>
         시작 시간을
         <br />

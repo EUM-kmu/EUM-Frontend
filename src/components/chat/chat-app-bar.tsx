@@ -42,7 +42,10 @@ export const ChatAppBar = ({
       <AppBar.AppBarNavigate style={{ padding: "4% 21px" }}>
         <AppBar.BackButton
           isColorMode={isColorMode}
-          onClick={() => navigate("/chat", { replace: true })}
+          onCustomClick={() => {
+            navigate("/chat", { replace: true });
+          }}
+          isBack={false}
         />
         <AppBar.HeaderText>{lastTransfer.title}</AppBar.HeaderText>
         {myId === creatorId ? (

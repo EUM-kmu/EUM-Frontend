@@ -17,6 +17,7 @@ export const ProfileLayout = ({ children }: { children: ReactNode }) => {
     accountNumber: "",
     profileImage: "",
     blocked: false,
+    dealCount: 0,
   });
 
   const navigate = useNavigate();

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import Instance from "./axios-instance";
 import {
   ChatFinalResponse,
@@ -14,7 +12,7 @@ export default class ChatApi {
   // 메세지 보내기
   static async sendChatMessages({ message, roomId }: ChatSendRequest) {
     const response = await Instance.post(
-      `/chat-service/api/chatrooms/${roomId}/message`,
+      `/chat-service/api/chats/${roomId}/message`,
       message,
     );
     if (response) {
@@ -37,9 +35,13 @@ export default class ChatApi {
   }
 
   // 채팅방 디테일 멤버 정보랑 채팅내역 가져오기
-  static async getChatRoomData(chatRoomId: string) {
+  static async getChatRoomData(data: {
+    chatRoomId: string;
+    page: number;
+    size: number;
+  }) {
     const response = await Instance.get(
-      `/chat-service/api/chatrooms/${chatRoomId}`,
+      `/chat-service/api/chats/${data.chatRoomId}?pagingIndex=${data.page}&pagingSize=${data.size}`,
     );
     if (response) {
       const temp = response.data as ChatRoomResponse;
@@ -60,39 +62,17 @@ export default class ChatApi {
     }
   }
 
-  // static async postAddingNewMember(data: {
-  //   chatRoomId: string;
-  //   addingData: ChatMakeRequest;
-  // }) {
-  //   const response = await Instance.patch(
-  //     `/chat-service/api/chats/${data.chatRoomId}/members`,
-  //     { postId: data.addingData.postId, memberIds: data.addingData.memberIds },
-  //     {
-  //       headers: {
-  //         userId: localStorage.getItem("userId"),
-  //       },
-  //     },
-  //   );
-  //   if (response) {
-  //     const temp = response.data as ChatFinalResponse<ChatMakeRoom>;
-  //     return temp.result;
-  //   } else {
-  //     throw new Error("Invalid response from server");
-  //   }
-  // }
-
   static async postAddingNewMember(data: {
     chatRoomId: string;
     addingData: ChatMakeRequest;
   }) {
-    const response = await axios.patch(
-      `${process.env.REACT_APP_CHAT_API_BASE_URL}/chat-service/api/chatrooms/${data.chatRoomId}/members`,
+    const response = await Instance.patch(
+      `/chat-service/api/chatrooms/${data.chatRoomId}/members`,
       { postId: data.addingData.postId, memberIds: data.addingData.memberIds },
       {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
           "Content-Type": "application/json",
-          // "X-Requested-With": "XMLHttpRequest",
         },
         withCredentials: true,
       },

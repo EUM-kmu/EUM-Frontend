@@ -9,9 +9,9 @@ import FemaleSVG from "@/assets/icons/female.svg";
 import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
 import LocationWhiteBackSVG from "@/assets/icons/location-white-back.svg";
 import MaleSVG from "@/assets/icons/male.svg";
+import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { DropDownMenu } from "@/components/common/drop-down-menu";
 import { Modal } from "@/components/common/modal";
-// import PersonSVG from "@/assets/icons/person-white-back.svg";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
 import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { useSignOut } from "@/hooks/queries/useSignOut";
@@ -100,9 +100,10 @@ export const MypageListProfile = () => {
               <OtherStateIcon src={LocationWhiteBackSVG} />
               <div>{myProfile?.address}</div>
             </PriceStateBox>
-            {/* <PriceStateBox style={{ width: "5rem" }}>
+            <PriceStateBox style={{ width: "5rem" }}>
               <OtherStateIcon src={PersonSVG} />
-            </PriceStateBox> */}
+              <div>도움횟수 {myProfile?.dealCount}</div>
+            </PriceStateBox>
           </OtherStateColumnBox>
         </StateOrangeBox>
       </ColumnBox>
