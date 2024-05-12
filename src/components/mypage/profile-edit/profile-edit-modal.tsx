@@ -134,12 +134,16 @@ export const ProfileEditModal = ({
             <Modal.Button
               color="orange"
               onClick={() => {
+                const isChanged =
+                  profileEdit.fileByte !== profileData.profileImage;
                 mutate({
                   ...profileEdit,
-                  fileByte: profileEdit.fileByte.replace(
-                    "data:image/jpeg;base64,",
-                    "",
-                  ),
+                  fileByte: isChanged
+                    ? profileEdit.fileByte.replace(
+                        "data:image/jpeg;base64,",
+                        "",
+                      )
+                    : null,
                 });
                 setEditMode(false);
                 // setReadyModal(true);

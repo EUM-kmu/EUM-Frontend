@@ -45,5 +45,5 @@ export type ProfilePutRequest = {
   birth: string;
   gender: string;
   address: string;
-  fileByte: string;
+  fileByte: string | null;
 };
