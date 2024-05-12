@@ -62,6 +62,13 @@ export const MypageListProfile = () => {
                   </DropDownMenu.MenuItem>
                   <DropDownMenu.MenuItem
                     onClick={() => {
+                      navigate("/notion/terms");
+                    }}
+                  >
+                    이용약관
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
                       setShow(false);
                       setSignOutModal(true);
                     }}

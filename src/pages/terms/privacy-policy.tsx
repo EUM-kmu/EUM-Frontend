@@ -7,7 +7,7 @@ import "react-notion-x/src/styles.css";
 import { Button } from "@/components/common/button";
 import { useNavigate } from "react-router-dom";
 
-export const PrivacyPolicyNotion = () => {
+export const PrivacyPolicyPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [notionData, setNotionData] = useState<ExtendedRecordMap>();
 
