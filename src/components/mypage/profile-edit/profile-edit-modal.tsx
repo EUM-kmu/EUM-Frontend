@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { type Swiper as SwiperCore } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
@@ -40,6 +40,7 @@ export const ProfileEditModal = ({
   const [photoEditMode, setPhotoEditMode] = useState<boolean>(false);
 
   const [profileEdit, setProfileEdit] = useRecoilState(profileEditState);
+
   const activeIdx = useRef<number>(0);
 
   useEffect(() => {
@@ -57,7 +58,18 @@ export const ProfileEditModal = ({
   return (
     <>
       {editMode ? (
-        <Modal onClose={() => setEditMode(false)}>
+        <Modal
+          onClose={() => {
+            setProfileEdit(() => ({
+              nickName: profileData.nickName,
+              gender: profileData.gender,
+              address: profileData.address,
+              birth: profileData.birth,
+              fileByte: profileData.profileImage,
+            }));
+            setEditMode(false);
+          }}
+        >
           <ModalInner>
             <FormContainer>
               <InputWrapper>
