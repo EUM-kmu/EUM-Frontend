@@ -37,7 +37,7 @@ export const Posting5 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onClick={() => handleSave()} nowPage={5} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={5} />
       <PostingBoldText style={{ marginBottom: "1.8rem" }}>
         필요한 인원을
         <br />

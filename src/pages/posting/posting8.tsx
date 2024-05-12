@@ -18,10 +18,14 @@ export const Posting8 = () => {
       <AppBar>
         <AppBar.AppBarNavigate>
           <AppBar.BackButton
-            onClick={() => {
+            onCustomClick={() => {
               resetRecoil();
               localStorage.removeItem("postId");
+              navigate(`/post/${state.postId}`, {
+                state: { replace: "/post" },
+              });
             }}
+            isBack={false}
           />
         </AppBar.AppBarNavigate>
       </AppBar>

@@ -13,6 +13,7 @@ export type DatePickerProps = {
 
 export type PostingAppBarProps = {
   nowPage: number;
+  onCustomClick: () => void;
 } & Omit<React.HTMLAttributes<HTMLElement>, "type">;
 
 export type TextAreaType = {

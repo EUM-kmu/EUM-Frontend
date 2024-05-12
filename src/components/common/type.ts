@@ -50,6 +50,8 @@ export type AppBarProps = {
   isBorderExist?: boolean;
   isBigSizeText?: boolean;
   children?: React.ReactNode;
+  isBack?: boolean;
+  onCustomClick?: () => void;
 } & Omit<React.HTMLAttributes<HTMLElement>, "type">;
 
 export type RightButtonProps = {
