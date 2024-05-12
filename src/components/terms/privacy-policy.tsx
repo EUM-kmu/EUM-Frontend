@@ -1,13 +1,17 @@
-import "react-notion-x/src/styles.css";
 import axios from "axios";
 import { BlockMap, ExtendedRecordMap } from "notion-types";
 import { useEffect, useState } from "react";
 import { NotionRenderer } from "react-notion-x";
 import { styled } from "styled-components";
+import "react-notion-x/src/styles.css";
+import { Button } from "@/components/common/button";
+import { useNavigate } from "react-router-dom";
 
 export const PrivacyPolicyNotion = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [notionData, setNotionData] = useState<ExtendedRecordMap>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getNotion = async () => {
@@ -17,7 +21,6 @@ export const PrivacyPolicyNotion = () => {
           "https://notion-api.splitbee.io/v1/page/v-df2b1754a0cb4cd7936e70b29fcc077c?pvs=4",
         )
         .then(({ data }) => {
-          console.log(data);
           setNotionData({
             block: data as BlockMap,
             space: {},
@@ -36,12 +39,9 @@ export const PrivacyPolicyNotion = () => {
 
   console.log(notionData);
   return (
-    <Layout
-      style={{
-        margin: "auto",
-        width: "90vw",
-      }}
-    >
+    <Layout>
+      <Button onClick={() => navigate("/mypage")}>이전</Button>
+
       {!isLoading && (
         <NotionRenderer
           recordMap={notionData!}
@@ -54,10 +54,20 @@ export const PrivacyPolicyNotion = () => {
 };
 
 const Layout = styled.div`
+  width: 100%;
+  max-width: 480px;
   height: 100%;
+  margin-top: 30px;
+  padding: 0 20px;
   overflow: hidden;
+  & .notion-title {
+    font-size: 1.8rem;
+  }
   .notion {
     height: 100%;
+  }
+  .notion-page-no-cover {
+    margin-top: 20px !important;
   }
   .notion-header {
     display: none;

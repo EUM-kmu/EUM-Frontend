@@ -16,6 +16,7 @@ import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { useSignOut } from "@/hooks/queries/useSignOut";
 import { useWithdrawal } from "@/hooks/queries/useWithdrawal";
 import { colorTheme } from "@/style/color-theme";
+import { useNavigate } from "react-router-dom";
 
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();
@@ -24,6 +25,7 @@ export const MypageListProfile = () => {
   const { mutate: signOut } = useSignOut();
   const { mutate: withdrawal } = useWithdrawal();
   const [show, setShow] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const [profileModal, setProfileModal] = useState<boolean>(false);
 
@@ -53,11 +55,10 @@ export const MypageListProfile = () => {
                 <DropDownMenu>
                   <DropDownMenu.MenuItem
                     onClick={() => {
-                      setShow(false);
-                      setWithDrawalModal(true);
+                      navigate("/notion/policy");
                     }}
                   >
-                    탈퇴하기
+                    개인정보보호정책
                   </DropDownMenu.MenuItem>
                   <DropDownMenu.MenuItem
                     onClick={() => {
@@ -66,6 +67,14 @@ export const MypageListProfile = () => {
                     }}
                   >
                     로그아웃하기
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      setShow(false);
+                      setWithDrawalModal(true);
+                    }}
+                  >
+                    탈퇴하기
                   </DropDownMenu.MenuItem>
                 </DropDownMenu>
               </>
