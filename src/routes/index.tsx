@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/auth-layout";
 import { GlobalLayout } from "@/components/layout/global-layout";
 import { KakaoAuth } from "@/components/login/kakao-auth";
+import { PrivacyPolicyNotion } from "@/components/terms/privacy-policy";
 import { Chat } from "@/pages/chat/chat";
 import { ChatRoom } from "@/pages/chat/chat-room";
 // import { WrongAccessPage } from "@/pages/error/wrong-access";
@@ -38,6 +39,11 @@ const routeChildren = [
     auth: false,
   },
   { path: "/auth/kakao", element: <KakaoAuth /> },
+  {
+    path: "/notion/policy",
+    element: <PrivacyPolicyNotion />,
+    auth: false,
+  },
   {
     path: "/profile",
     element: <ProfilePage />,
