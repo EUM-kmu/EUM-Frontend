@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
@@ -115,9 +113,10 @@ export const ProfileEditModal = ({
               />
               <InputWrapper>
                 <Swiper
-                  initialSlide={0}
+                  initialSlide={ADDRESS.indexOf(profileData.address)}
                   onSlideChange={(event: SwiperCore) => {
-                    activeIdx.current = event.realIndex;
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    activeIdx.current = event.realIndex as number;
                     setProfileEdit((prev) => ({
                       ...prev,
                       address: ADDRESS[activeIdx.current],
