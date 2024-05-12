@@ -41,7 +41,10 @@ export const TakePhotoPage = ({ nextStep, onModal }: TakePhotoPageProps) => {
           }}
         >
           {dataUri.length ? (
-            <img src={dataUri} style={{ width: "100%" }} />
+            <img
+              src={dataUri}
+              style={{ width: "100%", aspectRatio: 1, objectFit: "cover" }}
+            />
           ) : (
             <Camera setDataUri={setDataUri} />
           )}
@@ -54,7 +57,6 @@ export const TakePhotoPage = ({ nextStep, onModal }: TakePhotoPageProps) => {
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 20px;
 `;
 
 const ContentLayout = styled.div`
