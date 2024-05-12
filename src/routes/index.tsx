@@ -5,7 +5,7 @@ import { GlobalLayout } from "@/components/layout/global-layout";
 import { KakaoAuth } from "@/components/login/kakao-auth";
 import { Chat } from "@/pages/chat/chat";
 import { ChatRoom } from "@/pages/chat/chat-room";
-// import { WrongAccessPage } from "@/pages/error/wrong-access";
+import { WrongAccessPage } from "@/pages/error/wrong-access";
 import { LoginPage } from "@/pages/login";
 import { Mypage } from "@/pages/mypage/mypage";
 import { ApplicantListPage } from "@/pages/post/applicant-list-page";
@@ -24,6 +24,8 @@ import { ProfilePage } from "@/pages/profile";
 import { DonePage } from "@/pages/profile/done";
 import { WelcomePage } from "@/pages/profile/welcome";
 import { Splash } from "@/pages/splash/splash";
+import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
+import { UserTermsPage } from "@/pages/terms/user-terms";
 import { Test2 } from "@/pages/test2";
 
 const routeChildren = [
@@ -38,6 +40,16 @@ const routeChildren = [
     auth: false,
   },
   { path: "/auth/kakao", element: <KakaoAuth /> },
+  {
+    path: "/notion/policy",
+    element: <PrivacyPolicyPage />,
+    auth: false,
+  },
+  {
+    path: "/notion/terms",
+    element: <UserTermsPage />,
+    auth: false,
+  },
   {
     path: "/profile",
     element: <ProfilePage />,
@@ -135,7 +147,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <GlobalLayout />,
-    // errorElement: <WrongAccessPage />,
+    errorElement: <WrongAccessPage />,
     children: routeChildren.map(({ path, element, auth }) => {
       if (auth) return { path, element: <AuthLayout>{element}</AuthLayout> };
       return { path, element };

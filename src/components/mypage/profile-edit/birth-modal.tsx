@@ -1,4 +1,11 @@
-import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import {
+  ChangeEvent,
+  forwardRef,
+  InputHTMLAttributes,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useSetRecoilState } from "recoil";
 import { css, styled } from "styled-components";
 
@@ -31,6 +38,10 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
   const [bMonth, setBMonth] = useState<string>("");
   const [bDay, setBDay] = useState<string>("");
 
+  const yRef = useRef<HTMLInputElement>(null);
+  const mRef = useRef<HTMLInputElement>(null);
+  const dRef = useRef<HTMLInputElement>(null);
+
   const setProfileEdit = useSetRecoilState(profileEditState);
 
   const [errorMsg, setErrorMsg] = useState<ErrorMessageType>("INITIAL");
@@ -55,6 +66,21 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
       nextStep(step + 1);
   };
 
+  useEffect(() => {
+    // step에 따른 input 자동 포커싱
+    switch (step) {
+      case 0:
+        yRef.current && yRef.current.focus();
+        break;
+      case 1:
+        mRef.current && mRef.current.focus();
+        break;
+      case 2:
+        dRef.current && dRef.current.focus();
+        break;
+    }
+  }, [step]);
+
   return (
     <Modal bottomFixed icon="back" onClose={onClose}>
       <ModalInner>
@@ -66,6 +92,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
         )}
         <>
           <BirthInput
+            ref={yRef}
             suffix="년도"
             appear={step === 0}
             appearEffect="down"
@@ -84,6 +111,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
           <RowBox>
             {step >= 1 && (
               <BirthInput
+                ref={mRef}
                 suffix="월"
                 appear={step === 1}
                 appearEffect="fadeIn"
@@ -103,6 +131,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
             )}
             {step >= 2 && (
               <BirthInput
+                ref={dRef}
                 appear={step === 2}
                 appearEffect="widthUp"
                 moveEffect={"none"}
@@ -130,32 +159,30 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-export const BirthInput = ({
-  suffix,
-  appear,
-  appearEffect,
-  moveEffect,
-  value,
-  onChange,
-  ...props
-}: BirthInputProps) => {
-  return (
-    <InputWrapper
-      appear={appear}
-      appearEffect={appearEffect}
-      moveEffect={moveEffect}
-    >
-      <input
-        type="text"
-        inputMode="numeric"
-        value={value}
-        onChange={onChange}
-        {...props}
-      />
-      <span>{suffix}</span>
-    </InputWrapper>
-  );
-};
+export const BirthInput = forwardRef<HTMLInputElement, BirthInputProps>(
+  function BirthInput(
+    { suffix, appear, appearEffect, moveEffect, value, onChange, ...props },
+    ref,
+  ) {
+    return (
+      <InputWrapper
+        appear={appear}
+        appearEffect={appearEffect}
+        moveEffect={moveEffect}
+      >
+        <input
+          ref={ref}
+          type="text"
+          inputMode="numeric"
+          value={value}
+          onChange={onChange}
+          {...props}
+        />
+        <span>{suffix}</span>
+      </InputWrapper>
+    );
+  },
+);
 
 const ModalInner = styled.div`
   width: 100%;
