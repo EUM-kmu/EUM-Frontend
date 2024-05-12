@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useRef, useState } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { type Swiper as SwiperCore } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
@@ -18,10 +18,10 @@ import { MyProfileModal } from "@/components/common/profile-modal";
 import { useEditProfile } from "@/hooks/queries/useEditProfile";
 import { profileEditState } from "@/recoil/atoms/profile-edit-state";
 import { colorTheme } from "@/style/color-theme";
+import { calculateAge } from "@/utils/date-utils";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
-import { calculateAge } from "@/utils/date-utils";
 // eslint-disable-next-line import/order
 
 type ProfileEditModalProps = {

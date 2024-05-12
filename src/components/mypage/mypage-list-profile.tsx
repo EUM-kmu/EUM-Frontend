@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { ProfileEditModal } from "./profile-edit/profile-edit-modal";
@@ -16,7 +17,6 @@ import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { useSignOut } from "@/hooks/queries/useSignOut";
 import { useWithdrawal } from "@/hooks/queries/useWithdrawal";
 import { colorTheme } from "@/style/color-theme";
-import { useNavigate } from "react-router-dom";
 
 export const MypageListProfile = () => {
   const { data: myProfile } = useGetProfile();

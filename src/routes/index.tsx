@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/auth-layout";
 import { GlobalLayout } from "@/components/layout/global-layout";
 import { KakaoAuth } from "@/components/login/kakao-auth";
-import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { Chat } from "@/pages/chat/chat";
 import { ChatRoom } from "@/pages/chat/chat-room";
 import { WrongAccessPage } from "@/pages/error/wrong-access";
@@ -25,8 +24,9 @@ import { ProfilePage } from "@/pages/profile";
 import { DonePage } from "@/pages/profile/done";
 import { WelcomePage } from "@/pages/profile/welcome";
 import { Splash } from "@/pages/splash/splash";
-import { Test2 } from "@/pages/test2";
+import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { UserTermsPage } from "@/pages/terms/user-terms";
+import { Test2 } from "@/pages/test2";
 
 const routeChildren = [
   {

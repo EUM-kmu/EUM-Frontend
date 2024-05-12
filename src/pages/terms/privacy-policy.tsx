@@ -2,10 +2,11 @@ import axios from "axios";
 import { BlockMap, ExtendedRecordMap } from "notion-types";
 import { useEffect, useState } from "react";
 import { NotionRenderer } from "react-notion-x";
-import { styled } from "styled-components";
-import "react-notion-x/src/styles.css";
-import { Button } from "@/components/common/button";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
+
+import { Button } from "@/components/common/button";
+import "react-notion-x/src/styles.css";
 
 export const PrivacyPolicyPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
