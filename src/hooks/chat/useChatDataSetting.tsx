@@ -14,8 +14,6 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
   const { data: roomData } = useGetChatRoomData(props.roomId);
   const { data: bankData } = useGetBankData();
 
-  console.log("roomData: ", roomData?.pages[0]);
-
   useEffect(() => {
     const myId = localStorage.getItem("userId") || "0";
     const users: ChatRoomMember[] =
@@ -29,7 +27,6 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
     const availableBudget: number = bankData ? bankData.availableBudget : -1;
     const title: string = roomData ? roomData.pages[0].postInfo.title : "";
 
-    console.log("availableBudget!!!: ", availableBudget);
     setTransfer({
       users: users,
       price: price,

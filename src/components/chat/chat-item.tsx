@@ -27,34 +27,37 @@ export const ChatItem = ({
       {userId === myId && (
         <DateDiv>{date ? ChatdateToMsgtype(date) : ""}</DateDiv>
       )}
-      {userId !== myId && (
-        <ProfileImg
-          onClick={() => {
-            if (userId !== -2) {
-              setProfileUserId(Number(userId));
-              setProfileModal(true);
-            } else {
-              setDeletedProfileModal(true);
-            }
-          }}
-          src={imgurl}
-        ></ProfileImg>
-      )}
-      <ChatColumnBox
-        style={{
-          alignItems: userId === myId ? "flex-end" : "flex-start",
-        }}
-      >
-        {userId !== myId && <NameDiv>{userName}</NameDiv>}
-        <ChatBox
+      <RowBox>
+        {userId !== myId && (
+          <ProfileImg
+            onClick={() => {
+              if (userId !== -2) {
+                setProfileUserId(Number(userId));
+                setProfileModal(true);
+              } else {
+                setDeletedProfileModal(true);
+              }
+            }}
+            src={imgurl}
+          ></ProfileImg>
+        )}
+        <ChatColumnBox
           style={{
-            backgroundColor:
-              userId === myId ? colorTheme.blue100 : colorTheme.blue300,
+            alignItems: userId === myId ? "flex-end" : "flex-start",
+            marginRight: userId === myId ? "1.28rem" : "0rem",
           }}
         >
-          <ChatText>{children}</ChatText>
-        </ChatBox>
-      </ChatColumnBox>
+          {userId !== myId && <NameDiv>{userName}</NameDiv>}
+          <ChatBox
+            style={{
+              backgroundColor:
+                userId === myId ? colorTheme.blue100 : colorTheme.blue300,
+            }}
+          >
+            <ChatText>{children}</ChatText>
+          </ChatBox>
+        </ChatColumnBox>
+      </RowBox>
       {userId !== myId && (
         <DateDiv>{date ? ChatdateToMsgtype(date) : ""}</DateDiv>
       )}
@@ -75,7 +78,7 @@ const Container = styled.div`
 const ProfileImg = styled.img`
   width: 2.22rem;
   height: 2.22rem;
-  margin: 0.6rem 4% 0 7.15%;
+  margin: 0.6rem 1rem 0 1.78rem;
   border-radius: 0.83rem;
   background-color: #d9d9d9;
 `;
@@ -85,7 +88,6 @@ const ChatBox = styled.div`
   height: auto;
   width: auto;
   padding: 0.5rem 0.61rem;
-  margin-right: 1.28rem;
   border-radius: 0.28rem;
 `;
 
@@ -98,7 +100,7 @@ const ChatText = styled.div`
 const ChatColumnBox = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 62.1%;
+  max-width: 12.9rem;
   gap: 0.4rem;
 `;
 
@@ -110,4 +112,10 @@ const NameDiv = styled.div`
 const DateDiv = styled.div`
   font-size: 0.56rem;
   color: #707379;
+`;
+
+const RowBox = styled.div`
+  display: flex;
+  direction: row;
+  align-items: flex-start;
 `;

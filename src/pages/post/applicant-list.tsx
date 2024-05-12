@@ -57,7 +57,6 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
       });
       setApplyIds(tempApplyIds);
       setOriginApplyIds(tempApplyIds);
-      console.log("OriginApplyIds: ", tempApplyIds);
       const timeoutId = setTimeout(() => {
         setIsDataLoaded(true);
       }, 300);
@@ -79,8 +78,6 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
       });
     }
   };
-
-  console.log("chatroomid: ", chatRoomId);
 
   return (
     <>
@@ -116,7 +113,6 @@ export const ApplicantList = ({ postId }: { postId: string }) => {
                         onSuccess: (res) => {
                           setApplyModal("PostNewMember");
                           setChatMakeRoomId(res);
-                          console.log("makeChat: ", res);
                         },
                         onError: () => {
                           setIsApplyError("APPLY_CHAT_ERROR");
