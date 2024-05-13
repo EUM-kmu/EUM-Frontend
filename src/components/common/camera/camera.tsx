@@ -1,3 +1,5 @@
+import { devLog } from "@/utils/dev-log";
+
 import { Dispatch, SetStateAction } from "react";
 import OriginCamera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
@@ -10,8 +12,8 @@ type CameraProps = {
 
 const Camera = ({ setDataUri }: CameraProps) => {
   function handleTakePhoto(dataUri: string) {
-    console.log("takePhoto");
-    console.log(dataUri);
+    devLog("takePhoto");
+    devLog(dataUri);
   }
 
   return (

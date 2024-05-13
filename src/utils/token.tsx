@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { devLog } from "./dev-log";
+
 import { AuthResponse } from "@/api/types/auth-type";
 
 const getRefreshToken = async () => {
@@ -19,7 +21,7 @@ const getRefreshToken = async () => {
     );
 
     const res = response.data as AuthResponse;
-    console.log("res:", res);
+    devLog("res:", res);
 
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);

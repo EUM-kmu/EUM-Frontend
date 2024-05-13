@@ -4,10 +4,11 @@ import { useRecoilValue } from "recoil";
 
 import PostApi from "@/api/post-api";
 import { postEditState } from "@/recoil/atoms/post-edit-state";
+import { devLog } from "@/utils/dev-log";
 
 export function useEditPost(postId: string) {
   const ePost = useRecoilValue(postEditState);
-  console.log(ePost);
+  devLog(ePost);
 
   const navigate = useNavigate();
   return useMutation({
@@ -17,7 +18,7 @@ export function useEditPost(postId: string) {
       navigate(`/post/${postId}`);
     },
     onError: (e) => {
-      console.log(e);
+      devLog(e);
     },
   });
 }

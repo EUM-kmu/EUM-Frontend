@@ -10,6 +10,7 @@ import { BottomFixed } from "@/components/common/bottom-fixed";
 import { usePostChatTransfer } from "@/hooks/queries/usePostChatTransfer";
 import { transferState } from "@/recoil/atoms/transfer-state";
 import { colorTheme } from "@/style/color-theme";
+import { devLog } from "@/utils/dev-log";
 
 const PASSWORD_LENGTH = 4;
 
@@ -62,7 +63,7 @@ export const TransferDetailPassword = ({
             });
           },
           onError: (e) => {
-            console.log("error, ", e.message);
+            devLog("error, ", e.message);
             setPassword("");
             e.message.includes("400") ? setIsError(true) : setIsError500(true);
           },

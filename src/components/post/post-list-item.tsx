@@ -9,6 +9,7 @@ import KnotSVG from "@/assets/icons/knot.svg";
 import LocationSVG from "@/assets/icons/location.svg";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
+import { devLog } from "@/utils/dev-log";
 
 export const PostListItem = (props: PostListItemProps) => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export const PostListItem = (props: PostListItemProps) => {
         </BottomColumnBox>
         <ProfileImg
           src={props.writerProfileImg}
-          onClick={() => console.log("user: ", props.writerId)}
+          onClick={() => devLog("user: ", props.writerId)}
         />
       </BottomRowBox>
     </Wrapper>

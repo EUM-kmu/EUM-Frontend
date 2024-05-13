@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { KakaoResponseType } from "./type";
 
 import { useSignIn } from "@/hooks/queries/useSignIn";
+import { devLog } from "@/utils/dev-log";
 
 export const KakaoAuth = () => {
   const location = useLocation(); // useLocation 훅 사용
@@ -13,7 +14,7 @@ export const KakaoAuth = () => {
   const searchParams = new URLSearchParams(location.search);
   const kakaoAuthCode = searchParams.get("code");
 
-  console.log("code", kakaoAuthCode);
+  devLog("code", kakaoAuthCode);
 
   useEffect(() => {
     const handleGetKakaoToken = async (code: string) => {
@@ -34,7 +35,7 @@ export const KakaoAuth = () => {
           },
         );
 
-        console.log("카카오 로그인 성공", responseData.data.access_token);
+        devLog("카카오 로그인 성공", responseData.data.access_token);
 
         localStorage.setItem("KakaoToken", responseData.data.access_token);
 

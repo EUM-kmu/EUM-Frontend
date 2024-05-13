@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { Button } from "@/components/common/button";
+import { devLog } from "@/utils/dev-log";
 import "react-notion-x/src/styles.css";
 
 export const UserTermsPage = () => {
@@ -31,14 +32,14 @@ export const UserTermsPage = () => {
             collection_query: {},
           } as unknown as ExtendedRecordMap);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => devLog(err));
     };
 
     void getNotion();
     setIsLoading(false);
   }, []);
 
-  console.log(notionData);
+  devLog(notionData);
   return (
     <Layout>
       <Button onClick={() => navigate("/mypage")}>이전</Button>

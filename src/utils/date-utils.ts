@@ -22,7 +22,6 @@ export function calculateAge(birth: string) {
 
   const todayMonth = today.getMonth();
   const todayDay = today.getDate();
-  console.log(birthDate, today);
 
   if (
     birthMonth < todayMonth ||

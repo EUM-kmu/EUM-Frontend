@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import ProfileApi from "@/api/profile-api";
 import { ProfilePutRequest } from "@/api/types/profile-type";
 import { queryClient } from "@/index";
+import { devLog } from "@/utils/dev-log";
 
 export function useEditProfile() {
   return useMutation({
@@ -12,7 +13,7 @@ export function useEditProfile() {
       void queryClient.invalidateQueries({ queryKey: ["myProfile"] });
     },
     onError: (e) => {
-      console.log(e);
+      devLog(e);
     },
   });
 }

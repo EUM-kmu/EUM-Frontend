@@ -5,6 +5,7 @@ import { useDeleteApply } from "@/hooks/queries/useDeleteApply";
 import { usePostApplyAccept } from "@/hooks/queries/usePostApplyAccept";
 import { usePostRollback } from "@/hooks/queries/usePostRollback";
 import { usePutChatNewMember } from "@/hooks/queries/usePutChatNewMember";
+import { devLog } from "@/utils/dev-log";
 
 const newMember = ({ a, b }: { a: ApplyListType[]; b: ApplyListType[] }) => {
   a.sort();
@@ -90,7 +91,7 @@ export const ApplicantModifyModal = ({
                     },
                   });
                 } else {
-                  console.log("accept modify modal");
+                  devLog("accept modify modal");
                   const tempAcceptList: number[] = applyIds.map((item) => {
                     return item.applyId;
                   });

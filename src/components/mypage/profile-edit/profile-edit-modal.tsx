@@ -17,6 +17,7 @@ import { useEditProfile } from "@/hooks/queries/useEditProfile";
 import { profileEditState } from "@/recoil/atoms/profile-edit-state";
 import { colorTheme } from "@/style/color-theme";
 import { calculateAge } from "@/utils/date-utils";
+import { devLog } from "@/utils/dev-log";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./location-swiper.css";
@@ -158,7 +159,7 @@ export const ProfileEditModal = ({
                 });
                 setEditMode(false);
                 // setReadyModal(true);
-                console.log(profileEdit);
+                devLog(profileEdit);
               }}
             >
               편집 완료하기
