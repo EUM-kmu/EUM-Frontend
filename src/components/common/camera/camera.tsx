@@ -1,9 +1,10 @@
-import { devLog } from "@/utils/dev-log";
-
 import { Dispatch, SetStateAction } from "react";
 import OriginCamera from "react-html5-camera-photo";
-import "react-html5-camera-photo/build/css/index.css";
 import { styled } from "styled-components";
+
+import { devLog } from "@/utils/dev-log";
+
+import "react-html5-camera-photo/build/css/index.css";
 import "./camera.css";
 
 type CameraProps = {
