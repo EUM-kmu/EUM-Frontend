@@ -6,7 +6,6 @@ import { colorTheme } from "@/style/color-theme";
 import { ChatdateToMsgtype } from "@/utils/chatdate-to-msgtype";
 
 export const ChatItem = ({
-  children,
   userId,
   imgurl,
   userName,

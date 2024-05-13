@@ -5,7 +5,6 @@ export type MyChatType = {
 };
 
 export type ChatItemType = {
-  children?: React.ReactNode;
   userId: number;
   imgurl?: string;
   userName: string;
