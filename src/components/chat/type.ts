@@ -13,6 +13,7 @@ export type ChatItemType = {
   setProfileUserId: React.Dispatch<React.SetStateAction<number>>;
   setDeletedProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
   date?: string;
+  msg: string;
 };
 
 export type InputType = {

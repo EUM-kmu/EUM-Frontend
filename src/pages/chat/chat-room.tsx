@@ -254,9 +254,8 @@ export const ChatRoom = () => {
                           }
                           setDeletedProfileModal={setDeletedProfileModal}
                           date={item.createdAt}
-                        >
-                          {item.message.replace(/^"(.*)"$/, "$1")}
-                        </ChatItem>
+                          msg={item.message.replace(/^"(.*)"$/, "$1")}
+                        />
                       );
                     } else if (item.type === "JOIN" || item.type === "LEAVE") {
                       return (
@@ -291,9 +290,8 @@ export const ChatRoom = () => {
                 imgurl={temp ? temp.profileImage : undefined}
                 setDeletedProfileModal={setDeletedProfileModal}
                 date={item.createdAt}
-              >
-                {item.message.replace(/^"(.*)"$/, "$1")}
-              </ChatItem>
+                msg={item.message.replace(/^"(.*)"$/, "$1")}
+              />
             );
           } else {
             return <ChatEntryExit key={index} msg={item.message} />;
