@@ -6,6 +6,7 @@ import { Header } from "@/components/profile/header";
 // import { usePostProfile } from "@/hooks/queries/usePostProfile";
 // import { profileState } from "@/recoil/atoms/profile-state";
 import { colorTheme } from "@/style/color-theme";
+import { devLog } from "@/utils/dev-log";
 
 const PASSWORD_LENGTH = 4;
 
@@ -49,7 +50,7 @@ export const PasswordPage = () => {
   useEffect(() => {
     if (confirmPassword.length === PASSWORD_LENGTH) {
       setTimeout(() => {
-        if (password === confirmPassword) console.log("deprecated code");
+        if (password === confirmPassword) devLog("deprecated code");
         // submitProfile({ ...profile, password });
         else {
           setPassword("");

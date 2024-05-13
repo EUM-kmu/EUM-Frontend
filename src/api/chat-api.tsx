@@ -8,6 +8,8 @@ import {
   ChatSendRequest,
 } from "./types/chat-type";
 
+import { devLog } from "@/utils/dev-log";
+
 export default class ChatApi {
   // 메세지 보내기
   static async sendChatMessages({ message, roomId }: ChatSendRequest) {
@@ -25,7 +27,7 @@ export default class ChatApi {
   // 채팅방 리스트 가져오기
   static async getChatList() {
     const response = await Instance.get(`/chat-service/api/chatrooms`);
-    console.log(response);
+    devLog(response);
     if (response) {
       const temp = response.data as ChatListResponse;
       return temp.result;

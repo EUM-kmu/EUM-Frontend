@@ -1,6 +1,8 @@
 import Instance from "./axios-instance";
 import { AuthResponse } from "./types/auth-type";
 
+import { devLog } from "@/utils/dev-log";
+
 export default class AuthApi {
   static async postSignIn(type: string, token: string) {
     const response = await Instance.post(
@@ -8,7 +10,7 @@ export default class AuthApi {
       { token: token },
     );
 
-    console.log(response);
+    devLog(response);
     const res = response.data as AuthResponse;
     return res.data;
   }
@@ -19,7 +21,7 @@ export default class AuthApi {
       { email: email, password: password },
     );
 
-    console.log(response);
+    devLog(response);
     const res = response.data as AuthResponse;
     return res.data;
   }
@@ -27,7 +29,7 @@ export default class AuthApi {
   static async postSignOut() {
     const response = await Instance.post(`/auth-service/api/v2/logOut`);
 
-    console.log(response);
+    devLog(response);
     return response;
   }
 
@@ -36,7 +38,7 @@ export default class AuthApi {
       `/haetsal-service/api/v2/user/withdrawal`,
     );
 
-    console.log(response);
+    devLog(response);
     return response;
   }
 }

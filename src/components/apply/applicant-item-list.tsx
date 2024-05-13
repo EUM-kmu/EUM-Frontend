@@ -1,6 +1,8 @@
 import { ApplicantItem } from "./applicant-item";
 import { ApplicantItemProps } from "./type";
 
+import { devLog } from "@/utils/dev-log";
+
 export const ApplicantItemList = ({
   data,
   applyIds,
@@ -8,7 +10,7 @@ export const ApplicantItemList = ({
   isRecruiting,
   setApplyModal,
 }: ApplicantItemProps) => {
-  console.log("Applicant List: ", applyIds);
+  devLog("Applicant List: ", applyIds);
   return (
     <>
       {data?.map((applicant) => {

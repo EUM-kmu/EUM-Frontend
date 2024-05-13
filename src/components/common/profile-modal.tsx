@@ -10,6 +10,7 @@ import { useGetProfile } from "@/hooks/queries/useGetProfile";
 import { usePostBlock } from "@/hooks/queries/usePostBlock";
 import { colorTheme } from "@/style/color-theme";
 import { calculateAge } from "@/utils/date-utils";
+import { devLog } from "@/utils/dev-log";
 
 export const MyProfileModal = ({
   profileData,
@@ -52,7 +53,7 @@ export const ProfileModal = ({ userId, onClose }: ProfileModalType) => {
 
   const postBlock = usePostBlock();
   const deleteBlock = useDeleteBlock();
-  console.log("Profile-Modal:: ", userId);
+  devLog("Profile-Modal:: ", userId);
 
   let myId: number = -1;
   let myIdStorage: string | null = null;

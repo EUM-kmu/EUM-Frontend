@@ -22,7 +22,7 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
   //   };
   // }, []);
 
-  // console.log(profileImage);
+  // devLog(profileImage);
 
   return (
     <ApplicantItemWrapper>

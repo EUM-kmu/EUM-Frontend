@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { ReactComponent as GoogleLoginButtonSVG } from "@/assets/icons/google-login-button.svg";
 import { useSignIn } from "@/hooks/queries/useSignIn";
 import { auth } from "@/lib/firebase";
+import { devLog } from "@/utils/dev-log";
 
 export const GoogleButton = ({
   setIsLoading,
@@ -28,7 +29,7 @@ export const GoogleButton = ({
       .then(async function (result) {
         if (result?.user) {
           const token = await result.user.getIdToken();
-          console.log("IdToken", token);
+          devLog("IdToken", token);
           await signInBack({ type: "firebase", token });
         } else {
           setIsLoading(false);
@@ -36,7 +37,7 @@ export const GoogleButton = ({
         }
       })
       .catch(function (error) {
-        console.log(error);
+        devLog(error);
       });
   }, []);
 

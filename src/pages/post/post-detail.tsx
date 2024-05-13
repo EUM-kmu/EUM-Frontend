@@ -21,6 +21,7 @@ import { usePostApply } from "@/hooks/queries/usePostApply";
 import { usePullUp } from "@/hooks/queries/usePullUp";
 import { postState } from "@/recoil/atoms/post-state";
 import { colorTheme } from "@/style/color-theme";
+import { devLog } from "@/utils/dev-log";
 
 type LocationType = {
   state: {
@@ -55,7 +56,7 @@ export const PostDetailPage = () => {
 
   useEffect(() => {
     if (data) setPost(data);
-    console.log(location);
+    devLog(location);
   }, [data]);
 
   return (

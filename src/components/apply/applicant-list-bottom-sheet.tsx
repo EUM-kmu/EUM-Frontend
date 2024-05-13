@@ -13,6 +13,7 @@ import { useGetPostDetail } from "@/hooks/queries/useGetPostDetail";
 import { usePostApplyAccept } from "@/hooks/queries/usePostApplyAccept";
 import { usePutChatNewMember } from "@/hooks/queries/usePutChatNewMember";
 import { checkChange } from "@/utils/apply-list-change-check";
+import { devLog } from "@/utils/dev-log";
 
 export const ApplicantListBottomSheet = ({
   postId,
@@ -57,7 +58,7 @@ export const ApplicantListBottomSheet = ({
       });
       setApplyIds(tempApplyIds);
       setOriginApplyIds(tempApplyIds);
-      console.log("OriginApplyIds: ", tempApplyIds);
+      devLog("OriginApplyIds: ", tempApplyIds);
       const timeoutId = setTimeout(() => {
         setIsDataLoaded(true);
       }, 300);

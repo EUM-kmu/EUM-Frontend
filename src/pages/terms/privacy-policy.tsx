@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { Button } from "@/components/common/button";
+import { devLog } from "@/utils/dev-log";
 import "react-notion-x/src/styles.css";
 
 export const PrivacyPolicyPage = () => {
@@ -31,14 +32,14 @@ export const PrivacyPolicyPage = () => {
             collection_query: {},
           } as unknown as ExtendedRecordMap);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => devLog(err));
     };
 
     void getNotion();
     setIsLoading(false);
   }, []);
 
-  console.log(notionData);
+  devLog(notionData);
   return (
     <Layout>
       <Button onClick={() => navigate("/mypage")}>이전</Button>
@@ -58,6 +59,7 @@ const Layout = styled.div`
   width: 100%;
   max-width: 480px;
   height: 100%;
+  margin: auto;
   margin-top: 30px;
   padding: 0 20px;
   overflow: hidden;

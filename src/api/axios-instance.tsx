@@ -1,11 +1,12 @@
 import axios, {
   AxiosError,
-  InternalAxiosRequestConfig,
   AxiosResponse,
+  InternalAxiosRequestConfig,
 } from "axios";
 
 import { InstanceResponseData } from "./types/common-type";
 
+import { devLog } from "@/utils/dev-log";
 import getRefreshToken from "@/utils/token";
 
 const Instance = axios.create({
@@ -26,12 +27,12 @@ Instance.interceptors.request.use(
     if (token !== undefined && token !== null) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log(`[API - REQUEST] ${method?.toUpperCase()} ${url}`);
+    devLog(`[API - REQUEST] ${method?.toUpperCase()} ${url}`);
     return { ...config, headers };
   },
   (error: AxiosError) => {
     const { method, url } = error.config as InternalAxiosRequestConfig;
-    console.log(`[API - REQUEST ERROR] ${method?.toUpperCase()} ${url}`);
+    devLog(`[API - REQUEST ERROR] ${method?.toUpperCase()} ${url}`);
 
     // 어떻게 처리하면 좋을까 ~?
 
@@ -47,10 +48,10 @@ Instance.interceptors.response.use(
     const stauts = response.status;
 
     if (stauts === 404) {
-      console.log(`[API - RESPONSE 404] ${method?.toUpperCase()} ${url} | `);
+      devLog(`[API - RESPONSE 404] ${method?.toUpperCase()} ${url} | `);
     }
 
-    console.log(`[API-RESPONSE ${stauts}] `, response);
+    devLog(`[API-RESPONSE ${stauts}] `, response);
 
     return response;
   },
@@ -60,10 +61,10 @@ Instance.interceptors.response.use(
       const { method, url } = config;
       const status = error.response.status;
 
-      console.log(`[API-RESPONSE ${status}] `, error);
+      devLog(`[API-RESPONSE ${status}] `, error);
 
       if (status === 401) {
-        console.log(
+        devLog(
           `[API - RESPONSE 401] ${method?.toUpperCase()} ${url} | ${status} : ${error.message} | refresh Token`,
         );
 
@@ -74,7 +75,7 @@ Instance.interceptors.response.use(
 
         return axios(config);
       } else {
-        console.log(
+        devLog(
           `[API - RESPONSE ERROR] ${method?.toUpperCase()} ${url} | ${status} : ${error.message}`,
         );
         return Promise.reject(error);

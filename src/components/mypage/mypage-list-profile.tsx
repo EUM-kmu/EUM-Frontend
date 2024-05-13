@@ -149,7 +149,7 @@ const Wrapper = styled.div`
 
 const ProfileImg = styled.img`
   width: 4.33rem;
-  height: 4.33rem;
+  aspect-ratio: 1;
   border-radius: 0.56rem;
   border: 3px solid ${colorTheme.orange400};
   object-fit: cover;

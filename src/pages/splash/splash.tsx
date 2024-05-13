@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 
 import SplashLogoSVG from "@/assets/images/splash-logo.svg";
 import { colorTheme } from "@/style/color-theme";
+import { devLog } from "@/utils/dev-log";
 import getRefreshToken from "@/utils/token";
 
 export const Splash = () => {
@@ -21,7 +22,7 @@ export const Splash = () => {
           localStorage.setItem("role", data.role);
           if (data.role !== "ROLE_USER") {
             path = "/signup";
-            console.log("splash::", path);
+            devLog("splash::", path);
             navigate(path, { replace: true });
           } else {
             path = "/post";
@@ -29,7 +30,7 @@ export const Splash = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        devLog(error);
         path = "/login";
       }
     } else {
@@ -39,7 +40,7 @@ export const Splash = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      verifyTokens().catch((err) => console.log(err));
+      verifyTokens().catch((err) => devLog(err));
       navigate(path, { replace: true });
     }, 2000);
 
