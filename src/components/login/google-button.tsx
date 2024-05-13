@@ -1,5 +1,8 @@
-import { GoogleAuthProvider, signInWithRedirect } from "@firebase/auth";
-import { getRedirectResult } from "firebase/auth";
+import {
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from "firebase/auth";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { ReactComponent as GoogleLoginButtonSVG } from "@/assets/icons/google-login-button.svg";
