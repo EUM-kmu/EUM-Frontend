@@ -48,6 +48,7 @@ export const ChatRoom = () => {
   const [deletedProfileModal, setDeletedProfileModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [transferErrorModal, setTransferErrorModal] = useState(false);
+  const [leaveModal, setLeaveModal] = useState(false);
 
   const [profileUserId, setProfileUserId] = useState<number>(0);
   const [isApplySheet, setIsApplySheet] = useState(false);
@@ -57,6 +58,9 @@ export const ChatRoom = () => {
   const { mutate: sendMsg } = UseSendMessages();
   const tempId = localStorage.getItem("userId");
   const myId = tempId === null ? "" : tempId;
+  const tempNickName = localStorage.getItem("nickName");
+  const myNickName = tempNickName === null ? "" : tempNickName;
+  const [isConnected, setIsConnected] = useState(false);
 
   const connectHandler = () => {
     const socket = new WebSocket(
@@ -64,15 +68,24 @@ export const ChatRoom = () => {
     );
     client.current = Stomp.over(socket);
     client.current.connect({}, () => {
-      client.current?.subscribe(`/sub/room/${state.roomId}`, (message) => {
-        const temp = JSON.parse(message.body) as ChatRoomSubMessage;
-        setNewRoomMsgs((prevHistory) => {
-          return prevHistory ? [...prevHistory, temp] : [];
-        });
-      });
+      setIsConnected(true);
+      const subscription = client.current?.subscribe(
+        `/sub/room/${state.roomId}`,
+        (message) => {
+          const temp = JSON.parse(message.body) as ChatRoomSubMessage;
+
+          if (temp.type === "LEAVE" && temp.message.includes(myNickName)) {
+            setLeaveModal(true);
+            if (subscription) subscription.unsubscribe();
+          } else {
+            setNewRoomMsgs((prevHistory) => {
+              return prevHistory ? [...prevHistory, temp] : [];
+            });
+          }
+        },
+      );
     });
   };
-
   useEffect(() => {
     if (!pageMsgs) {
       setNewRoomMsgs([]);
@@ -94,8 +107,20 @@ export const ChatRoom = () => {
   };
 
   useEffect(() => {
-    connectHandler();
+    if (!isConnected) {
+      connectHandler();
+    }
 
+    return () => {
+      if (isConnected && client.current) {
+        client.current.disconnect(() => {
+          setIsConnected(false);
+        });
+      }
+    };
+  }, [isConnected]);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (chatListRef.current) {
         if (chatListRef.current.scrollTop === 0) {
@@ -229,9 +254,8 @@ export const ChatRoom = () => {
                           }
                           setDeletedProfileModal={setDeletedProfileModal}
                           date={item.createdAt}
-                        >
-                          {item.message.replace(/^"(.*)"$/, "$1")}
-                        </ChatItem>
+                          msg={item.message.replace(/^"(.*)"$/, "$1")}
+                        />
                       );
                     } else if (item.type === "JOIN" || item.type === "LEAVE") {
                       return (
@@ -266,9 +290,8 @@ export const ChatRoom = () => {
                 imgurl={temp ? temp.profileImage : undefined}
                 setDeletedProfileModal={setDeletedProfileModal}
                 date={item.createdAt}
-              >
-                {item.message.replace(/^"(.*)"$/, "$1")}
-              </ChatItem>
+                msg={item.message.replace(/^"(.*)"$/, "$1")}
+              />
             );
           } else {
             return <ChatEntryExit key={index} msg={item.message} />;
@@ -369,6 +392,24 @@ export const ChatRoom = () => {
             setDeletedProfileModal(false);
           }}
         />
+      )}
+      {leaveModal && (
+        <Modal
+          onClose={() => {
+            setLeaveModal(false);
+            navigate("/chat", { replace: true });
+          }}
+        >
+          <Modal.Title text="해당 거래에서\n제외되셨습니다." />
+          <Modal.Button
+            onClick={() => {
+              navigate("/chat", { replace: true });
+            }}
+            style={{ fontSize: "1.5rem" }}
+          >
+            이전 화면으로 이동
+          </Modal.Button>
+        </Modal>
       )}
     </PageContainer>
   );

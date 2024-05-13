@@ -13,7 +13,7 @@ export const ChatInput = ({
 }: InputType) => {
   const [inputValue, setIsValue] = useState("");
   return (
-    <Container>
+    <Container onFocus={() => onFocus(false)} onBlur={() => onFocus(true)}>
       <InputContainer
         value={
           blockedRoom
@@ -21,8 +21,6 @@ export const ChatInput = ({
             : inputValue
         }
         onChange={(e) => setIsValue(e.target.value)}
-        onFocus={() => onFocus(false)}
-        onBlur={() => onFocus(true)}
         readOnly={blockedRoom}
       />
       <ChatButton

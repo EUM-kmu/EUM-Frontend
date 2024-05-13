@@ -5,7 +5,6 @@ export type MyChatType = {
 };
 
 export type ChatItemType = {
-  children?: React.ReactNode;
   userId: number;
   imgurl?: string;
   userName: string;
@@ -13,6 +12,7 @@ export type ChatItemType = {
   setProfileUserId: React.Dispatch<React.SetStateAction<number>>;
   setDeletedProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
   date?: string;
+  msg: string;
 };
 
 export type InputType = {

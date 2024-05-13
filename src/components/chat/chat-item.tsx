@@ -6,7 +6,6 @@ import { colorTheme } from "@/style/color-theme";
 import { ChatdateToMsgtype } from "@/utils/chatdate-to-msgtype";
 
 export const ChatItem = ({
-  children,
   userId,
   imgurl,
   userName,
@@ -14,6 +13,7 @@ export const ChatItem = ({
   setProfileUserId,
   setDeletedProfileModal,
   date,
+  msg,
 }: ChatItemType) => {
   const tempId = localStorage.getItem("userId");
   const myId = tempId ? Number(tempId) : -1;
@@ -54,7 +54,11 @@ export const ChatItem = ({
                 userId === myId ? colorTheme.blue100 : colorTheme.blue300,
             }}
           >
-            <ChatText>{children}</ChatText>
+            <ChatText>
+              {msg.split("\\n").map((t, idx) => (
+                <div key={idx}>{t}</div>
+              ))}
+            </ChatText>
           </ChatBox>
         </ChatColumnBox>
       </RowBox>
