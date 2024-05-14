@@ -59,6 +59,7 @@ const Layout = styled.div`
   width: 100%;
   max-width: 480px;
   height: 100%;
+  margin: auto;
   margin-top: 30px;
   padding: 0 20px;
   overflow: hidden;
