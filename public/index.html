@@ -22,7 +22,11 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="manifest"
+      crossorigin="”use-credentials”"
+      href="%PUBLIC_URL%/manifest.json"
+    />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -36,6 +40,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="installPropmt"></div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -52,6 +57,16 @@
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("/pwabuilder-sw.js");
         }
+        window.addEventListener("beforeinstallprompt", (event) => {
+          event.preventDefault();
+          var installDiv = document.getElementById("divInstallApp");
+          installDiv.innerHTML =
+            '<button id="installPrompt" class="">Install App</button>';
+          installDiv.addEventListener("click", () => {
+            event.prompt();
+            installDiv.innerHTML = "";
+          });
+        });
       })();
     </script>
   </body>

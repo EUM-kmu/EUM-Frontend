@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
+import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
 import { useGetPostList } from "@/hooks/queries/useGetPostList";
 import { colorTheme } from "@/style/color-theme";
+import { devLog } from "@/utils/dev-log";
 
 export const PostList = () => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -17,6 +19,8 @@ export const PostList = () => {
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
   const { data, fetchNextPage } = useGetPostList(search);
+
+  const [ready, setReady] = useState<boolean>(true);
 
   useEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
@@ -46,48 +50,55 @@ export const PostList = () => {
     }
   };
   return (
-    <Wrapper ref={wrapperRef}>
-      <div style={{ width: "100%" }} ref={headerRef}>
-        {miniButtonVisible && <PostPostingButtonMini />}
-        <BigHeader>전체게시물</BigHeader>
-        <InputWrapper>
-          <InputInnerWrapper>
-            <InputTextArea
-              value={tempSearch}
-              onChange={(e) => setTempSearch(e.target.value)}
+    <>
+      <Wrapper ref={wrapperRef}>
+        <div style={{ width: "100%" }} ref={headerRef}>
+          {miniButtonVisible && <PostPostingButtonMini />}
+          <BigHeader>전체게시물</BigHeader>
+          <InputWrapper>
+            <InputInnerWrapper>
+              <InputTextArea
+                value={tempSearch}
+                onChange={(e) => setTempSearch(e.target.value)}
+              />
+              <SearchButton
+                onClick={() => {
+                  setSearch(tempSearch);
+                }}
+              />
+            </InputInnerWrapper>
+          </InputWrapper>
+          <SmallHeader>
+            게시글 만들기 버튼을 눌러 게시글을 만들어 보아요
+          </SmallHeader>
+          <PostPostingButton />
+        </div>
+        {data?.pages.map((page, idx) =>
+          page.map((item, index) => (
+            <PostListItem
+              key={`${idx}-${index}`}
+              postId={item.postId}
+              title={item.title}
+              location={item.location}
+              startDate={item.startDate}
+              pay={item.pay}
+              status={item.status}
+              currentApplicant={item.currentApplicant}
+              maxNumOfPeople={item.maxNumOfPeople}
+              writerProfileImg={item.writerInfo.profileImage}
+              writerId={item.writerInfo.profileId}
+              deleted={item.deleted}
             />
-            <SearchButton
-              onClick={() => {
-                setSearch(tempSearch);
-              }}
-            />
-          </InputInnerWrapper>
-        </InputWrapper>
-        <SmallHeader>
-          게시글 만들기 버튼을 눌러 게시글을 만들어 보아요
-        </SmallHeader>
-        <PostPostingButton />
-      </div>
-      {data?.pages.map((page, idx) =>
-        page.map((item, index) => (
-          <PostListItem
-            key={`${idx}-${index}`}
-            postId={item.postId}
-            title={item.title}
-            location={item.location}
-            startDate={item.startDate}
-            pay={item.pay}
-            status={item.status}
-            currentApplicant={item.currentApplicant}
-            maxNumOfPeople={item.maxNumOfPeople}
-            writerProfileImg={item.writerInfo.profileImage}
-            writerId={item.writerInfo.profileId}
-            deleted={item.deleted}
-          />
-        )),
+          )),
+        )}
+        {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
+      </Wrapper>
+      {ready && (
+        <Modal onClose={() => devLog("blodk")}>
+          <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
+        </Modal>
       )}
-      {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
-    </Wrapper>
+    </>
   );
 };
 
