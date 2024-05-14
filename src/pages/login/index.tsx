@@ -9,7 +9,7 @@ import { colorTheme } from "@/style/color-theme";
 import { devLog } from "@/utils/dev-log";
 
 export const LoginPage = () => {
-  const [ready, setReady] = useState<boolean>(true);
+  const [ready, _] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

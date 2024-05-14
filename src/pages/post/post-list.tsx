@@ -20,7 +20,7 @@ export const PostList = () => {
   const [search, setSearch] = useState("");
   const { data, fetchNextPage } = useGetPostList(search);
 
-  const [ready, setReady] = useState<boolean>(true);
+  const [ready, _] = useState<boolean>(true);
 
   useEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
