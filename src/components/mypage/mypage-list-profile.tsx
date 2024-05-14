@@ -10,6 +10,7 @@ import KnotWhiteBackSVG from "@/assets/icons/knot-white-back.svg";
 import LocationWhiteBackSVG from "@/assets/icons/location-white-back.svg";
 import MaleSVG from "@/assets/icons/male.svg";
 import PersonSVG from "@/assets/icons/person-white-back.svg";
+import NotregisteredUserSVG from "@/assets/images/deleted-user-back-exist.svg";
 import { DropDownMenu } from "@/components/common/drop-down-menu";
 import { Modal } from "@/components/common/modal";
 import { useGetBankData } from "@/hooks/queries/useGetBankData";
@@ -35,7 +36,11 @@ export const MypageListProfile = () => {
   return (
     <Wrapper>
       <ProfileImg
-        src={myProfile?.profileImage}
+        src={
+          myProfile?.profileImage.length
+            ? myProfile?.profileImage
+            : NotregisteredUserSVG
+        }
         onClick={() => setProfileModal(true)}
       />
       <ColumnBox>
