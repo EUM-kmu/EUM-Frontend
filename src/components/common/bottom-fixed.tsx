@@ -29,10 +29,30 @@ export const BottomFixed = ({
 }: BottomFixedProps) => {
   const location = useLocation();
   const [currentUrl, setCurrentUrl] = useState<string[]>([]);
+  const [resizeHeight, setResizeHeight] = useState<number>(0);
 
   useEffect(() => {
     setCurrentUrl(getCurrentPage(location.pathname));
   }, [location.pathname]);
+
+  useEffect(() => {
+    const resizeHandler = (event: Event) => {
+      setResizeHeight(
+        window.innerHeight - (event.currentTarget as VisualViewport)?.height,
+      );
+      console.log(
+        "event.currentTarget.height: ",
+        (event.currentTarget as VisualViewport).height,
+      );
+      console.log("window.innerHeight: ", window.innerHeight);
+      console.log(
+        window.innerHeight - (event.currentTarget as VisualViewport).height,
+      );
+    };
+    visualViewport && visualViewport.addEventListener("resize", resizeHandler);
+
+    return () => visualViewport?.removeEventListener("resize", resizeHandler);
+  }, []);
 
   function getCurrentPage(url: string): string[] {
     return url.split("/");
@@ -42,12 +62,13 @@ export const BottomFixed = ({
     <BottomFixedContainer
       $alignDirection={alignDirection}
       style={{
-        bottom:
+        bottom: `calc(${
           currentUrl[1] == "post" ||
           (currentUrl[1] == "chat" && !currentUrl[2]) ||
           currentUrl[1] == "mypage"
             ? "4rem"
-            : "2.2rem",
+            : "2.2rem"
+        } + ${resizeHeight}px)`,
       }}
     >
       {children}
