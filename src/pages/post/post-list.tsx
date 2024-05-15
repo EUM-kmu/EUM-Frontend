@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
-import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
 import { useGetPostList } from "@/hooks/queries/useGetPostList";
 import { colorTheme } from "@/style/color-theme";
-import { devLog } from "@/utils/dev-log";
 
 export const PostList = () => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -94,9 +92,10 @@ export const PostList = () => {
         {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
       </Wrapper>
       {ready && (
-        <Modal onClose={() => devLog("blodk")}>
-          <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
-        </Modal>
+        // for block
+        // <Modal onClose={() => devLog("blodk")}>
+        //   <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
+        // </Modal>
       )}
     </>
   );

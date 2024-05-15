@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
 import { ReactComponent as LoginIcon } from "@/assets/icons/login-icon.svg";
-import { Modal } from "@/components/common/modal";
 import { GoogleButton } from "@/components/login/google-button";
 import { KakaoButton } from "@/components/login/kakao-button";
 import { colorTheme } from "@/style/color-theme";
-import { devLog } from "@/utils/dev-log";
 
 export const LoginPage = () => {
+  // block
   const [ready, _] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -31,9 +30,10 @@ export const LoginPage = () => {
         )}
       </Content>
       {ready && (
-        <Modal onClose={() => devLog("blodk")}>
-          <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
-        </Modal>
+        // for block
+        // <Modal onClose={() => devLog("blodk")}>
+        //   <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
+        // </Modal>
       )}
     </Layout>
   );
