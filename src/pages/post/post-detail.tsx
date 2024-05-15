@@ -316,7 +316,7 @@ export const PostDetailPage = () => {
               setErrorModal(false);
             }}
           >
-            <Modal.Title text="아직 지원하지 않는 \n 서비스입니다." />
+            <Modal.Title text="현재 지원자가 있어\n게시글 수정이 불가합니다\n\n게시글 수정 기능을\n조만간 따로 준비할게요 😎" />
           </Modal>
         )}
       </PaddingWrapper>
