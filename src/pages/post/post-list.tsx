@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
+// import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
@@ -18,7 +19,7 @@ export const PostList = () => {
   const [search, setSearch] = useState("");
   const { data, fetchNextPage } = useGetPostList(search);
 
-  const [ready, _] = useState<boolean>(true);
+  // const [ready, _] = useState<boolean>(true);
 
   useEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
@@ -91,12 +92,11 @@ export const PostList = () => {
         )}
         {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
       </Wrapper>
-      {ready && (
-        // for block
-        // <Modal onClose={() => devLog("blodk")}>
-        //   <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
-        // </Modal>
-      )}
+      {/* {ready && (
+        <Modal onClose={() => devLog("blodk")}>
+          <Modal.Title text="지금 서비스를\n재정비중이에요!\n\n내일 오전 6시 이후\n다시 접속부탁드려요🤗" />
+        </Modal>
+      )} */}
     </>
   );
 };
