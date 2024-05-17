@@ -77,9 +77,10 @@
       "label": "KMU"
     }
   ],
-  "start_url": "/",
+  "start_url": "./post",
   "display": "fullscreen",
   "theme_color": "#253659",
   "background_color": "#253659",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "prefer_related_applications": true
 }
