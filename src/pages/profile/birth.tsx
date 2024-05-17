@@ -6,6 +6,7 @@ import { BottomFixed } from "@/components/common/bottom-fixed";
 import { Header } from "@/components/profile/header";
 import { Input } from "@/components/profile/input";
 import { profileState } from "@/recoil/atoms/profile-state";
+import { validateDate } from "@/utils/date-utils";
 
 type BirthPageProps = {
   nextStep: () => void;
@@ -20,17 +21,9 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   const setProfile = useSetRecoilState(profileState);
+
   const saveProfile = () => {
-    if (
-      isNaN(+bYear) ||
-      isNaN(+bMonth) ||
-      isNaN(+bDay) ||
-      +bYear > new Date().getFullYear() ||
-      +bMonth < 0 ||
-      +bMonth > 12 ||
-      +bDay < 0 ||
-      +bDay > new Date(+bYear, +bMonth, 0).getDate()
-    ) {
+    if (!validateDate.all(bYear, bMonth, bDay)) {
       setError(true);
       return;
     }
@@ -55,6 +48,7 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
           <Input
             ref={firstInputRef}
             maxLength={4}
+            inputMode="numeric"
             onChange={(event) => setBYear(event.target.value)}
           />
           <span>년도</span>
@@ -62,11 +56,13 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
         <InputWrapper>
           <Input
             maxLength={2}
+            inputMode="numeric"
             onChange={(event) => setBMonth(event.target.value)}
           />
           <span>월</span>
           <Input
             maxLength={2}
+            inputMode="numeric"
             onChange={(event) => setBDay(event.target.value)}
           />
           <span>일</span>

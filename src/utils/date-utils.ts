@@ -9,8 +9,12 @@ export const validateDate = {
   day: function (year: string, month: string, day: string) {
     return +day > 0 && +day < new Date(+year, +month, 0).getDate();
   },
+  all: function (year: string, month: string, day: string) {
+    return this.year(year) && this.month(month) && this.day(year, month, day);
+  },
 };
 
+// 생년월일을 받아 구체적인 나이를 계산합니다.
 export function calculateAge(birth: string) {
   const birthDate = new Date(birth);
   const today = new Date();
