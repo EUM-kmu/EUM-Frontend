@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
 // import { Modal } from "@/components/common/modal";
+import PostListEmptyCaseSVG from "@/assets/images/post-list-empty-case.svg";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
@@ -18,6 +19,8 @@ export const PostList = () => {
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
   const { data, fetchNextPage } = useGetPostList(search);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [isEmptyItem, setIsEmptyItem] = useState(false);
 
   // const [ready, _] = useState<boolean>(true);
 
@@ -42,6 +45,12 @@ export const PostList = () => {
       wrapperRef.current?.removeEventListener("scroll", handleScroll);
     };
   }, [headerHeight]);
+
+  useEffect(() => {
+    if (listRef.current) {
+      setIsEmptyItem(listRef.current.children.length === 0);
+    }
+  }, [data]);
 
   const handleMiniButton = () => {
     if (wrapperRef.current) {
@@ -72,24 +81,27 @@ export const PostList = () => {
           </SmallHeader>
           <PostPostingButton />
         </div>
-        {data?.pages.map((page, idx) =>
-          page.map((item, index) => (
-            <PostListItem
-              key={`${idx}-${index}`}
-              postId={item.postId}
-              title={item.title}
-              location={item.location}
-              startDate={item.startDate}
-              pay={item.pay}
-              status={item.status}
-              currentApplicant={item.currentApplicant}
-              maxNumOfPeople={item.maxNumOfPeople}
-              writerProfileImg={item.writerInfo.profileImage}
-              writerId={item.writerInfo.profileId}
-              deleted={item.deleted}
-            />
-          )),
-        )}
+        <div style={{ width: "100%" }} ref={listRef}>
+          {data?.pages.map((page, idx) =>
+            page.map((item, index) => (
+              <PostListItem
+                key={`${idx}-${index}`}
+                postId={item.postId}
+                title={item.title}
+                location={item.location}
+                startDate={item.startDate}
+                pay={item.pay}
+                status={item.status}
+                currentApplicant={item.currentApplicant}
+                maxNumOfPeople={item.maxNumOfPeople}
+                writerProfileImg={item.writerInfo.profileImage}
+                writerId={item.writerInfo.profileId}
+                deleted={item.deleted}
+              />
+            )),
+          )}
+        </div>
+        {isEmptyItem && <EmptyImg src={PostListEmptyCaseSVG} />}
         {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
       </Wrapper>
       {/* {ready && (
@@ -107,6 +119,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow: auto;
   height: 100%;
+  align-items: center;
 `;
 
 const BigHeader = styled.div`
@@ -157,4 +170,9 @@ const SearchButton = styled.button`
   border: none;
   background-repeat: no-repeat;
   background-size: cover;
+`;
+
+const EmptyImg = styled.img`
+  width: 18.16rem;
+  height: 18.16rem;
 `;
