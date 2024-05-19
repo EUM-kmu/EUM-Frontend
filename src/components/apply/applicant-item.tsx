@@ -143,8 +143,10 @@ const ApplyButton = styled.button<{ $selected: boolean }>`
   font-size: 0.8rem;
   justify-content: center;
   align-items: center;
+  background-color: ${colorTheme.orange400};
+  color: white;
   ${({ $selected }) =>
-    $selected && `background-color: ${colorTheme.orange400};color: white`}
+    $selected && `background-color:#e4e8f1;color:${colorTheme.blue500};`}
 `;
 
 const ApplyButtonNotClick = styled.div`

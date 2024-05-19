@@ -6,7 +6,7 @@ import { styled } from "styled-components";
 
 import { ChatRoomData, ChatRoomSubMessage } from "./type";
 
-import { ApplicantListBottomSheet } from "@/components/apply/applicant-list-bottom-sheet";
+import { ApplicantListBottomSheetChat } from "@/components/apply/applicant-list-bottom-sheet-chat";
 import { ChatAppBar } from "@/components/chat/chat-app-bar";
 import { ChatAppBarBlock } from "@/components/chat/chat-app-bar-block";
 import { ChatEntryExit } from "@/components/chat/chat-entry-exit";
@@ -335,7 +335,7 @@ export const ChatRoom = () => {
             />
           )}
           {isApplySheet && (
-            <ApplicantListBottomSheet
+            <ApplicantListBottomSheetChat
               postId={state.postId.toString()}
               chatId={state.roomId}
               onFinishApply={() => {
