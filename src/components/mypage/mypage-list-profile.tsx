@@ -60,20 +60,6 @@ export const MypageListProfile = () => {
                 <DropDownMenu>
                   <DropDownMenu.MenuItem
                     onClick={() => {
-                      navigate("/notion/policy");
-                    }}
-                  >
-                    개인정보보호정책
-                  </DropDownMenu.MenuItem>
-                  <DropDownMenu.MenuItem
-                    onClick={() => {
-                      navigate("/notion/terms");
-                    }}
-                  >
-                    이용약관
-                  </DropDownMenu.MenuItem>
-                  <DropDownMenu.MenuItem
-                    onClick={() => {
                       setShow(false);
                       setSignOutModal(true);
                     }}
@@ -87,6 +73,20 @@ export const MypageListProfile = () => {
                     }}
                   >
                     탈퇴하기
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      navigate("/notion/terms");
+                    }}
+                  >
+                    이용약관보기
+                  </DropDownMenu.MenuItem>
+                  <DropDownMenu.MenuItem
+                    onClick={() => {
+                      navigate("/notion/policy");
+                    }}
+                  >
+                    개인정보보호정책
                   </DropDownMenu.MenuItem>
                 </DropDownMenu>
               </>
@@ -166,6 +166,7 @@ const ColumnBox = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
+  gap: 9px;
 `;
 
 const ProfileRowBox = styled.div`
@@ -207,6 +208,7 @@ const MenuBackground = styled.div`
 `;
 
 const StateOrangeBox = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -216,7 +218,7 @@ const StateOrangeBox = styled.div`
   width: 100%;
   background-color: ${colorTheme.orange300};
   color: white;
-  padding: 0.66rem 6% 0.66rem 4.5%;
+  padding: 7px 6% 7px 4.5%;
 `;
 
 const PriceStateBox = styled.div`
@@ -247,6 +249,7 @@ const OtherStateColumnBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   font-size: 0.61rem;
+  gap: 5px;
 `;
 
 const OtherStateIcon = styled.img`
