@@ -3,9 +3,11 @@ import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { BottomFixed } from "@/components/common/bottom-fixed";
+import { Modal } from "@/components/common/modal";
 import { Header } from "@/components/profile/header";
 import { Input } from "@/components/profile/input";
 import { profileState } from "@/recoil/atoms/profile-state";
+import { colorTheme } from "@/style/color-theme";
 import { validateDate } from "@/utils/date-utils";
 
 type BirthPageProps = {
@@ -17,12 +19,18 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
   const [bYear, setBYear] = useState<string>("");
   const [bMonth, setBMonth] = useState<string>("");
   const [bDay, setBDay] = useState<string>("");
-  const [error, setError] = useState<boolean>();
+  const [error, setError] = useState<boolean>(false);
+  const [yearError, setYearError] = useState<boolean>(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   const setProfile = useSetRecoilState(profileState);
 
   const saveProfile = () => {
+    // 생년월일(4자리) 두자리 입력 방지를 위한 에러 플로팅
+    if (bYear.length < 4) {
+      setYearError(true);
+      return;
+    }
     if (!validateDate.all(bYear, bMonth, bDay)) {
       setError(true);
       return;
@@ -77,6 +85,12 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
           다음
         </BottomFixed.Button>
       </BottomFixed>
+      {yearError && (
+        <Modal onClose={() => setYearError(false)}>
+          <Modal.Title text="년도는 4자리로 입력\n해주세요" />
+          <ExampleYear>예시: 1987</ExampleYear>
+        </Modal>
+      )}
     </ContentLayout>
   );
 };
@@ -118,4 +132,14 @@ const InputWrapper = styled.div`
 const ErrorMessage = styled.span`
   font-size: 0.83rem;
   color: red;
+`;
+
+const ExampleYear = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1.38rem;
+  font-weight: 500;
+  color: ${colorTheme.orange400};
+  word-wrap: break-word;
 `;
