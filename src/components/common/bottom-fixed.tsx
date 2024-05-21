@@ -40,14 +40,6 @@ export const BottomFixed = ({
       setResizeHeight(
         window.innerHeight - (event.currentTarget as VisualViewport)?.height,
       );
-      console.log(
-        "event.currentTarget.height: ",
-        (event.currentTarget as VisualViewport).height,
-      );
-      console.log("window.innerHeight: ", window.innerHeight);
-      console.log(
-        window.innerHeight - (event.currentTarget as VisualViewport).height,
-      );
     };
     visualViewport && visualViewport.addEventListener("resize", resizeHandler);
 
@@ -68,7 +60,7 @@ export const BottomFixed = ({
           currentUrl[1] == "mypage"
             ? "4rem"
             : "2.2rem"
-        } + ${resizeHeight}px)`,
+        } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
       }}
     >
       {children}

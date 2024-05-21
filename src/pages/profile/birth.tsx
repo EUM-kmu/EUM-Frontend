@@ -87,7 +87,7 @@ export const BirthPage = ({ nextStep, onModal }: BirthPageProps) => {
       </BottomFixed>
       {yearError && (
         <Modal onClose={() => setYearError(false)}>
-          <Modal.Title text="년도는 4자리로 입력\n해주세요" />
+          <Modal.Title text="연도는 4자리로 입력\n해주세요" />
           <ExampleYear>예시: 1987</ExampleYear>
         </Modal>
       )}
