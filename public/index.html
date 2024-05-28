@@ -40,7 +40,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="installPropmt"></div>
+    <!-- <div id="installDiv"></div> -->
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -57,17 +57,7 @@
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("/pwabuilder-sw.js");
         }
-        window.addEventListener("beforeinstallprompt", (event) => {
-          event.preventDefault();
-          var installDiv = document.getElementById("divInstallApp");
-          installDiv.innerHTML =
-            '<button id="installPrompt" class="">Install App</button>';
-          installDiv.addEventListener("click", () => {
-            event.prompt();
-            installDiv.innerHTML = "";
-          });
-        });
-      })();
+      });
     </script>
   </body>
 </html>

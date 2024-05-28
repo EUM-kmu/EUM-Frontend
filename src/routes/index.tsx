@@ -26,6 +26,7 @@ import { WelcomePage } from "@/pages/profile/welcome";
 import { Splash } from "@/pages/splash/splash";
 import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { UserTermsPage } from "@/pages/terms/user-terms";
+import { BottomFixedTest } from "@/pages/test/bottom-fixed-test";
 import { Test2 } from "@/pages/test2";
 
 const routeChildren = [
@@ -120,7 +121,6 @@ const routeChildren = [
     element: <Posting8 />,
     auth: true,
   },
-  { path: "/test2", element: <Test2 />, auth: true },
   {
     path: "/chat/detail",
     element: <ChatRoom />,
@@ -141,6 +141,10 @@ const routeChildren = [
     element: <Mypage />,
     auth: true,
   },
+
+  // test
+  { path: "/test2", element: <Test2 />, auth: true },
+  { path: "/test", element: <BottomFixedTest />, auth: false },
 ];
 
 const router = createBrowserRouter([
