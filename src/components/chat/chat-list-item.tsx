@@ -44,20 +44,24 @@ export const ChatListItem = (props: ChatRoomItemType) => {
         )}
         <LeftColumnDiv>
           <TitleText>
-            {props.postTitle}{" "}
+            {props.postTitle.length > 16
+              ? props.postTitle.slice(0, 15) + "..."
+              : props.postTitle}{" "}
             {props.deletedPost
               ? "(삭제된 게시글)"
               : props.blockedRoom
                 ? "(작성자 탈퇴)"
                 : ""}
           </TitleText>
-          <ItemText style={{ color: "#828282" }}>
-            {/* <IconImg /> */}
-            {" " + props.creatorNickname + "   "} <IconImg src={dateSVG} />
+          <ContentText>{" " + props.creatorNickname + "   "}</ContentText>
+          <ContentText>
+            <IconImg src={dateSVG} />
             {" " + BackdateToItemtype(props.startDate) + "   "}
+          </ContentText>
+          <ContentText>
             <IconImg src={locationSVG} />
             {" " + props.location + "   "}
-          </ItemText>
+          </ContentText>
         </LeftColumnDiv>
       </RowDiv>
       {/* <RightColumnDiv>
@@ -84,7 +88,7 @@ const ItemContainer = styled.div`
 const RowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
 `;
 
@@ -113,7 +117,7 @@ const StateFinishDiv = styled.div`
 
 const LeftColumnDiv = styled.div`
   display: flex;
-  height: 2.7rem;
+  /* height: 2.7rem; */
   flex-direction: column;
   justify-content: center;
   padding: 0 0 0 4.61%;
@@ -121,7 +125,7 @@ const LeftColumnDiv = styled.div`
 `;
 
 const TitleText = styled.span`
-  font-size: 1rem;
+  font-size: 1.11rem;
   font-weight: bold;
 `;
 
@@ -135,8 +139,13 @@ const TitleText = styled.span`
 //   color: #ffffff;
 // `;
 
-const ItemText = styled.span`
-  font-size: 0.56rem;
+// const ItemText = styled.span`
+//   font-size: 0.56rem;
+// `;
+
+const ContentText = styled.span`
+  font-size: 0.83rem;
+  color: #828282;
 `;
 
 // const RightColumnDiv = styled.div`

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
 import { ChatList } from "@/components/chat/chat-list";
-import { AppBar } from "@/components/common/app-bar";
-import { useGetChatList } from "@/hooks/queries/useGetChatList";
+import { ToggleSwitchVer2 } from "@/components/common/toggle-switch-ver2";
+import { colorTheme } from "@/style/color-theme";
 
 export const Chat = () => {
   const [appBarHeight, setAppBarHeight] = useState(0);
-  const { data: chatList } = useGetChatList();
+  const [type, setType] = useState(true);
 
   useEffect(() => {
     const element = document.getElementById("AppBar");
@@ -19,10 +19,21 @@ export const Chat = () => {
 
   return (
     <Wrapper style={{ paddingTop: `${appBarHeight}px` }}>
-      <AppBar id="AppBar" isFixed={true}>
+      <HeaderWrapper>
         <PageText>채팅</PageText>
-      </AppBar>
-      {chatList && <ChatList chatList={chatList} />}
+      </HeaderWrapper>
+      <HeaderSwitchWrapper>
+        <ToggleSwitchVer2
+          firstText="진행중"
+          secondText="진행완료"
+          isLeftSelected={type}
+          onChangeSelected={setType}
+          notSelectBackColor={colorTheme.blue900}
+        />
+      </HeaderSwitchWrapper>
+      <ChatList
+        type={type ? "RECRUITMENT_COMPLETED" : "TRANSACTION_COMPLETED"}
+      />
     </Wrapper>
   );
 };
@@ -41,6 +52,19 @@ const PageText = styled.div`
   font-size: 1.78rem;
   width: 100%;
   padding: 1.39rem 7.95% 0.56rem;
-  border-bottom: 1px solid #d9d9d9;
   font-weight: 500;
+  vertical-align: bottom;
+`;
+
+const HeaderWrapper = styled.div`
+  width: 100%;
+  height: 5.56rem;
+  padding: 0.83rem 1.07rem;
+  background-color: ${colorTheme.blue100};
+`;
+
+const HeaderSwitchWrapper = styled.div`
+  width: 100%;
+  background-color: ${colorTheme.blue100};
+  border-bottom: 1px solid #d9d9d9;
 `;

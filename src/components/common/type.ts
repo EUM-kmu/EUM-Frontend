@@ -42,6 +42,10 @@ export type SwitchToggleType = {
   secondText: string;
   onChangeSelected: (newValue: boolean) => void;
   isLeftSelected: boolean;
+  selectBackColor?: string;
+  notSelectBackColor?: string;
+  selectTextColor?: string;
+  notSelectTextColor?: string;
 };
 
 export type AppBarProps = {

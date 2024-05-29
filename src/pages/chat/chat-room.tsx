@@ -255,6 +255,7 @@ export const ChatRoom = () => {
                           setDeletedProfileModal={setDeletedProfileModal}
                           date={item.createdAt}
                           msg={item.message.replace(/^"(.*)"$/, "$1")}
+                          creator={item.senderInfo.creator}
                         />
                       );
                     } else if (item.type === "JOIN" || item.type === "LEAVE") {
@@ -291,6 +292,12 @@ export const ChatRoom = () => {
                 setDeletedProfileModal={setDeletedProfileModal}
                 date={item.createdAt}
                 msg={item.message.replace(/^"(.*)"$/, "$1")}
+                creator={
+                  roomData
+                    ? item.userId ===
+                      roomData.pages[0].postInfo.userInfo.userId.toString()
+                    : false
+                }
               />
             );
           } else {
