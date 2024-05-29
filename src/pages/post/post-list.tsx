@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
-// import { Modal } from "@/components/common/modal";
 import PostListEmptyCaseSVG from "@/assets/images/post-list-empty-case.svg";
+// import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
@@ -18,9 +18,10 @@ export const PostList = () => {
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
-  const { data, fetchNextPage } = useGetPostList(search);
+  const { data, fetchNextPage, hasNextPage } = useGetPostList(search);
   const listRef = useRef<HTMLDivElement>(null);
   const [isEmptyItem, setIsEmptyItem] = useState(false);
+  const [canFetch, setCanFetch] = useState(true);
 
   // const [ready, _] = useState<boolean>(true);
 
@@ -31,11 +32,22 @@ export const PostList = () => {
       if (wrapperRef.current) {
         const isScrollingDown = wrapperRef.current.scrollTop > headerHeight;
         setMiniButtonVisible(isScrollingDown);
+        console.log(wrapperRef.current.scrollHeight - 60);
+        console.log(
+          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight,
+        );
         if (
-          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight ===
-          wrapperRef.current.scrollHeight
+          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight >=
+          wrapperRef.current.scrollHeight - 60
         ) {
-          void fetchNextPage();
+          if (hasNextPage) {
+            if (canFetch) void fetchNextPage();
+            setCanFetch(false);
+
+            setTimeout(() => {
+              setCanFetch(true);
+            }, 1000);
+          }
         }
       }
     };
@@ -44,7 +56,7 @@ export const PostList = () => {
     return () => {
       wrapperRef.current?.removeEventListener("scroll", handleScroll);
     };
-  }, [headerHeight]);
+  }, [headerHeight, hasNextPage]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -59,6 +71,9 @@ export const PostList = () => {
   };
   return (
     <>
+      {/* {(!canFetch || isLoading) && hasNextPage && (
+        <div style={{ width: "100px", height: "100px" }}>로딩중</div>
+      )} */}
       <Wrapper ref={wrapperRef}>
         <div style={{ width: "100%" }} ref={headerRef}>
           {miniButtonVisible && <PostPostingButtonMini />}
