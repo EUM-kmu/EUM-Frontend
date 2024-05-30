@@ -58,6 +58,8 @@ export const Posting7 = () => {
               setIsError(true);
               return;
             }
+            console.log(posting);
+
             handleSave();
             navigate("/posting/8");
           }}

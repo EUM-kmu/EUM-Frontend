@@ -33,7 +33,12 @@ export const Posting8 = () => {
       location: posting.location,
       volunteerTime: posting.price,
       maxNumOfPeople: posting.memberNum,
+      categoryId: posting.activityType.filter(
+        (category) => category.state === true,
+      )[0].id,
     };
+
+    console.log(tempProps);
 
     postPosting.mutate(tempProps);
   };
