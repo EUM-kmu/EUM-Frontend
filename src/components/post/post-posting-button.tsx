@@ -30,6 +30,7 @@ export const PostPostingButton = () => {
 const Wrapper = styled.div`
   width: 100%;
   padding: 0.5rem 5.12% 0.8rem;
+  border-bottom: 1px solid #d9d9d9;
 `;
 
 const PostingButton = styled.button`

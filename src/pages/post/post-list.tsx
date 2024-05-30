@@ -14,6 +14,7 @@ import { colorTheme } from "@/style/color-theme";
 export const PostList = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
   const [tempSearch, setTempSearch] = useState("");
@@ -71,18 +72,16 @@ export const PostList = () => {
   };
   return (
     <>
-      {/* {(!canFetch || isLoading) && hasNextPage && (
-        <div style={{ width: "100px", height: "100px" }}>로딩중</div>
-      )} */}
       <Wrapper ref={wrapperRef}>
         <div style={{ width: "100%" }} ref={headerRef}>
           {miniButtonVisible && <PostPostingButtonMini />}
-          <BigHeader>전체게시물</BigHeader>
+          {/* <BigHeader>전체게시물</BigHeader> */}
           <InputWrapper>
             <InputInnerWrapper>
               <InputTextArea
                 value={tempSearch}
                 onChange={(e) => setTempSearch(e.target.value)}
+                ref={inputRef}
               />
               <SearchButton
                 onClick={() => {
@@ -137,11 +136,11 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const BigHeader = styled.div`
-  width: 100%;
-  font-size: 1.8rem;
-  padding: 2.9rem 9% 0.7rem;
-`;
+// const BigHeader = styled.div`
+//   width: 100%;
+//   font-size: 1.8rem;
+//   padding: 2.9rem 9% 0.7rem;
+// `;
 
 const SmallHeader = styled.div`
   width: 100%;
@@ -152,6 +151,7 @@ const SmallHeader = styled.div`
 const InputWrapper = styled.div`
   width: 100%;
   padding: 0 7.94% 0.7rem;
+  margin-top: 2rem;
 `;
 
 const InputInnerWrapper = styled.div`
@@ -190,4 +190,13 @@ const SearchButton = styled.button`
 const EmptyImg = styled.img`
   width: 18.16rem;
   height: 18.16rem;
+`;
+
+const CategoryField = styled.div`
+  width: 100%;
+  padding: 1rem 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.67rem;
 `;

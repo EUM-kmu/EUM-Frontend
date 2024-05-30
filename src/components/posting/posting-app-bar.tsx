@@ -11,13 +11,13 @@ export const PostingAppBar = (props: PostingAppBarProps) => {
     <AppBar isBorderExist={true}>
       <AppBar.AppBarNavigate>
         <AppBar.BackButton onCustomClick={props.onCustomClick} />
-        <AppBar.HeaderText>{props.nowPage}/7</AppBar.HeaderText>
+        <AppBar.HeaderText>{props.nowPage}/8</AppBar.HeaderText>
         <div style={{ width: "30px" }} />
       </AppBar.AppBarNavigate>
       <StateLine>
         <NowStateLine
-          initial={{ width: `calc((100% / 7) * ${props.nowPage - 1})` }}
-          animate={{ width: `calc((100% / 7) * ${props.nowPage})` }}
+          initial={{ width: `calc((100% / 8) * ${props.nowPage - 1})` }}
+          animate={{ width: `calc((100% / 8) * ${props.nowPage})` }}
         />
       </StateLine>
     </AppBar>

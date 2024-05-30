@@ -6,41 +6,61 @@ import { styled } from "styled-components";
 import { BottomFixed } from "@/components/common/bottom-fixed";
 import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
-import { PostingInput } from "@/components/posting/posting-input";
+import { PostingCategoryButton } from "@/components/posting/posting-category-button";
 import { postingState } from "@/recoil/atoms/posting-state";
 import { colorTheme } from "@/style/color-theme";
 
 export const Posting6 = () => {
   const [posting, setPosting] = useRecoilState(postingState);
-  const [title, setTitle] = useState(posting.title);
+  const [typeState, setTypeState] = useState(posting.activityType);
   const [isError, setIsError] = useState(false);
-
   const navigate = useNavigate();
 
   const handleSave = () => {
     setPosting((prevPosting) => {
-      const updatedPosting = { ...prevPosting, title: title };
+      const updatedPosting = { ...prevPosting, activityType: typeState };
       return updatedPosting;
     });
   };
 
   useEffect(() => {
-    if (isError && title !== "") {
-      setIsError(false);
-    }
-  }, [title]);
+    if (isError) setIsError(false);
+  }, [typeState]);
 
   return (
     <PageContainer>
       <PostingAppBar onCustomClick={() => handleSave()} nowPage={6} />
-      <PostingBoldText>활동 제목을 적어보세요</PostingBoldText>
-      <PostingInput.InputTitle
-        value={title}
-        setValue={setTitle}
-        isError={isError}
-        setIsError={setIsError}
-      />
-      {isError && <ErrorMsg>활동 제목은 필수 항목입니다</ErrorMsg>}
+      <ScrollContainer>
+        <PostingBoldText>항목을 선택해주세요</PostingBoldText>
+        {isError && <ErrorMsg>항목선택은 필수입니다</ErrorMsg>}
+        <Grid>
+          {typeState.map((item, index) => (
+            <PostingCategoryButton
+              key={index}
+              state={item.state}
+              onClick={() => {
+                setTypeState((prevTypeState) => {
+                  const updatedTypeState = prevTypeState.map(
+                    (prevStateItem, idx) => {
+                      if (idx === index) {
+                        return {
+                          ...prevStateItem,
+                          state: !prevStateItem.state,
+                        };
+                      } else {
+                        return { ...prevStateItem, state: false };
+                      }
+                    },
+                  );
+                  return updatedTypeState;
+                });
+              }}
+            >
+              {item.name}
+            </PostingCategoryButton>
+          ))}
+        </Grid>
+      </ScrollContainer>
       <BottomFixed alignDirection="row">
         <BottomFixed.Button
           color="blue"
@@ -54,7 +74,7 @@ export const Posting6 = () => {
         <BottomFixed.Button
           color="blue"
           onClick={() => {
-            if (!title.length) {
+            if (typeState.filter((category) => category.state).length === 0) {
               setIsError(true);
               return;
             }
@@ -72,8 +92,26 @@ export const Posting6 = () => {
 const PageContainer = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   align-items: center;
   flex-direction: column;
+`;
+
+const ScrollContainer = styled.div`
+  overflow: auto;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 4.07%;
+  width: 83.07%;
+  margin: 0px 0px 150px 0px;
 `;
 
 const ErrorMsg = styled.div`
@@ -83,5 +121,5 @@ const ErrorMsg = styled.div`
   font-weight: bold;
   line-height: 1.1rem;
   white-space: pre-line;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 `;

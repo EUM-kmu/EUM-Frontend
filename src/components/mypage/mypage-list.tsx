@@ -34,4 +34,5 @@ const Wrapper = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid #d9d9d9;
 `;
