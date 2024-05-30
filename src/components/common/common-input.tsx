@@ -35,24 +35,24 @@ const InputInner = ({
       } else {
         setValue(e.target.value);
         setIsError(false);
-        const inputValue = Number(e.target.value);
+        // const inputValue = Number(e.target.value);
 
-        if (isPrice) {
-          let roundedValue: number;
-          if (inputValue < 30) {
-            roundedValue = inputValue;
-          } else if (inputValue % 10 >= 1 && inputValue % 10 <= 4) {
-            roundedValue = inputValue - (inputValue % 10);
-          } else if (inputValue % 10 >= 5 && inputValue % 10 <= 9) {
-            roundedValue = Math.ceil(inputValue / 10) * 10;
-          } else {
-            roundedValue = inputValue;
-          }
+        // if (isPrice) {
+        //   let roundedValue: number;
+        //   if (inputValue < 30) {
+        //     roundedValue = inputValue;
+        //   } else if (inputValue % 10 >= 1 && inputValue % 10 <= 4) {
+        //     roundedValue = inputValue - (inputValue % 10);
+        //   } else if (inputValue % 10 >= 5 && inputValue % 10 <= 9) {
+        //     roundedValue = Math.ceil(inputValue / 10) * 10;
+        //   } else {
+        //     roundedValue = inputValue;
+        //   }
 
-          setTimeout(() => {
-            setValue(roundedValue.toString());
-          }, 600);
-        }
+        //   setTimeout(() => {
+        //     setValue(roundedValue.toString());
+        //   }, 600);
+        // }
       }
     }
   };

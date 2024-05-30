@@ -27,8 +27,10 @@ export type ToggleType = {
 
 export type InputType = {
   value: string | number;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
+  isError?: boolean;
+  setIsError?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type BottomSheetProps = {

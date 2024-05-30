@@ -1,19 +1,19 @@
-import { ChangeEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { BottomFixed } from "@/components/common/bottom-fixed";
-import { Modal } from "@/components/common/modal";
 import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
 import { PostingInput } from "@/components/posting/posting-input";
 import { postingState } from "@/recoil/atoms/posting-state";
+import { colorTheme } from "@/style/color-theme";
 
 export const Posting6 = () => {
   const [posting, setPosting] = useRecoilState(postingState);
   const [title, setTitle] = useState(posting.title);
-  const [errorModal, setErrorModal] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,21 +24,23 @@ export const Posting6 = () => {
     });
   };
 
+  useEffect(() => {
+    if (isError && title !== "") {
+      setIsError(false);
+    }
+  }, [title]);
+
   return (
     <PageContainer>
       <PostingAppBar onCustomClick={() => handleSave()} nowPage={6} />
       <PostingBoldText>활동 제목을 적어보세요</PostingBoldText>
       <PostingInput.InputTitle
         value={title}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setTitle(e.target.value);
-        }}
+        setValue={setTitle}
+        isError={isError}
+        setIsError={setIsError}
       />
-      {errorModal && (
-        <Modal onClose={() => setErrorModal(false)}>
-          <Modal.Title text="활동 제목은\n필수 항목입니다." />
-        </Modal>
-      )}
+      {isError && <ErrorMsg>활동 제목은 필수 항목입니다</ErrorMsg>}
       <BottomFixed alignDirection="row">
         <BottomFixed.Button
           color="blue"
@@ -52,11 +54,11 @@ export const Posting6 = () => {
         <BottomFixed.Button
           color="blue"
           onClick={() => {
-            handleSave();
             if (!title.length) {
-              setErrorModal(true);
+              setIsError(true);
               return;
             }
+            handleSave();
             navigate("/posting/7");
           }}
         >
@@ -72,4 +74,14 @@ const PageContainer = styled.div`
   width: 100%;
   align-items: center;
   flex-direction: column;
+`;
+
+const ErrorMsg = styled.div`
+  color: ${colorTheme.orange400};
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.1rem;
+  white-space: pre-line;
+  margin-top: 1rem;
 `;

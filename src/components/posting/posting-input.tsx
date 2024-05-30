@@ -1,4 +1,5 @@
-import { PropsWithChildren, useRef } from "react";
+import { motion } from "framer-motion";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 
 import { TextAreaType } from "./type";
@@ -10,12 +11,37 @@ export const PostingInput = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
 
-const InputTitle = (props: InputType) => {
+const InputTitle = ({ value, setValue, isError, setIsError }: InputType) => {
+  useEffect(() => {
+    const errorTimeout = setTimeout(() => {
+      if (setIsError) setIsError(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(errorTimeout);
+    };
+  }, [value]);
   return (
     <InputWrapper>
-      <InputContainer>
-        <InputTitleBox maxLength={20} type="text" {...props} />
-        <InputLeft>{props.value?.toString().length}/20자</InputLeft>
+      <InputContainer
+        animate={{
+          x: isError ? [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0] : 0,
+        }}
+        transition={{ duration: 0.5, repeat: 0 }}
+        style={{
+          color: isError ? "white" : "black",
+          backgroundColor: isError ? colorTheme.blue700 : colorTheme.blue100,
+        }}
+      >
+        <InputTitleBox
+          maxLength={20}
+          type="text"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        />
+        <InputLeft>{value.toString().length}/20자</InputLeft>
       </InputContainer>
     </InputWrapper>
   );
@@ -47,7 +73,7 @@ const InputWrapper = styled.div`
   padding: 0 9.8%;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   width: 100%;
