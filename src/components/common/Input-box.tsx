@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, ChangeEvent, PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { styled } from "styled-components";
 
 import { InputType } from "./type";
