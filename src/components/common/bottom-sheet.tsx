@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 
 import { BottomSheetProps } from "./type";
@@ -44,28 +45,33 @@ export const BottomSheet = ({
   // }, [isOpened, sheetRef]);
 
   return (
-    <Background style={{ visibility: isOpened ? "visible" : "hidden" }}>
-      <Wrapper
-        ref={sheetRef}
-        variants={variants}
-        animate={isOpened ? "opened" : "closed"}
-        initial={false}
-        style={{
-          visibility: isOpened ? "visible" : "hidden",
-          transition: "visibility 1s",
-          ...style,
-        }}
-      >
-        <HeaderContainer>
-          <HeaderXButton onClick={() => onChangeIsOpened()}>
-            <HeaderXImg src={CloseBlueDarkSVG} />
-          </HeaderXButton>
-          <EmptyBox></EmptyBox>
-          <Header></Header>
-        </HeaderContainer>
-        <ContentContainer>{props.children}</ContentContainer>
-      </Wrapper>
-    </Background>
+    <>
+      {createPortal(
+        <Background style={{ visibility: isOpened ? "visible" : "hidden" }}>
+          <Wrapper
+            ref={sheetRef}
+            variants={variants}
+            animate={isOpened ? "opened" : "closed"}
+            initial={false}
+            style={{
+              visibility: isOpened ? "visible" : "hidden",
+              transition: "visibility 1s",
+              ...style,
+            }}
+          >
+            <HeaderContainer>
+              <HeaderXButton onClick={() => onChangeIsOpened()}>
+                <HeaderXImg src={CloseBlueDarkSVG} />
+              </HeaderXButton>
+              <EmptyBox></EmptyBox>
+              <Header></Header>
+            </HeaderContainer>
+            <ContentContainer>{props.children}</ContentContainer>
+          </Wrapper>
+        </Background>,
+        document.body,
+      )}
+    </>
   );
 };
 

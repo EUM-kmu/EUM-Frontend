@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 import { ChatItemType } from "./type";
 
+import ChatCreatorIconSVG from "@/assets/icons/chat-creator-icon.svg";
 import { colorTheme } from "@/style/color-theme";
 import { ChatdateToMsgtype } from "@/utils/chatdate-to-msgtype";
 
@@ -14,6 +15,7 @@ export const ChatItem = ({
   setDeletedProfileModal,
   date,
   msg,
+  creator,
 }: ChatItemType) => {
   const tempId = localStorage.getItem("userId");
   const myId = tempId ? Number(tempId) : -1;
@@ -47,7 +49,11 @@ export const ChatItem = ({
             marginRight: userId === myId ? "1.28rem" : "0rem",
           }}
         >
-          {userId !== myId && <NameDiv>{userName}</NameDiv>}
+          {userId !== myId && (
+            <NameDiv>
+              {userName} {creator && <CreatorIcon src={ChatCreatorIconSVG} />}
+            </NameDiv>
+          )}
           <ChatBox
             style={{
               backgroundColor:
@@ -122,4 +128,9 @@ const RowBox = styled.div`
   display: flex;
   direction: row;
   align-items: flex-start;
+`;
+
+const CreatorIcon = styled.img`
+  width: 0.78rem;
+  height: 0.56rem;
 `;

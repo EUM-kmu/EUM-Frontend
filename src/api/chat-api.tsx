@@ -25,8 +25,10 @@ export default class ChatApi {
   }
 
   // 채팅방 리스트 가져오기
-  static async getChatList() {
-    const response = await Instance.get(`/chat-service/api/chatrooms`);
+  static async getChatList(type?: string) {
+    const response = type
+      ? await Instance.get(`/chat-service/api/chatrooms?status=${type}`)
+      : await Instance.get(`/chat-service/api/chatrooms`);
     devLog(response);
     if (response) {
       const temp = response.data as ChatListResponse;
