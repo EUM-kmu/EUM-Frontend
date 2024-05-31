@@ -1,48 +1,73 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useResetRecoilState } from "recoil";
+import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
-import { AppBar } from "@/components/common/app-bar";
+import { RequestPostingProps } from "@/api/types/post-type";
 import { BottomFixed } from "@/components/common/bottom-fixed";
+import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
+import { PostingInput } from "@/components/posting/posting-input";
+import { usePostPosting } from "@/hooks/queries/usePostPosting";
 import { postingState } from "@/recoil/atoms/posting-state";
+import { FormatDateString } from "@/utils/format-date-string";
 
 export const Posting8 = () => {
-  const location = useLocation();
-  const state = location.state as { postId: number };
-  const resetRecoil = useResetRecoilState(postingState);
+  const [posting, setPosting] = useRecoilState(postingState);
+  const [content, setContent] = useState(posting.content);
   const navigate = useNavigate();
+  const postPosting = usePostPosting();
+
+  const handleSave = () => {
+    setPosting((prevPosting) => {
+      const updatedPosting = { ...prevPosting, content: content };
+      return updatedPosting;
+    });
+  };
+
+  const handlePostPosting = () => {
+    const tempProps: RequestPostingProps = {
+      title: posting.title,
+      content: content,
+      startDate: FormatDateString(posting.startDate),
+      location: posting.location,
+      volunteerTime: posting.price,
+      maxNumOfPeople: posting.memberNum,
+      categoryId: posting.activityType.filter(
+        (category) => category.state === true,
+      )[0].id,
+    };
+
+    console.log(tempProps);
+
+    postPosting.mutate(tempProps);
+  };
 
   return (
     <PageContainer>
-      <AppBar>
-        <AppBar.AppBarNavigate>
-          <AppBar.BackButton
-            onCustomClick={() => {
-              resetRecoil();
-              localStorage.removeItem("postId");
-              navigate(`/post/${state.postId}`, {
-                state: { replace: "/post" },
-              });
-            }}
-            isBack={false}
-          />
-        </AppBar.AppBarNavigate>
-      </AppBar>
-      <PostingBoldText style={{ marginTop: "50px" }}>
-        게시물이
-        <br />
-        완성되었습니다!
-      </PostingBoldText>
+      <PostingAppBar
+        onCustomClick={() => {
+          handleSave();
+          navigate(-1);
+        }}
+        nowPage={7}
+      />
+      <PostingBoldText>활동 내용을 적어보세요</PostingBoldText>
+      <PostingInput.InputContent
+        value={content}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+          setContent(e.target.value);
+        }}
+      />
       <BottomFixed>
         <BottomFixed.Button
           color="orange"
           onClick={() => {
-            resetRecoil();
-            navigate(`/post/${state.postId}`, { state: { replace: "/post" } });
+            handleSave();
+            handlePostPosting();
           }}
         >
-          게시물 보러가기
+          게시물 만들기
         </BottomFixed.Button>
       </BottomFixed>
     </PageContainer>

@@ -21,3 +21,9 @@ export type TextAreaType = {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   children?: React.ReactNode;
 };
+
+export type SelectToggleType = {
+  state: boolean;
+  onClick?: () => void;
+  children: React.ReactNode;
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;

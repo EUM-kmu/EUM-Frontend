@@ -78,6 +78,7 @@ const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   gap: 11px;
   left: 0;
   right: 0;
+  background-color: white;
 `;
 
 const StyledButton = styled.button<{

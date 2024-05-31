@@ -1,68 +1,70 @@
-import { ChangeEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
-import { RequestPostingProps } from "@/api/types/post-type";
 import { BottomFixed } from "@/components/common/bottom-fixed";
 import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
 import { PostingInput } from "@/components/posting/posting-input";
-import { usePostPosting } from "@/hooks/queries/usePostPosting";
 import { postingState } from "@/recoil/atoms/posting-state";
-import { FormatDateString } from "@/utils/format-date-string";
+import { colorTheme } from "@/style/color-theme";
 
 export const Posting7 = () => {
   const [posting, setPosting] = useRecoilState(postingState);
-  const [content, setContent] = useState(posting.content);
+  const [title, setTitle] = useState(posting.title);
+  const [isError, setIsError] = useState(false);
+
   const navigate = useNavigate();
-  const postPosting = usePostPosting();
 
   const handleSave = () => {
     setPosting((prevPosting) => {
-      const updatedPosting = { ...prevPosting, content: content };
+      const updatedPosting = { ...prevPosting, title: title };
       return updatedPosting;
     });
   };
 
-  const handlePostPosting = () => {
-    const tempProps: RequestPostingProps = {
-      title: posting.title,
-      content: content,
-      startDate: FormatDateString(posting.startDate),
-      location: posting.location,
-      volunteerTime: posting.price,
-      maxNumOfPeople: posting.memberNum,
-    };
-
-    postPosting.mutate(tempProps);
-  };
+  useEffect(() => {
+    if (isError && title !== "") {
+      setIsError(false);
+    }
+  }, [title]);
 
   return (
     <PageContainer>
-      <PostingAppBar
-        onCustomClick={() => {
-          handleSave();
-          navigate(-1);
-        }}
-        nowPage={7}
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={6} />
+      <PostingBoldText>활동 제목을 적어보세요</PostingBoldText>
+      <PostingInput.InputTitle
+        value={title}
+        setValue={setTitle}
+        isError={isError}
+        setIsError={setIsError}
       />
-      <PostingBoldText>활동 내용을 적어보세요</PostingBoldText>
-      <PostingInput.InputContent
-        value={content}
-        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-          setContent(e.target.value);
-        }}
-      />
-      <BottomFixed>
+      {isError && <ErrorMsg>활동 제목은 필수 항목입니다</ErrorMsg>}
+      <BottomFixed alignDirection="row">
         <BottomFixed.Button
-          color="orange"
+          color="blue"
           onClick={() => {
             handleSave();
-            handlePostPosting();
+            navigate(-1);
           }}
         >
-          게시물 만들기
+          이전
+        </BottomFixed.Button>
+        <BottomFixed.Button
+          color="blue"
+          onClick={() => {
+            if (!title.length) {
+              setIsError(true);
+              return;
+            }
+            console.log(posting);
+
+            handleSave();
+            navigate("/posting/8");
+          }}
+        >
+          다음
         </BottomFixed.Button>
       </BottomFixed>
     </PageContainer>
@@ -74,4 +76,14 @@ const PageContainer = styled.div`
   width: 100%;
   align-items: center;
   flex-direction: column;
+`;
+
+const ErrorMsg = styled.div`
+  color: ${colorTheme.orange400};
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.1rem;
+  white-space: pre-line;
+  margin-top: 1rem;
 `;

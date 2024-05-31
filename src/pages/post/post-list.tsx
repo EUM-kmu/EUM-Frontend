@@ -5,23 +5,32 @@ import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
 import PostListEmptyCaseSVG from "@/assets/images/post-list-empty-case.svg";
 // import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
+import { PostCategory } from "@/components/post/post-category";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
 import { useGetPostList } from "@/hooks/queries/useGetPostList";
 import { colorTheme } from "@/style/color-theme";
+import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
 export const PostList = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const categoryRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
-  const { data, fetchNextPage, hasNextPage } = useGetPostList(search);
+  const [category, setCategory] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const [isEmptyItem, setIsEmptyItem] = useState(false);
   const [canFetch, setCanFetch] = useState(true);
+  const [categoryDiv, setCategoryDiv] = useState(false);
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetPostList({
+    search: search,
+    category: category,
+  });
 
   // const [ready, _] = useState<boolean>(true);
 
@@ -32,10 +41,6 @@ export const PostList = () => {
       if (wrapperRef.current) {
         const isScrollingDown = wrapperRef.current.scrollTop > headerHeight;
         setMiniButtonVisible(isScrollingDown);
-        console.log(wrapperRef.current.scrollHeight - 60);
-        console.log(
-          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight,
-        );
         if (
           wrapperRef.current.scrollTop + wrapperRef.current.clientHeight >=
           wrapperRef.current.scrollHeight - 60
@@ -64,33 +69,75 @@ export const PostList = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    void refetch();
+  }, [category]);
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      if (
+        categoryRef.current &&
+        inputRef.current &&
+        !categoryRef.current.contains(e.target as Node) &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setCategoryDiv(false);
+      }
+    };
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+
   const handleMiniButton = () => {
     if (wrapperRef.current) {
       wrapperRef.current.scrollTop = 0;
     }
   };
+
   return (
     <>
-      {/* {(!canFetch || isLoading) && hasNextPage && (
-        <div style={{ width: "100px", height: "100px" }}>로딩중</div>
-      )} */}
       <Wrapper ref={wrapperRef}>
         <div style={{ width: "100%" }} ref={headerRef}>
           {miniButtonVisible && <PostPostingButtonMini />}
-          <BigHeader>전체게시물</BigHeader>
+          {/* <BigHeader>전체게시물</BigHeader> */}
           <InputWrapper>
+            {category !== 0 && (
+              <CategorySelected
+                onClick={() => {
+                  setCategory(0);
+                }}
+              >
+                {TypeIdInteractionString({
+                  categoryId: category,
+                  idToString: true,
+                })}{" "}
+                X
+              </CategorySelected>
+            )}
             <InputInnerWrapper>
               <InputTextArea
                 value={tempSearch}
                 onChange={(e) => setTempSearch(e.target.value)}
+                onClick={() => {
+                  setCategoryDiv(true);
+                }}
+                ref={inputRef}
               />
               <SearchButton
                 onClick={() => {
                   setSearch(tempSearch);
+                  setCategoryDiv(false);
                 }}
               />
             </InputInnerWrapper>
           </InputWrapper>
+          {categoryDiv && (
+            <CategoryField ref={categoryRef}>
+              <PostCategory categoryId={category} setCategoryId={setCategory} />
+            </CategoryField>
+          )}
           <SmallHeader>
             게시글 만들기 버튼을 눌러 게시글을 만들어 보아요
           </SmallHeader>
@@ -137,11 +184,11 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const BigHeader = styled.div`
-  width: 100%;
-  font-size: 1.8rem;
-  padding: 2.9rem 9% 0.7rem;
-`;
+// const BigHeader = styled.div`
+//   width: 100%;
+//   font-size: 1.8rem;
+//   padding: 2.9rem 9% 0.7rem;
+// `;
 
 const SmallHeader = styled.div`
   width: 100%;
@@ -152,6 +199,26 @@ const SmallHeader = styled.div`
 const InputWrapper = styled.div`
   width: 100%;
   padding: 0 7.94% 0.7rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+`;
+
+const CategorySelected = styled.button`
+  height: 2.78rem;
+  width: 8.2rem;
+  border: none;
+  border-radius: 0.56rem;
+  display: flex;
+  flex-direction: row;
+  /* gap: 0.3rem; */
+  align-items: center;
+  padding: 0.22rem 0.7rem;
+  font-size: 1rem;
+  background-color: ${colorTheme.orange400};
+  color: white;
+  justify-content: center;
 `;
 
 const InputInnerWrapper = styled.div`
@@ -190,4 +257,8 @@ const SearchButton = styled.button`
 const EmptyImg = styled.img`
   width: 18.16rem;
   height: 18.16rem;
+`;
+
+const CategoryField = styled.div`
+  width: 100%;
 `;
