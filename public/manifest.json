@@ -64,10 +64,33 @@
   "screenshots": [
     {
       "src": "images/screenshot1.jpg",
-      "sizes": "1080x1920",
+      "sizes": "1695x3840",
       "form_factor": "narrow",
-      "platform": "windows",
-      "label": "KMU"
+      "label": "mobile_screenshot1"
+    },
+    {
+      "src": "images/screenshot2.jpg",
+      "sizes": "1695x3840",
+      "form_factor": "narrow",
+      "label": "mobile_screenshot2"
+    },
+    {
+      "src": "images/screenshot3.jpg",
+      "sizes": "1695x3840",
+      "form_factor": "narrow",
+      "label": "mobile_screenshot3"
+    },
+    {
+      "src": "images/screenshot4.jpg",
+      "sizes": "1695x3840",
+      "form_factor": "narrow",
+      "label": "mobile_screenshot4"
+    },
+    {
+      "src": "images/screenshot5.jpg",
+      "sizes": "1695x3840",
+      "form_factor": "narrow",
+      "label": "mobile_screenshot5"
     },
     {
       "src": "images/screenshot2.png",
