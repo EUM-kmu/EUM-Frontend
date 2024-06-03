@@ -56,3 +56,8 @@ export type ApplicantOnlyDeleteProps = {
   isPage?: boolean;
   onFinishApply?: () => void;
 };
+
+export type ApplicantListBottomSheetPostProps = {
+  postId: string;
+  onFinishApply: () => void;
+};

@@ -1,4 +1,5 @@
-import { useState, ChangeEvent, PropsWithChildren } from "react";
+import { motion } from "framer-motion";
+import { PropsWithChildren, useEffect } from "react";
 import { styled } from "styled-components";
 
 import { InputType } from "./type";
@@ -10,43 +11,51 @@ export const InputBox = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
 
-const InputNum = ({ value, onChange, children }: InputType) => {
-  const [inputValue, setInputValue] = useState(value || "");
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange(e);
-  };
-
+const InputNum = ({ value, setValue, children }: InputType) => {
   return (
     <InputBoxContainer>
       <InputBoxCom
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
-        value={inputValue}
-        onChange={handleInputChange}
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
       />
       <WonText>{children}</WonText>
     </InputBoxContainer>
   );
 };
 
-const InputMap = ({ value, onChange }: InputType) => {
-  const [inputValue, setInputValue] = useState(value || "");
+const InputMap = ({ value, setValue, isError, setIsError }: InputType) => {
+  useEffect(() => {
+    const errorTimeout = setTimeout(() => {
+      if (setIsError) setIsError(false);
+    }, 5000);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange(e);
-  };
+    return () => {
+      clearTimeout(errorTimeout);
+    };
+  }, [value]);
 
   return (
     <InputMapContainer>
       <Icon src={ReadingGlassSVG} />
       <InputMapBox
         type="text"
-        value={inputValue}
-        onChange={handleInputChange}
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+        animate={{
+          x: isError ? [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0] : 0,
+        }}
+        transition={{ duration: 0.5, repeat: 0 }}
+        style={{
+          color: isError ? "white" : "black",
+          backgroundColor: isError ? colorTheme.blue700 : colorTheme.blue100,
+        }}
       />
     </InputMapContainer>
   );
@@ -95,7 +104,7 @@ const Icon = styled.img`
   height: 1.89rem;
 `;
 
-const InputMapBox = styled.input`
+const InputMapBox = styled(motion.input)`
   width: 69.12%;
   height: 100%;
   padding: 7.4%;

@@ -4,18 +4,28 @@ import { styled } from "styled-components";
 import { SwitchToggleType } from "@/components/common/type";
 import { colorTheme } from "@/style/color-theme";
 
-export const MypageToggleSwitch = ({
+export const ToggleSwitchVer2 = ({
   firstText,
   secondText,
   onChangeSelected,
   isLeftSelected,
+  selectBackColor,
+  notSelectBackColor,
+  selectTextColor,
+  notSelectTextColor,
 }: SwitchToggleType) => {
   const variants = {
-    selected: { width: "65%", backgroundColor: "#ffffff", color: "#000000" },
+    selected: {
+      width: "65%",
+      backgroundColor: selectBackColor ? selectBackColor : "white",
+      color: selectTextColor ? selectTextColor : "black",
+    },
     notSelected: {
       width: "35%",
-      backgroundColor: colorTheme.orange400,
-      color: "#ffffff",
+      backgroundColor: notSelectBackColor
+        ? notSelectBackColor
+        : colorTheme.orange400,
+      color: notSelectTextColor ? notSelectTextColor : "white",
     },
   };
 

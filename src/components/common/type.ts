@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, ChangeEvent } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { ProfileData } from "@/api/types/profile-type";
 
@@ -27,8 +27,10 @@ export type ToggleType = {
 
 export type InputType = {
   value: string | number;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
+  isError?: boolean;
+  setIsError?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type BottomSheetProps = {
@@ -42,6 +44,10 @@ export type SwitchToggleType = {
   secondText: string;
   onChangeSelected: (newValue: boolean) => void;
   isLeftSelected: boolean;
+  selectBackColor?: string;
+  notSelectBackColor?: string;
+  selectTextColor?: string;
+  notSelectTextColor?: string;
 };
 
 export type AppBarProps = {

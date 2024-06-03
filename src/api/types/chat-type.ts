@@ -39,6 +39,7 @@ export type senderInfo = {
   profileImage: string;
   nickName: string;
   deleted: boolean;
+  creator: boolean;
 };
 
 export type ChatRoomMessage = {
@@ -54,6 +55,7 @@ export type ChatRoomMember = {
   profileId: number;
   userId: number;
   profileImage: string;
+  creator: boolean;
 };
 
 export type postInfo = {
@@ -62,6 +64,9 @@ export type postInfo = {
   title: string;
   pay: number;
   dealId: number;
+  userInfo: {
+    userId: number;
+  };
 };
 
 export type ChatRoomData = {

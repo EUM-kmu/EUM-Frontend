@@ -11,3 +11,13 @@ export type PostListItemProps = {
   writerId: number;
   deleted: boolean;
 };
+
+export type PostCategorySelect = {
+  categoryId: number;
+  setCategoryId: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export type categoryType = {
+  id: number;
+  name: string;
+};

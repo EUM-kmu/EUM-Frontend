@@ -20,6 +20,7 @@ import { Posting5 } from "@/pages/posting/posting5";
 import { Posting6 } from "@/pages/posting/posting6";
 import { Posting7 } from "@/pages/posting/posting7";
 import { Posting8 } from "@/pages/posting/posting8";
+import { Posting9 } from "@/pages/posting/posting9";
 import { ProfilePage } from "@/pages/profile";
 import { DonePage } from "@/pages/profile/done";
 import { WelcomePage } from "@/pages/profile/welcome";
@@ -28,7 +29,6 @@ import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { UserTermsPage } from "@/pages/terms/user-terms";
 import { BottomFixedTest } from "@/pages/test/bottom-fixed-test";
 import { FCMTest } from "@/pages/test/fcm";
-import { Test2 } from "@/pages/test2";
 
 const routeChildren = [
   {
@@ -123,6 +123,11 @@ const routeChildren = [
     auth: true,
   },
   {
+    path: "posting/9",
+    element: <Posting9 />,
+    auth: true,
+  },
+  {
     path: "/chat/detail",
     element: <ChatRoom />,
     auth: true,
@@ -145,7 +150,6 @@ const routeChildren = [
 
   // test
   { path: "/test", element: <BottomFixedTest />, auth: false },
-  { path: "/test2", element: <Test2 />, auth: true },
   { path: "/test3", element: <FCMTest />, auth: false },
 ];
 

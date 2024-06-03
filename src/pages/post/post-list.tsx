@@ -3,8 +3,10 @@ import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
+import PostListEmptyCaseSVG from "@/assets/images/post-list-empty-case.svg";
 // import { Modal } from "@/components/common/modal";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
+import { PostCategory } from "@/components/post/post-category";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
@@ -13,17 +15,28 @@ import { usePostFcmToken } from "@/hooks/queries/usePostFcmToken";
 import { requestPermission, requestToken } from "@/lib/messaging";
 import { fcmTokenState } from "@/recoil/atoms/fcm-token-state";
 import { colorTheme } from "@/style/color-theme";
+import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
 export const PostList = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const categoryRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
-  const { data, fetchNextPage } = useGetPostList(search);
   const [fcmToken, setFcmToken] = useRecoilState(fcmTokenState);
   const { mutate } = usePostFcmToken();
+  const [category, setCategory] = useState(0);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [isEmptyItem, setIsEmptyItem] = useState(false);
+  const [canFetch, setCanFetch] = useState(true);
+  const [categoryDiv, setCategoryDiv] = useState(false);
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetPostList({
+    search: search,
+    category: category,
+  });
 
   // const [ready, _] = useState<boolean>(true);
 
@@ -50,10 +63,17 @@ export const PostList = () => {
         const isScrollingDown = wrapperRef.current.scrollTop > headerHeight;
         setMiniButtonVisible(isScrollingDown);
         if (
-          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight ===
-          wrapperRef.current.scrollHeight
+          wrapperRef.current.scrollTop + wrapperRef.current.clientHeight >=
+          wrapperRef.current.scrollHeight - 60
         ) {
-          void fetchNextPage();
+          if (hasNextPage) {
+            if (canFetch) void fetchNextPage();
+            setCanFetch(false);
+
+            setTimeout(() => {
+              setCanFetch(true);
+            }, 1000);
+          }
         }
       }
     };
@@ -62,55 +82,109 @@ export const PostList = () => {
     return () => {
       wrapperRef.current?.removeEventListener("scroll", handleScroll);
     };
-  }, [headerHeight]);
+  }, [headerHeight, hasNextPage]);
+
+  useEffect(() => {
+    if (listRef.current) {
+      setIsEmptyItem(listRef.current.children.length === 0);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    void refetch();
+  }, [category]);
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      if (
+        categoryRef.current &&
+        inputRef.current &&
+        !categoryRef.current.contains(e.target as Node) &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setCategoryDiv(false);
+      }
+    };
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
 
   const handleMiniButton = () => {
     if (wrapperRef.current) {
       wrapperRef.current.scrollTop = 0;
     }
   };
+
   return (
     <>
       <Wrapper ref={wrapperRef}>
         <div style={{ width: "100%" }} ref={headerRef}>
           {miniButtonVisible && <PostPostingButtonMini />}
-          <BigHeader>전체게시물</BigHeader>
+          {/* <BigHeader>전체게시물</BigHeader> */}
           <InputWrapper>
+            {category !== 0 && (
+              <CategorySelected
+                onClick={() => {
+                  setCategory(0);
+                }}
+              >
+                {TypeIdInteractionString({
+                  categoryId: category,
+                  idToString: true,
+                })}{" "}
+                X
+              </CategorySelected>
+            )}
             <InputInnerWrapper>
               <InputTextArea
                 value={tempSearch}
                 onChange={(e) => setTempSearch(e.target.value)}
+                onClick={() => {
+                  setCategoryDiv(true);
+                }}
+                ref={inputRef}
               />
               <SearchButton
                 onClick={() => {
                   setSearch(tempSearch);
+                  setCategoryDiv(false);
                 }}
               />
             </InputInnerWrapper>
           </InputWrapper>
+          {categoryDiv && (
+            <CategoryField ref={categoryRef}>
+              <PostCategory categoryId={category} setCategoryId={setCategory} />
+            </CategoryField>
+          )}
           <SmallHeader>
             게시글 만들기 버튼을 눌러 게시글을 만들어 보아요
           </SmallHeader>
           <PostPostingButton />
         </div>
-        {data?.pages.map((page, idx) =>
-          page.map((item, index) => (
-            <PostListItem
-              key={`${idx}-${index}`}
-              postId={item.postId}
-              title={item.title}
-              location={item.location}
-              startDate={item.startDate}
-              pay={item.pay}
-              status={item.status}
-              currentApplicant={item.currentApplicant}
-              maxNumOfPeople={item.maxNumOfPeople}
-              writerProfileImg={item.writerInfo.profileImage}
-              writerId={item.writerInfo.profileId}
-              deleted={item.deleted}
-            />
-          )),
-        )}
+        <div style={{ width: "100%" }} ref={listRef}>
+          {data?.pages.map((page, idx) =>
+            page.map((item, index) => (
+              <PostListItem
+                key={`${idx}-${index}`}
+                postId={item.postId}
+                title={item.title}
+                location={item.location}
+                startDate={item.startDate}
+                pay={item.pay}
+                status={item.status}
+                currentApplicant={item.currentApplicant}
+                maxNumOfPeople={item.maxNumOfPeople}
+                writerProfileImg={item.writerInfo.profileImage}
+                writerId={item.writerInfo.profileId}
+                deleted={item.deleted}
+              />
+            )),
+          )}
+        </div>
+        {isEmptyItem && <EmptyImg src={PostListEmptyCaseSVG} />}
         {miniButtonVisible && <MypageUpButton onHandler={handleMiniButton} />}
       </Wrapper>
       {/* {ready && (
@@ -128,13 +202,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow: auto;
   height: 100%;
+  align-items: center;
 `;
 
-const BigHeader = styled.div`
-  width: 100%;
-  font-size: 1.8rem;
-  padding: 2.9rem 9% 0.7rem;
-`;
+// const BigHeader = styled.div`
+//   width: 100%;
+//   font-size: 1.8rem;
+//   padding: 2.9rem 9% 0.7rem;
+// `;
 
 const SmallHeader = styled.div`
   width: 100%;
@@ -145,6 +220,26 @@ const SmallHeader = styled.div`
 const InputWrapper = styled.div`
   width: 100%;
   padding: 0 7.94% 0.7rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+`;
+
+const CategorySelected = styled.button`
+  height: 2.78rem;
+  width: 8.2rem;
+  border: none;
+  border-radius: 0.56rem;
+  display: flex;
+  flex-direction: row;
+  /* gap: 0.3rem; */
+  align-items: center;
+  padding: 0.22rem 0.7rem;
+  font-size: 1rem;
+  background-color: ${colorTheme.orange400};
+  color: white;
+  justify-content: center;
 `;
 
 const InputInnerWrapper = styled.div`
@@ -178,4 +273,13 @@ const SearchButton = styled.button`
   border: none;
   background-repeat: no-repeat;
   background-size: cover;
+`;
+
+const EmptyImg = styled.img`
+  width: 18.16rem;
+  height: 18.16rem;
+`;
+
+const CategoryField = styled.div`
+  width: 100%;
 `;

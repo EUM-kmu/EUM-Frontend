@@ -9,7 +9,7 @@ export const usePostPosting = () => {
   return useMutation({
     mutationFn: (data: RequestPostingProps) => PostApi.postPosting(data),
     onSuccess: (response) => {
-      navigate("/posting/8", { state: { postId: response.data.postId } });
+      navigate("/posting/9", { state: { postId: response.data.postId } });
     },
   });
 };

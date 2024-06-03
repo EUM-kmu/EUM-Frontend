@@ -6,7 +6,7 @@ import { styled } from "styled-components";
 
 import { ChatRoomData, ChatRoomSubMessage } from "./type";
 
-import { ApplicantListBottomSheet } from "@/components/apply/applicant-list-bottom-sheet";
+import { ApplicantListBottomSheetChat } from "@/components/apply/applicant-list-bottom-sheet-chat";
 import { ChatAppBar } from "@/components/chat/chat-app-bar";
 import { ChatAppBarBlock } from "@/components/chat/chat-app-bar-block";
 import { ChatEntryExit } from "@/components/chat/chat-entry-exit";
@@ -255,6 +255,7 @@ export const ChatRoom = () => {
                           setDeletedProfileModal={setDeletedProfileModal}
                           date={item.createdAt}
                           msg={item.message.replace(/^"(.*)"$/, "$1")}
+                          creator={item.senderInfo.creator}
                         />
                       );
                     } else if (item.type === "JOIN" || item.type === "LEAVE") {
@@ -291,6 +292,12 @@ export const ChatRoom = () => {
                 setDeletedProfileModal={setDeletedProfileModal}
                 date={item.createdAt}
                 msg={item.message.replace(/^"(.*)"$/, "$1")}
+                creator={
+                  roomData
+                    ? item.userId ===
+                      roomData.pages[0].postInfo.userInfo.userId.toString()
+                    : false
+                }
               />
             );
           } else {
@@ -335,7 +342,7 @@ export const ChatRoom = () => {
             />
           )}
           {isApplySheet && (
-            <ApplicantListBottomSheet
+            <ApplicantListBottomSheetChat
               postId={state.postId.toString()}
               chatId={state.roomId}
               onFinishApply={() => {

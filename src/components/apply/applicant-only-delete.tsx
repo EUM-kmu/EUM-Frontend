@@ -20,6 +20,7 @@ export const ApplicantOnlyDelete = ({
     <Modal
       onClose={() => {
         setStatusChangeModal(false);
+        if (isPage) if (onFinishApply) onFinishApply();
       }}
     >
       {applyIds.length === 0 && (
@@ -29,45 +30,24 @@ export const ApplicantOnlyDelete = ({
         <Modal.Title text="선택한 유저를 \n 참여자에서 제외시켰습니다 \n 이 게시물의 현재 상태는 \n [모집중]입니다. \n 상태를 [모집완료]로 \n 변경하시겠습니까?" />
       )}
       {applyIds.length === 0 ? (
-        isPage ? (
-          <>
-            <Modal.Button
-              color="orange"
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              게시글 돌아가기
-            </Modal.Button>
-            <Modal.Button
-              color="orange"
-              onClick={() => {
-                navigate("/post");
-              }}
-            >
-              홈화면 가기
-            </Modal.Button>
-          </>
-        ) : (
-          <>
-            <Modal.Button
-              color="orange"
-              onClick={() => {
-                if (onFinishApply) onFinishApply();
-              }}
-            >
-              채팅방 돌아가기
-            </Modal.Button>
-            <Modal.Button
-              color="orange"
-              onClick={() => {
-                navigate("/post");
-              }}
-            >
-              홈화면 가기
-            </Modal.Button>
-          </>
-        )
+        <>
+          <Modal.Button
+            color="orange"
+            onClick={() => {
+              if (onFinishApply) onFinishApply();
+            }}
+          >
+            {isPage ? "게시글 돌아가기" : "채팅방 돌아가기"}
+          </Modal.Button>
+          <Modal.Button
+            color="orange"
+            onClick={() => {
+              navigate("/post");
+            }}
+          >
+            홈화면 가기
+          </Modal.Button>
+        </>
       ) : (
         <>
           <Modal.Button

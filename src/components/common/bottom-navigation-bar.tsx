@@ -35,7 +35,8 @@ export const BottomNavigationBar = () => {
         <img src={currentUrl == "mypage" ? MypageOrangeSVG : MypageDarkSVG} />
         <ButtonText
           style={{
-            color: currentUrl == "mypage" ? "#f17547" : "#828282",
+            color:
+              currentUrl == "mypage" ? colorTheme.orange400 : colorTheme.shade,
             fontWeight: currentUrl == "mypage" ? "bold" : "normal",
           }}
         >
@@ -50,7 +51,8 @@ export const BottomNavigationBar = () => {
         <img src={currentUrl == "post" ? PostOrange : PostDark} />
         <ButtonText
           style={{
-            color: currentUrl == "post" ? "#f17547" : "#828282",
+            color:
+              currentUrl == "post" ? colorTheme.orange400 : colorTheme.shade,
             fontWeight: currentUrl == "post" ? "bold" : "normal",
           }}
         >
@@ -65,7 +67,8 @@ export const BottomNavigationBar = () => {
         <img src={currentUrl == "chat" ? ChatOrangeSVG : ChatDarkSVG} />
         <ButtonText
           style={{
-            color: currentUrl == "chat" ? "#f17547" : "#828282",
+            color:
+              currentUrl == "chat" ? colorTheme.orange400 : colorTheme.shade,
             fontWeight: currentUrl == "chat" ? "bold" : "normal",
           }}
         >
@@ -99,6 +102,7 @@ const NavigateButton = styled.button`
   gap: 0.22rem;
   padding-top: 7px;
   height: 100%;
+  background-color: transparent;
 `;
 
 const ButtonText = styled.span`

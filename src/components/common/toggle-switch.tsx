@@ -10,10 +10,24 @@ export const ToggleSwitch = ({
   secondText,
   onChangeSelected,
   isLeftSelected,
+  selectBackColor,
+  notSelectBackColor,
+  selectTextColor,
+  notSelectTextColor,
 }: SwitchToggleType) => {
   const variants = {
-    selected: { width: "65%", backgroundColor: colorTheme.orange400 },
-    notSelected: { width: "35%", backgroundColor: colorTheme.orange200 },
+    selected: {
+      width: "65%",
+      backgroundColor: selectBackColor ? selectBackColor : colorTheme.orange400,
+      color: selectTextColor ? selectTextColor : "#ffffff",
+    },
+    notSelected: {
+      width: "35%",
+      backgroundColor: notSelectBackColor
+        ? notSelectBackColor
+        : colorTheme.orange200,
+      color: notSelectTextColor ? notSelectTextColor : "#ffffff",
+    },
   };
 
   return (

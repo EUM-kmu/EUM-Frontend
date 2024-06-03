@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 
 import { PostType } from "@/api/types/post-type";
 import BackBlackSVG from "@/assets/icons/back-black.svg";
+import { ApplicantListBottomSheetPost } from "@/components/apply/applicant-list-bottom-sheet-post";
 import { ActivityBox } from "@/components/common/activity-box";
 import { AppBar } from "@/components/common/app-bar";
 import { BottomFixed } from "@/components/common/bottom-fixed";
@@ -37,9 +38,10 @@ export const PostDetailPage = () => {
   const [statusModal, setStatusModal] = useState(false);
   // const [reportModal, setReportModal] = useState(false);
   const [repostModal, setRepostModal] = useState(false);
-  const [reportBottomSheet, setReportBottomSheet] = useState(false);
+  const [bottomSheet, setBottomSheet] = useState(false);
   const [reportBottomSheetRendering, setReportBottomSheetRendering] =
     useState(false);
+  const [isApplySheet, setIsApplySheet] = useState(false);
 
   const [applyModal, setApplyModal] = useState<boolean>(false);
 
@@ -112,7 +114,7 @@ export const PostDetailPage = () => {
               rounded
               color="orange"
               onClick={() => {
-                setReportBottomSheet(true);
+                setBottomSheet(true);
                 setReportBottomSheetRendering(true);
               }}
             >
@@ -122,10 +124,11 @@ export const PostDetailPage = () => {
         )}
         <BottomSheet
           style={{ height: window.innerHeight > 720 ? "81%" : "90%" }}
-          isOpened={reportBottomSheet}
+          isOpened={bottomSheet}
           onChangeIsOpened={() => {
             setReportBottomSheetRendering(false);
-            setReportBottomSheet(false);
+            setBottomSheet(false);
+            setIsApplySheet(false);
           }}
         >
           {reportBottomSheetRendering && (
@@ -133,10 +136,19 @@ export const PostDetailPage = () => {
               postId={data?.marketPostResponse.postId.toString() ?? ""}
               onSuccessReport={() => {
                 setReportBottomSheetRendering(false);
-                setReportBottomSheet(false);
+                setBottomSheet(false);
                 // setReportModal(true);
               }}
               creatorId={data?.marketPostResponse.writerInfo.userId.toString()}
+            />
+          )}
+          {isApplySheet && (
+            <ApplicantListBottomSheetPost
+              postId={postId!}
+              onFinishApply={() => {
+                setIsApplySheet(false);
+                setReportBottomSheetRendering(false);
+              }}
             />
           )}
         </BottomSheet>
@@ -158,7 +170,12 @@ export const PostDetailPage = () => {
                 <BottomFixed.Button onClick={() => setRepostModal(true)}>
                   끌어올리기
                 </BottomFixed.Button>
-                <BottomFixed.Button onClick={() => navigate("applicant")}>
+                <BottomFixed.Button
+                  onClick={() => {
+                    setBottomSheet(true);
+                    setIsApplySheet(true);
+                  }}
+                >
                   참여관리
                 </BottomFixed.Button>
               </>

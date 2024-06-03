@@ -24,7 +24,10 @@ export const Posting4 = () => {
 
   const handleSave = () => {
     setPosting((prevPosting) => {
-      const updatedPosting = { ...prevPosting, price: Number(price) };
+      const updatedPosting = {
+        ...prevPosting,
+        price: Math.ceil(Number(price) / 10) * 10,
+      };
       return updatedPosting;
     });
   };
@@ -46,7 +49,7 @@ export const Posting4 = () => {
       <TipMsg
         style={{ color: `${colorTheme.orange400}` }}
       >{`※최소 단위는 30분(타임)입니다※`}</TipMsg>
-      <TimeText>{`인당 ${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분\n= ${Number(price)}분(타임) 소요`}</TimeText>
+      <TimeText>{`인당 ${Math.floor(Number(price) / 60)}시간 ${Number(price) % 60}분\n=> ${Math.ceil(Number(price) / 10) * 10}분(타임) 소요`}</TimeText>
       {isError && !isErrorText && (
         <ErrorMsg>
           {` 소요시간은 최소 30분 ~ 최대 ${availableBudget}분 사이로
@@ -61,7 +64,6 @@ export const Posting4 = () => {
           isError={isError}
           setIsError={setIsError}
           maximum={availableBudget}
-          isPrice={true}
           gap={"3%"}
         >
           분
@@ -120,7 +122,7 @@ const BalanceText = styled.span`
 const TimeText = styled.span`
   color: ${colorTheme.orange400};
   font-size: 1.33rem;
-  margin-bottom: 7%;
+  margin-bottom: 5%;
   white-space: pre-line;
   text-align: center;
   line-height: 1.7rem;

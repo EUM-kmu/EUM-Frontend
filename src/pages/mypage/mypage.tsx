@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import { AppBar } from "@/components/common/app-bar";
+import { ToggleSwitchVer2 } from "@/components/common/toggle-switch-ver2";
 import { MypageList } from "@/components/mypage/mypage-list";
 import { MypageListProfile } from "@/components/mypage/mypage-list-profile";
-import { MypageToggleSwitch } from "@/components/mypage/mypage-toggle-switch";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
 import { colorTheme } from "@/style/color-theme";
 
@@ -61,7 +61,7 @@ export const Mypage = () => {
             backgroundColor: colorTheme.blue100,
           }}
         >
-          <MypageToggleSwitch
+          <ToggleSwitchVer2
             firstText="내게시물"
             secondText="신청내역"
             isLeftSelected={isLeftSelected}

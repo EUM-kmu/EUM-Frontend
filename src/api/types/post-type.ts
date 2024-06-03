@@ -7,6 +7,7 @@ export type RequestPostingProps = {
   location: string;
   volunteerTime: number;
   maxNumOfPeople: number;
+  categoryId: number;
 };
 
 export type ResponsePostingProps = FinalResponse<PostType>;
@@ -72,4 +73,5 @@ export type PostListPageable = {
   page: number;
   size: number;
   search?: string;
+  category?: number;
 };
