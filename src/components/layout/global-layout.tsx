@@ -22,8 +22,8 @@ export const GlobalLayout = () => {
   return (
     <div
       style={{
-        width: "100dvw",
-        height: "100dvh",
+        width: "100vw",
+        height: "100vh",
         position: "relative",
         overflow: "hidden",
       }}
