@@ -17,6 +17,7 @@ export type ChatListItemType = {
   startDate: string;
   deletedPost: boolean;
   blockedRoom: boolean;
+  creatorProfileImg: string;
 };
 
 export type ChatMakeRoom = {

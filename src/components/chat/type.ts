@@ -37,6 +37,7 @@ export type ChatRoomItemType = {
   creatorNickname: string;
   deletedPost: boolean;
   blockedRoom: boolean;
+  creatorProfileImg: string;
 };
 
 export type ChatAppBarType = {
