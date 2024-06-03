@@ -11,7 +11,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
 
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     margin: 0 auto;
 
     @media screen and (min-width: 380px) and (max-width: 480px) {
