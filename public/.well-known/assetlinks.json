@@ -5,6 +5,16 @@
       "namespace": "android_app",
       "package_name": "app.web.k_eum2023.twa",
       "sha256_cert_fingerprints": [
+        "8A:5C:33:26:EE:F7:DA:58:3F:FB:6E:B2:AC:87:C0:EB:F7:2C:4E:C6:19:9A:F3:C4:7D:7F:BA:51:E8:FE:C4:97"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.web.k_eum2023.twa",
+      "sha256_cert_fingerprints": [
         "A9:0B:6A:9D:55:54:C3:6D:64:AC:79:79:17:AB:31:9D:D4:AB:E5:30:20:E3:A7:02:11:64:A3:E7:16:9F:17:02",
         "D0:A9:78:03:4A:4A:CB:98:17:C8:D9:8B:FA:6D:F4:D7:AC:E4:3A:C8:C2:4C:2B:F8:CB:68:B7:C8:12:83:4E:32"
       ]
