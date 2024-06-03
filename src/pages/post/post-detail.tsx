@@ -147,7 +147,7 @@ export const PostDetailPage = () => {
               postId={postId!}
               onFinishApply={() => {
                 setIsApplySheet(false);
-                setReportBottomSheetRendering(false);
+                setBottomSheet(false);
               }}
             />
           )}
@@ -199,7 +199,12 @@ export const PostDetailPage = () => {
                 </BottomFixed.Button>
                 {data?.marketPostResponse.status ===
                   "RECRUITMENT_COMPLETED" && (
-                  <BottomFixed.Button onClick={() => navigate("applicant")}>
+                  <BottomFixed.Button
+                    onClick={() => {
+                      setBottomSheet(true);
+                      setIsApplySheet(true);
+                    }}
+                  >
                     참여관리
                   </BottomFixed.Button>
                 )}
