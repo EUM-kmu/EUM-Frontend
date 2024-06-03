@@ -43,7 +43,6 @@ self.addEventListener("push", function (e) {
 });
 
 self.addEventListener("notificationclick", function (event) {
-  console.log("notification click");
   const url = "/";
   event.notification.close();
   event.waitUntil(clients.openWindow(url));

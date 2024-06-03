@@ -8,10 +8,8 @@ export type PermissionType = "granted" | "denied" | "default";
 async function requestPermission(): Promise<PermissionType> {
   return await Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
-      alert("알림 권한이 승인되었습니다");
       devLog("권한 승인");
     } else {
-      alert("크롬 설정에 들어가서 알림 권한을 승인해주셔야합니다");
       devLog("권한 거부");
     }
     return permission as PermissionType;

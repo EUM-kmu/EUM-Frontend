@@ -7,7 +7,7 @@ export default class AuthApi {
   static async postSignIn(type: string, token: string) {
     const response = await Instance.post(
       `/auth-service/api/v2/auth/signin/${type}`,
-      { token: token },
+      { token: token, fcmToken: "" },
     );
 
     devLog(response);
