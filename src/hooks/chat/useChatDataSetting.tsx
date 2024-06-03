@@ -26,9 +26,9 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
     const dealId: number = roomData ? roomData.pages[0].postInfo.dealId : -1;
     const availableBudget: number = bankData ? bankData.availableBudget : -1;
     const title: string = roomData ? roomData.pages[0].postInfo.title : "";
-    const creatorNickname: string = roomData
-      ? roomData.pages[0].postInfo.userInfo.creatorNickname
-      : "";
+    // const creatorNickname: string = roomData
+    //   ? roomData.pages[0].postInfo.userInfo.creatorNickname
+    //   : "";
 
     setTransfer({
       users: users,
@@ -39,7 +39,7 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
       dealId: dealId,
       transferState: status,
       title: title,
-      creatorNickname: creatorNickname,
+      // creatorNickname: creatorNickname,
     });
 
     setLastTransfer({
@@ -51,7 +51,7 @@ export const useChatDataSetting = (props: ChatMakeRoom) => {
       dealId: dealId,
       transferState: status,
       title: title,
-      creatorNickname: creatorNickname,
+      // creatorNickname: creatorNickname,
     });
   }, [roomData, bankData]);
 

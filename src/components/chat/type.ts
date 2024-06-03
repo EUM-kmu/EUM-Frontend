@@ -50,6 +50,7 @@ export type ChatAppBarType = {
   onClickApply: () => void;
   memberCount: number;
   setTransferErrorModal: () => void;
+  isEmpty: boolean;
 };
 
 export type ChatInRoomUser = {

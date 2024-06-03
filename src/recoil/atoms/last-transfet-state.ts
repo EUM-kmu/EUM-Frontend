@@ -19,6 +19,6 @@ export const lastTransferState = atom({
     dealId: 0,
     transferState: false,
     title: "",
-    creatorNickname: "",
+    // creatorNickname: "",
   },
 });

@@ -6,7 +6,6 @@ import { styled } from "styled-components";
 
 import { ChatRoomData, ChatRoomSubMessage } from "./type";
 
-import ChatRoomEmptySVG from "@/assets/images/chat-room-empty.svg";
 import { ApplicantListBottomSheetChat } from "@/components/apply/applicant-list-bottom-sheet-chat";
 import { ChatAppBar } from "@/components/chat/chat-app-bar";
 import { ChatAppBarBlock } from "@/components/chat/chat-app-bar-block";
@@ -23,7 +22,6 @@ import { useChatDataSetting } from "@/hooks/chat/useChatDataSetting";
 import { useGetChatRoomData } from "@/hooks/queries/useGetChatRoomData";
 import { UseSendMessages } from "@/hooks/queries/useSendMessages";
 import { transferState } from "@/recoil/atoms/transfer-state";
-import { colorTheme } from "@/style/color-theme";
 import { FormatDateString } from "@/utils/format-date-string";
 
 export const ChatRoom = () => {
@@ -102,6 +100,9 @@ export const ChatRoom = () => {
         }
       }
     }
+    if (chatListRef.current) {
+      setIsEmptyItem(chatListRef.current.children.length === 0);
+    }
   }, [roomData]);
 
   const handlePagenation = () => {
@@ -149,7 +150,11 @@ export const ChatRoom = () => {
 
   useEffect(() => {
     if (chatListRef.current) {
-      setIsEmptyItem(chatListRef.current.children.length === 0);
+      const chatItems = chatListRef.current.querySelectorAll(".chat-item");
+      const chatItems2 = chatListRef.current.querySelectorAll(
+        ".chat-entry-exit-item",
+      );
+      setIsEmptyItem(chatItems.length + chatItems2.length === 0);
     }
   }, [newRoomMsgs, roomData]);
 
@@ -215,6 +220,7 @@ export const ChatRoom = () => {
           setTransferErrorModal={() => {
             setTransferErrorModal(true);
           }}
+          isEmpty={isEmptyItem}
         />
       )}
       {(state.blockedRoom || state.deletedPost) && (
@@ -223,12 +229,6 @@ export const ChatRoom = () => {
           isDelted={state.deletedPost}
           isBlocked={state.blockedRoom}
         />
-      )}
-      {isEmptyItem && (
-        <>
-          <EmptyMsg>{`${transfer.creatorNickname}님의 [${transfer.title}] 채팅에 초대되었습니다\n자유롭게 채팅을 시작해보세요!`}</EmptyMsg>
-          <EmptyImg src={ChatRoomEmptySVG} />
-        </>
       )}
       <ChatList
         ref={chatListRef}
@@ -452,20 +452,4 @@ const ChatList = styled.div`
   align-items: center;
   flex-direction: column;
   padding-bottom: 3.89rem;
-`;
-
-const EmptyImg = styled.img`
-  width: 18.16rem;
-  height: 18.16rem;
-`;
-
-const EmptyMsg = styled.div`
-  width: 100%;
-  height: 3.78rem;
-  font-size: 0.83rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${colorTheme.shade};
-  background-color: ${colorTheme.blue100};
 `;

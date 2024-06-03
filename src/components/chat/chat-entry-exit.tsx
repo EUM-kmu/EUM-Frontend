@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const ChatEntryExit = ({ msg }: { msg: string }) => {
   return (
-    <Wrapper>
+    <Wrapper className="chat-entry-exit-item">
       <Container>{msg}</Container>
     </Wrapper>
   );
