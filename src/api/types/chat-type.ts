@@ -66,6 +66,7 @@ export type postInfo = {
   dealId: number;
   userInfo: {
     userId: number;
+    creatorNickname: string;
   };
 };
 
