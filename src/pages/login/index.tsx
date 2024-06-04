@@ -103,14 +103,14 @@ const Layout = styled.div`
   margin: auto;
   font-size: 0.88rem;
   background-color: #ffffff;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Content = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2.78rem;
 `;
 
