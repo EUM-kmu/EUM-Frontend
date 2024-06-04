@@ -16,7 +16,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ["dist", ".eslintrc.cjs", "**/*.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "**/*.cjs", "public/*"],
   plugins: ["react-refresh", "react", "import", "prettier"],
   rules: {
     "@typescript-eslint/no-unused-vars": [

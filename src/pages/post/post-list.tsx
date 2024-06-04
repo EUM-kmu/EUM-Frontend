@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import ReadingGlassOrangeSVG from "@/assets/icons/reading-glass-orange.svg";
@@ -10,6 +11,9 @@ import { PostListItem } from "@/components/post/post-list-item";
 import { PostPostingButton } from "@/components/post/post-posting-button";
 import { PostPostingButtonMini } from "@/components/post/post-posting-button-mini";
 import { useGetPostList } from "@/hooks/queries/useGetPostList";
+import { usePostFcmToken } from "@/hooks/queries/usePostFcmToken";
+import { requestPermission, requestToken } from "@/lib/messaging";
+import { fcmTokenState } from "@/recoil/atoms/fcm-token-state";
 import { colorTheme } from "@/style/color-theme";
 import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
@@ -22,6 +26,8 @@ export const PostList = () => {
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
   const [tempSearch, setTempSearch] = useState("");
   const [search, setSearch] = useState("");
+  const [fcmToken, setFcmToken] = useRecoilState(fcmTokenState);
+  const { mutate } = usePostFcmToken();
   const [category, setCategory] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const [isEmptyItem, setIsEmptyItem] = useState(false);
@@ -33,6 +39,21 @@ export const PostList = () => {
   });
 
   // const [ready, _] = useState<boolean>(true);
+
+  useEffect(() => {
+    // for alarm with fcm token
+    const registerToken = async () => {
+      if (fcmToken) return; // fcm token is already updated
+      const permission = await requestPermission();
+      if (permission === "granted") {
+        const token = await requestToken();
+        setFcmToken(token);
+        mutate(token);
+      }
+    };
+
+    void registerToken();
+  }, []);
 
   useEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);

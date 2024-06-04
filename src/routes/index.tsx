@@ -27,6 +27,8 @@ import { WelcomePage } from "@/pages/profile/welcome";
 import { Splash } from "@/pages/splash/splash";
 import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { UserTermsPage } from "@/pages/terms/user-terms";
+import { BottomFixedTest } from "@/pages/test/bottom-fixed-test";
+import { FCMTest } from "@/pages/test/fcm";
 
 const routeChildren = [
   {
@@ -145,6 +147,10 @@ const routeChildren = [
     element: <Mypage />,
     auth: true,
   },
+
+  // test
+  { path: "/test", element: <BottomFixedTest />, auth: false },
+  { path: "/test3", element: <FCMTest />, auth: false },
 ];
 
 const router = createBrowserRouter([

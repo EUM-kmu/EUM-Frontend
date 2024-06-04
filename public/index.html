@@ -24,7 +24,7 @@
     -->
     <link
       rel="manifest"
-      crossorigin="”use-credentials”"
+      crossorigin="use-credentials"
       href="%PUBLIC_URL%/manifest.json"
     />
     <!--
@@ -53,11 +53,17 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      (function () {
+      (async function () {
         if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("/pwabuilder-sw.js");
+          let registration = await navigator.serviceWorker.getRegistration();
+          if (!registration) {
+            registration = await navigator.serviceWorker.register(
+              "./pwabuilder-sw.js",
+              { scope: "/firebase-cloud-messaging-push-scope" },
+            );
+          }
         }
-      });
+      })();
     </script>
   </body>
 </html>
