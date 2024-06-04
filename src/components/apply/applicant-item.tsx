@@ -84,7 +84,7 @@ export const ApplicantItem = (props: ApplicantItemDetailProps) => {
 
 const SelectedItemWrapper = styled.div`
   width: 100%;
-  height: 25%;
+  height: 30%;
   position: relative;
 `;
 

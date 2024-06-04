@@ -58,6 +58,6 @@ export const ApplicantItemList = ({
 };
 
 const EmptyBox = styled.div`
-  height: 25%;
+  height: 30%;
   width: 100%;
 `;
