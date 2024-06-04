@@ -26,4 +26,5 @@ export type SelectToggleType = {
   state: boolean;
   onClick?: () => void;
   children: React.ReactNode;
+  category: number;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;

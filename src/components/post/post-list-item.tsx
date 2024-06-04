@@ -1,16 +1,23 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { PostListItemProps } from "./type";
 
 import ApplicantSVG from "@/assets/icons/applicant.svg";
+import Category1SVG from "@/assets/icons/category1.svg";
+import Category2SVG from "@/assets/icons/category2.svg";
+import Category3SVG from "@/assets/icons/category3.svg";
+import Category4SVG from "@/assets/icons/category4.svg";
+import Category5SVG from "@/assets/icons/category5.svg";
+import Category6SVG from "@/assets/icons/category6.svg";
+import Category7SVG from "@/assets/icons/category7.svg";
 import DateSVG from "@/assets/icons/date.svg";
 import KnotSVG from "@/assets/icons/knot.svg";
 import LocationSVG from "@/assets/icons/location.svg";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 import { devLog } from "@/utils/dev-log";
+import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
 export const PostListItem = (props: PostListItemProps) => {
   const navigate = useNavigate();
@@ -35,6 +42,19 @@ export const PostListItem = (props: PostListItemProps) => {
         <TopIcon src={ApplicantSVG} />
         <StateSpan>
           {props.currentApplicant}/{props.maxNumOfPeople}명
+        </StateSpan>
+        {props.category === 1 && <TopIcon src={Category1SVG} />}
+        {props.category === 2 && <TopIcon src={Category2SVG} />}
+        {props.category === 3 && <TopIcon src={Category3SVG} />}
+        {props.category === 4 && <TopIcon src={Category4SVG} />}
+        {props.category === 5 && <TopIcon src={Category5SVG} />}
+        {props.category === 6 && <TopIcon src={Category6SVG} />}
+        {props.category === 7 && <TopIcon src={Category7SVG} />}
+        <StateSpan>
+          {TypeIdInteractionString({
+            categoryId: props.category,
+            idToString: true,
+          })}
         </StateSpan>
         <TopIcon src={KnotSVG} />
         <StateSpan>{props.pay}타임</StateSpan>

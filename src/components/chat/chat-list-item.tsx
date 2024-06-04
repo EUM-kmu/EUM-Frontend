@@ -1,5 +1,3 @@
-import { url } from "inspector";
-
 import { useNavigate } from "react-router";
 import { styled } from "styled-components";
 
@@ -7,6 +5,7 @@ import { ChatRoomItemType } from "./type";
 
 import dateSVG from "@/assets/icons/date.svg";
 import locationSVG from "@/assets/icons/location.svg";
+import PersonOrangeSVG from "@/assets/icons/person-orange.svg";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
@@ -73,7 +72,10 @@ export const ChatListItem = (props: ChatRoomItemType) => {
                 ? "(작성자 탈퇴)"
                 : ""}
           </TitleText>
-          <ContentText>{" " + props.creatorNickname + "   "}</ContentText>
+          <ContentText>
+            <IconImg src={PersonOrangeSVG} />
+            {" " + props.creatorNickname + "   "}
+          </ContentText>
           <ContentText>
             <IconImg src={dateSVG} />
             {" " + BackdateToItemtype(props.startDate) + "   "}

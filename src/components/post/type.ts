@@ -10,6 +10,7 @@ export type PostListItemProps = {
   writerProfileImg: string;
   writerId: number;
   deleted: boolean;
+  category: number;
 };
 
 export type PostCategorySelect = {

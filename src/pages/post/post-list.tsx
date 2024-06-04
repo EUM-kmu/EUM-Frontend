@@ -159,6 +159,7 @@ export const PostList = () => {
                 writerProfileImg={item.writerInfo.profileImage}
                 writerId={item.writerInfo.profileId}
                 deleted={item.deleted}
+                category={item.categoryId}
               />
             )),
           )}

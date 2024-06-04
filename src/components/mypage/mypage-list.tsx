@@ -22,6 +22,7 @@ export const MypageList = ({ type }: { type: string }) => {
           writerId={item.writerInfo.profileId}
           writerProfileImg={item.writerInfo.profileImage}
           deleted={item.deleted}
+          category={item.categoryId}
         />
       ))}
     </Wrapper>

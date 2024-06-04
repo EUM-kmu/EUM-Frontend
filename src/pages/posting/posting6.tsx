@@ -55,6 +55,7 @@ export const Posting6 = () => {
                   return updatedTypeState;
                 });
               }}
+              category={item.id}
             >
               {item.name}
             </PostingCategoryButton>
