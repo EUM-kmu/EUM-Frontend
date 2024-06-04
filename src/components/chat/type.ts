@@ -37,6 +37,7 @@ export type ChatRoomItemType = {
   creatorNickname: string;
   deletedPost: boolean;
   blockedRoom: boolean;
+  creatorProfileImg: string;
 };
 
 export type ChatAppBarType = {
@@ -49,6 +50,7 @@ export type ChatAppBarType = {
   onClickApply: () => void;
   memberCount: number;
   setTransferErrorModal: () => void;
+  isEmpty: boolean;
 };
 
 export type ChatInRoomUser = {

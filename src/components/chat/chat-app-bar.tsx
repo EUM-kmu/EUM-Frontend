@@ -22,6 +22,7 @@ export const ChatAppBar = ({
   setErrorModal,
   memberCount,
   setTransferErrorModal,
+  isEmpty,
 }: ChatAppBarType) => {
   const [lastTransfer] = useRecoilState(lastTransferState);
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ export const ChatAppBar = ({
           setTransferErrorModal={setTransferErrorModal}
           memberCount={memberCount}
           setErrorModal={setErrorModal}
+          isEmpty={isEmpty}
         />
       ) : (
         <AfterTransfer
@@ -106,6 +108,19 @@ const AfterTransferDiv = styled.div`
   line-height: 2.78rem;
 `;
 
+const EmptyMsg = styled.div`
+  width: 103%;
+  height: 3.78rem;
+  font-size: 0.83rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${colorTheme.shade};
+  background-color: ${colorTheme.blue100};
+  padding: 0 2rem;
+  text-align: center;
+`;
+
 type BeforeTransferProps = {
   onClickTransfer: () => void;
   postId: string;
@@ -114,6 +129,7 @@ type BeforeTransferProps = {
   memberCount: number;
   setTransferErrorModal: () => void;
   setErrorModal: () => void;
+  isEmpty: boolean;
 };
 
 const AfterTransfer = ({
@@ -173,15 +189,17 @@ const BeforeTransfer = ({
   setTransferErrorModal,
   memberCount,
   setErrorModal,
+  isEmpty,
 }: BeforeTransferProps) => {
   const navigate = useNavigate();
   const myId = localStorage.getItem("userId");
+  const [lastTransfer] = useRecoilState(lastTransferState);
 
   return (
     <ColumnBox
       style={{
         backgroundColor: colorTheme.blue900,
-        paddingBottom: "13px",
+        paddingBottom: isEmpty ? "0" : "13px",
       }}
     >
       <RowBox>
@@ -246,6 +264,17 @@ const BeforeTransfer = ({
             송금하기
           </Button>
         </div>
+      )}
+      {isEmpty && (
+        <EmptyMsg>
+          {myId !== null
+            ? myId === creatorId
+              ? `[${lastTransfer.title}] 채팅을 개설하였습니다`
+              : `[${lastTransfer.title}] 채팅에 참여하였습니다`
+            : ""}
+          <br />
+          자유롭게 채팅을 시작해보세요!
+        </EmptyMsg>
       )}
     </ColumnBox>
   );

@@ -4,16 +4,23 @@ import { styled } from "styled-components";
 import { PostListItemProps } from "./type";
 
 import ApplicantSVG from "@/assets/icons/applicant.svg";
+import Category1MiniSVG from "@/assets/icons/category1-mini.svg";
+import Category2MiniSVG from "@/assets/icons/category2-mini.svg";
+import Category3MiniSVG from "@/assets/icons/category3-mini.svg";
+import Category4MiniSVG from "@/assets/icons/category4-mini.svg";
+import Category5MiniSVG from "@/assets/icons/category5-mini.svg";
+import Category6MiniSVG from "@/assets/icons/category6-mini.svg";
+import Category7MiniSVG from "@/assets/icons/category7-mini.svg";
 import DateSVG from "@/assets/icons/date.svg";
 import KnotSVG from "@/assets/icons/knot.svg";
 import LocationSVG from "@/assets/icons/location.svg";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 import { devLog } from "@/utils/dev-log";
+import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
 export const PostListItem = (props: PostListItemProps) => {
   const navigate = useNavigate();
-
   return (
     <Wrapper
       onClick={() => {
@@ -31,7 +38,19 @@ export const PostListItem = (props: PostListItemProps) => {
           <StateFin>거래완료</StateFin>
         )}
         {props.deleted && <StateFin>삭제된 글</StateFin>}
-
+        {props.category === 1 && <TopIcon src={Category1MiniSVG} />}
+        {props.category === 2 && <TopIcon src={Category2MiniSVG} />}
+        {props.category === 3 && <TopIcon src={Category3MiniSVG} />}
+        {props.category === 4 && <TopIcon src={Category4MiniSVG} />}
+        {props.category === 5 && <TopIcon src={Category5MiniSVG} />}
+        {props.category === 6 && <TopIcon src={Category6MiniSVG} />}
+        {props.category === 7 && <TopIcon src={Category7MiniSVG} />}
+        <StateSpan>
+          {TypeIdInteractionString({
+            categoryId: props.category,
+            idToString: true,
+          })}
+        </StateSpan>
         <TopIcon src={ApplicantSVG} />
         <StateSpan>
           {props.currentApplicant}/{props.maxNumOfPeople}명

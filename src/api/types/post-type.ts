@@ -49,6 +49,7 @@ export type PostType = {
   viewsCount: number;
   writerInfo: WriterInfo;
   deleted: boolean;
+  categoryId: number;
 };
 
 export type ResponsePostDetail = FinalResponse<PostDetailType>;

@@ -12,7 +12,9 @@ import { BottomFixed } from "@/components/common/bottom-fixed";
 import { BottomSheet } from "@/components/common/bottom-sheet";
 import { Button } from "@/components/common/button";
 import { Modal } from "@/components/common/modal";
+import { ProfileModal } from "@/components/common/profile-modal";
 import { DefaultLayout } from "@/components/layout/default-layout";
+import { PostDetailCategory } from "@/components/post/post-detail-category";
 import { Report } from "@/components/report/report";
 import { useCheckChatMakePost } from "@/hooks/chat/useCheckChatMakePost";
 import { useDeleteApply } from "@/hooks/queries/useDeleteApply";
@@ -36,6 +38,7 @@ export const PostDetailPage = () => {
   const [errorModal, setErrorModal] = useState(false); // TODO: remove this
   const [deleteModal, setDeleteModal] = useState(false);
   const [statusModal, setStatusModal] = useState(false);
+  const [profileModal, setProfileModal] = useState(false);
   // const [reportModal, setReportModal] = useState(false);
   const [repostModal, setRepostModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
@@ -81,7 +84,7 @@ export const PostDetailPage = () => {
       }
     >
       <PaddingWrapper $isWriter={data?.userCurrentStatus.writer ?? false}>
-        {data?.marketPostResponse.status === "RECRUITING" ? (
+        {/* {data?.marketPostResponse.status === "RECRUITING" ? (
           data?.userCurrentStatus.writer ? (
             <JustifyWrapper>
               <Button
@@ -106,7 +109,20 @@ export const PostDetailPage = () => {
           )
         ) : (
           <DoneWrapper>모집완료</DoneWrapper>
-        )}
+        )} */}
+        <RowBox>
+          <PostDetailCategory
+            category={data?.marketPostResponse.categoryId ?? 7}
+          />
+          <RowBoxInRow onClick={() => setProfileModal(true)}>
+            <ProfileImg
+              src={data ? data.marketPostResponse.writerInfo.profileImage : ""}
+            />
+            <ProfileName>
+              {data?.marketPostResponse.writerInfo.nickName ?? ""}
+            </ProfileName>
+          </RowBoxInRow>
+        </RowBox>
         <ActivityBox data={{ ...data?.marketPostResponse } as PostType} />
         {!data?.userCurrentStatus.writer && (
           <ButtonWrapper>
@@ -147,7 +163,7 @@ export const PostDetailPage = () => {
               postId={postId!}
               onFinishApply={() => {
                 setIsApplySheet(false);
-                setReportBottomSheetRendering(false);
+                setBottomSheet(false);
               }}
             />
           )}
@@ -199,7 +215,12 @@ export const PostDetailPage = () => {
                 </BottomFixed.Button>
                 {data?.marketPostResponse.status ===
                   "RECRUITMENT_COMPLETED" && (
-                  <BottomFixed.Button onClick={() => navigate("applicant")}>
+                  <BottomFixed.Button
+                    onClick={() => {
+                      setBottomSheet(true);
+                      setIsApplySheet(true);
+                    }}
+                  >
                     참여관리
                   </BottomFixed.Button>
                 )}
@@ -336,6 +357,12 @@ export const PostDetailPage = () => {
             <Modal.Title text="현재 지원자가 있어\n게시글 수정이 불가합니다\n\n게시글 수정 기능을\n조만간 따로 준비할게요 😎" />
           </Modal>
         )}
+        {profileModal && (
+          <ProfileModal
+            userId={data?.marketPostResponse.writerInfo.userId}
+            onClose={() => setProfileModal(false)}
+          />
+        )}
       </PaddingWrapper>
     </DefaultLayout>
   );
@@ -365,23 +392,23 @@ const BackButtonSVG = styled.img`
   height: 0.56rem;
 `;
 
-const JustifyWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
+// const JustifyWrapper = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 20px;
+// `;
 
-const DoneWrapper = styled.div`
-  width: 120%;
-  position: relative;
-  right: 10%;
-  padding: 25px;
-  margin-bottom: 20px;
-  background-color: ${colorTheme.blue100};
-  color: white;
-  font-size: 1.3rem;
-  text-align: center;
-`;
+// const DoneWrapper = styled.div`
+//   width: 120%;
+//   position: relative;
+//   right: 10%;
+//   padding: 25px;
+//   margin-bottom: 20px;
+//   background-color: ${colorTheme.blue100};
+//   color: white;
+//   font-size: 1.3rem;
+//   text-align: center;
+// `;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -397,4 +424,31 @@ const EditModalButtonWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 0.78rem;
+`;
+
+const ProfileImg = styled.img`
+  width: 2.06rem;
+  height: 2.06rem;
+  border: 0.17rem solid ${colorTheme.orange400};
+  border-radius: 0.56rem;
+`;
+
+const RowBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.56rem;
+`;
+
+const ProfileName = styled.div`
+  font-size: 1.11rem;
+  margin-left: 0.39rem;
+  color: ${colorTheme.shade};
+`;
+
+const RowBoxInRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 0.3rem;
 `;

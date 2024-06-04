@@ -28,6 +28,7 @@ export const ChatList = ({ type }: { type: string }) => {
             location: item.location,
             deletedPost: item.deletedPost,
             blockedRoom: item.blockedRoom,
+            creatorProfileImg: item.creatorProfileImg,
           };
           return <ChatListItem key={index} {...tempItem} />;
         })

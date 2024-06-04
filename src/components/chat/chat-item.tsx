@@ -25,6 +25,7 @@ export const ChatItem = ({
       style={{
         justifyContent: userId === myId ? "flex-end" : "flex-start",
       }}
+      className="chat-item"
     >
       {userId === myId && (
         <DateDiv>{date ? ChatdateToMsgtype(date) : ""}</DateDiv>

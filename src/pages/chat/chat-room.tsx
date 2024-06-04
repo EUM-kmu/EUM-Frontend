@@ -53,6 +53,7 @@ export const ChatRoom = () => {
   const [profileUserId, setProfileUserId] = useState<number>(0);
   const [isApplySheet, setIsApplySheet] = useState(false);
   const [applyLength, setApplyLength] = useState(0);
+  const [isEmptyItem, setIsEmptyItem] = useState(false);
 
   const client = useRef<CompatClient | null>(null);
   const { mutate: sendMsg } = UseSendMessages();
@@ -99,6 +100,9 @@ export const ChatRoom = () => {
         }
       }
     }
+    if (chatListRef.current) {
+      setIsEmptyItem(chatListRef.current.children.length === 0);
+    }
   }, [roomData]);
 
   const handlePagenation = () => {
@@ -143,6 +147,16 @@ export const ChatRoom = () => {
   useEffect(() => {
     scrollToBottom();
   }, [newRoomMsgs]);
+
+  useEffect(() => {
+    if (chatListRef.current) {
+      const chatItems = chatListRef.current.querySelectorAll(".chat-item");
+      const chatItems2 = chatListRef.current.querySelectorAll(
+        ".chat-entry-exit-item",
+      );
+      setIsEmptyItem(chatItems.length + chatItems2.length === 0);
+    }
+  }, [newRoomMsgs, roomData]);
 
   const refreshPage = () => {
     navigate(`/chat/detail`, {
@@ -206,6 +220,7 @@ export const ChatRoom = () => {
           setTransferErrorModal={() => {
             setTransferErrorModal(true);
           }}
+          isEmpty={isEmptyItem}
         />
       )}
       {(state.blockedRoom || state.deletedPost) && (

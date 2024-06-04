@@ -5,6 +5,7 @@ import { ChatRoomItemType } from "./type";
 
 import dateSVG from "@/assets/icons/date.svg";
 import locationSVG from "@/assets/icons/location.svg";
+import PersonOrangeSVG from "@/assets/icons/person-orange.svg";
 import { colorTheme } from "@/style/color-theme";
 import { BackdateToItemtype } from "@/utils/backdate-to-itemtype";
 
@@ -29,12 +30,32 @@ export const ChatListItem = (props: ChatRoomItemType) => {
         {!props.deletedPost &&
           !props.blockedRoom &&
           props.postStatus === "TRANSACTION_COMPLETED" && (
-            <StateFinishDiv>진행완료</StateFinishDiv>
+            <LeftColumnDiv style={{ padding: 0 }}>
+              <ProfileImg $image={props.creatorProfileImg}>
+                {props.memberCount > 1 && (
+                  <MemberCount>
+                    {"+ "}
+                    {props.memberCount - 1}
+                  </MemberCount>
+                )}
+              </ProfileImg>
+              <StateFinishDiv>진행완료</StateFinishDiv>
+            </LeftColumnDiv>
           )}
         {!props.deletedPost &&
           !props.blockedRoom &&
           props.postStatus !== "TRANSACTION_COMPLETED" && (
-            <StateDiv>진행중</StateDiv>
+            <LeftColumnDiv style={{ padding: 0 }}>
+              <ProfileImg $image={props.creatorProfileImg}>
+                {props.memberCount > 1 && (
+                  <MemberCount>
+                    {"+ "}
+                    {props.memberCount - 1}
+                  </MemberCount>
+                )}
+              </ProfileImg>
+              <StateDiv>진행중</StateDiv>
+            </LeftColumnDiv>
           )}
         {props.deletedPost && !props.blockedRoom && (
           <BlockRoom>{"삭제된\n게시글"}</BlockRoom>
@@ -44,16 +65,17 @@ export const ChatListItem = (props: ChatRoomItemType) => {
         )}
         <LeftColumnDiv>
           <TitleText>
-            {props.postTitle.length > 16
-              ? props.postTitle.slice(0, 15) + "..."
-              : props.postTitle}{" "}
+            {props.postTitle}{" "}
             {props.deletedPost
               ? "(삭제된 게시글)"
               : props.blockedRoom
                 ? "(작성자 탈퇴)"
                 : ""}
           </TitleText>
-          <ContentText>{" " + props.creatorNickname + "   "}</ContentText>
+          <ContentText>
+            <IconImg src={PersonOrangeSVG} />
+            {" " + props.creatorNickname + "   "}
+          </ContentText>
           <ContentText>
             <IconImg src={dateSVG} />
             {" " + BackdateToItemtype(props.startDate) + "   "}
@@ -88,45 +110,74 @@ const ItemContainer = styled.div`
 const RowDiv = styled.div`
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
   width: 100%;
 `;
 
+const ProfileImg = styled.div<{ $image: string }>`
+  height: 2.67rem;
+  width: 2.67rem;
+  background-image: url(${({ $image }) => $image});
+  background-size: 2.67rem 2.67rem;
+  color: #ffffff;
+  text-align: center;
+  font-size: 0.72rem;
+  border-radius: 0.83rem;
+  line-height: 3rem;
+  position: relative;
+`;
+
+const MemberCount = styled.div`
+  height: 1.1rem;
+  padding: 0 0.2rem;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: bold;
+  border-radius: 0.3rem;
+  line-height: 1.1rem;
+  border: 1px solid ${colorTheme.orange400};
+  background-color: #f17447a2;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
 const StateDiv = styled.div`
-  height: 3rem;
-  width: 3.56rem;
+  height: 1.3rem;
+  width: 2.67rem;
   background-color: ${colorTheme.orange400};
   color: #ffffff;
   text-align: center;
   font-size: 0.72rem;
-  border-radius: 1.22rem;
-  line-height: 3rem;
+  border-radius: 0.4rem;
+  line-height: 1.3rem;
 `;
 
 const StateFinishDiv = styled.div`
-  height: 3rem;
-  width: 3.56rem;
+  height: 1.3rem;
+  width: 2.67rem;
   background-color: #ffffff;
   color: ${colorTheme.orange400};
-  text-align: center;
-  font-size: 0.72rem;
-  border-radius: 0.5rem;
   border: 1px solid ${colorTheme.orange400};
   line-height: 3rem;
+  text-align: center;
+  font-size: 0.62rem;
+  border-radius: 0.4rem;
+  line-height: 1.3rem;
 `;
 
 const LeftColumnDiv = styled.div`
   display: flex;
-  /* height: 2.7rem; */
   flex-direction: column;
-  justify-content: center;
   padding: 0 0 0 4.61%;
   gap: 0.33rem;
 `;
 
 const TitleText = styled.span`
+  width: 100%;
   font-size: 1.11rem;
   font-weight: bold;
+  padding-bottom: 0.2rem;
 `;
 
 // const NewMsgNum = styled.span`
