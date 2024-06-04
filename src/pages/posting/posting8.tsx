@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
@@ -15,7 +14,6 @@ import { FormatDateString } from "@/utils/format-date-string";
 export const Posting8 = () => {
   const [posting, setPosting] = useRecoilState(postingState);
   const [content, setContent] = useState(posting.content);
-  const navigate = useNavigate();
   const postPosting = usePostPosting();
 
   const handleSave = () => {
