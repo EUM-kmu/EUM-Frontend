@@ -1,3 +1,5 @@
+import { styled } from "styled-components";
+
 import { ApplicantItem } from "./applicant-item";
 import { ApplicantItemProps } from "./type";
 
@@ -50,6 +52,12 @@ export const ApplicantItemList = ({
           />
         );
       })}
+      <EmptyBox />
     </>
   );
 };
+
+const EmptyBox = styled.div`
+  height: 25%;
+  width: 100%;
+`;

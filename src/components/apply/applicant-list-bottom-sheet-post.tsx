@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 import { ChatMakeRequest, ChatMakeRoom } from "@/api/types/chat-type";
 import { ApplicantItemList } from "@/components/apply/applicant-item-list";
@@ -9,7 +10,6 @@ import {
   ApplicantListBottomSheetPostProps,
   ApplyListType,
 } from "@/components/apply/type";
-import { BottomFixed } from "@/components/common/bottom-fixed";
 import { Modal } from "@/components/common/modal";
 import { useCheckChatMake } from "@/hooks/chat/useCheckChatMake";
 import { useGetApplyList } from "@/hooks/queries/useGetApplyList";
@@ -17,6 +17,7 @@ import { useGetPostDetail } from "@/hooks/queries/useGetPostDetail";
 import { usePostApplyAccept } from "@/hooks/queries/usePostApplyAccept";
 import { usePostMakeChat } from "@/hooks/queries/usePostMakeChat";
 import { usePutChatNewMember } from "@/hooks/queries/usePutChatNewMember";
+import { colorTheme } from "@/style/color-theme";
 import { checkChange } from "@/utils/apply-list-change-check";
 
 export const ApplicantListBottomSheetPost = ({
@@ -86,16 +87,19 @@ export const ApplicantListBottomSheetPost = ({
   };
 
   return (
-    <>
-      <ApplicantItemList
-        data={data!}
-        applyIds={applyIds}
-        setApplyIds={setApplyIds}
-        isRecruiting={isRecruiting}
-        setApplyModal={setIsApplyError}
-      />
+    <Wrapper>
+      <Title>참여관리</Title>
+      <ListWrapper>
+        <ApplicantItemList
+          data={data!}
+          applyIds={applyIds}
+          setApplyIds={setApplyIds}
+          isRecruiting={isRecruiting}
+          setApplyModal={setIsApplyError}
+        />
+      </ListWrapper>
       <BottomFixed>
-        <BottomFixed.Button
+        <Button
           color="orange"
           onClick={() => {
             const tempAcceptList: number[] = applyIds.map((item) => {
@@ -164,7 +168,7 @@ export const ApplicantListBottomSheetPost = ({
           }}
         >
           {applyIds.length}명 수락하기
-        </BottomFixed.Button>
+        </Button>
       </BottomFixed>
       {applyModal !== "" && (
         <Modal
@@ -256,6 +260,56 @@ export const ApplicantListBottomSheetPost = ({
           onFinishApply={onFinishApply}
         />
       )}
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  height: 100%;
+  padding-bottom: 4rem;
+`;
+
+const ListWrapper = styled.div`
+  height: calc(100% - 4rem - 24px);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: ${colorTheme.blue100};
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${colorTheme.orange400};
+    border-radius: 3px;
+  }
+`;
+
+const Title = styled.div`
+  padding: 1.72rem 0 1rem;
+  font-size: 1.38rem;
+  text-align: center;
+`;
+
+const BottomFixed = styled.div`
+  display: flex;
+  position: fixed;
+  margin: 0 2rem;
+  padding-bottom: 0 1.6rem 1.8rem;
+  bottom: 1.6rem;
+  gap: 11px;
+  left: 0;
+  right: 0;
+  background-color: white;
+`;
+
+const Button = styled.button`
+  position: relative;
+  width: 100%;
+  max-width: calc(480px - 3.2rem);
+  margin: auto;
+  padding: 12px;
+  border: 1px solid transparent;
+  background-color: ${colorTheme.blue900};
+  border-radius: 50px;
+  color: white;
+  font-size: 1.3rem;
+`;

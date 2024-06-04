@@ -81,3 +81,21 @@ to {
   }
 }
 `;
+
+export const widthUp2 = keyframes`
+  from {
+    width: 0;
+  }
+  to {
+    width: 30%;
+  }
+`;
+
+export const widthDown2 = keyframes`
+  from {
+    width: 30%;
+  }
+  to {
+    width: 10%;
+  }
+`;
