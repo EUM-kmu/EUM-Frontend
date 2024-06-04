@@ -150,13 +150,21 @@ export const PostList = () => {
                 onClick={() => {
                   setSearch(tempSearch);
                   setCategoryDiv(false);
+                  setCategory(0);
                 }}
               />
             </InputInnerWrapper>
           </InputWrapper>
           {categoryDiv && (
             <CategoryField ref={categoryRef}>
-              <PostCategory categoryId={category} setCategoryId={setCategory} />
+              <PostCategory
+                categoryId={category}
+                setCategoryId={setCategory}
+                resetTextSearch={() => {
+                  setSearch("");
+                  setTempSearch("");
+                }}
+              />
             </CategoryField>
           )}
           <SmallHeader>

@@ -7,6 +7,7 @@ import { colorTheme } from "@/style/color-theme";
 export const PostCategory = ({
   categoryId,
   setCategoryId,
+  resetTextSearch,
 }: PostCategorySelect) => {
   const categoryList: categoryType[] = [
     { id: 1, name: "이동" },
@@ -29,6 +30,7 @@ export const PostCategory = ({
               setCategoryId(0);
             } else {
               setCategoryId(item.id);
+              resetTextSearch();
             }
           }}
         >

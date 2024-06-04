@@ -16,6 +16,7 @@ export type PostListItemProps = {
 export type PostCategorySelect = {
   categoryId: number;
   setCategoryId: React.Dispatch<React.SetStateAction<number>>;
+  resetTextSearch: () => void;
 };
 
 export type categoryType = {
