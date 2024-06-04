@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
 import { MouseEvent, ReactNode, useState } from "react";
 import { styled } from "styled-components";
 
 import { ApplicantItemDetailProps } from "./type";
 
+import LeftArrowWhiteSVG from "@/assets/icons/left-arrow-white.svg";
 import LocationSVG from "@/assets/icons/location.svg";
+import RightArrowWhiteSVG from "@/assets/icons/right-arrow-white.svg";
 import DeletedUserBackExistSVG from "@/assets/images/deleted-user-back-exist.svg";
 import { colorTheme } from "@/style/color-theme";
 import { widthUp2 } from "@/style/keyframes";
@@ -32,6 +35,16 @@ export const SelectedWrapper = ({
             {cancelToggle && (
               <CancelButton onClick={onSelect}>취소</CancelButton>
             )}
+
+            <ArrowAbsoluteBox
+              animate={cancelToggle ? { left: "30%" } : { left: "0" }}
+            >
+              <Arrow
+                src={cancelToggle ? LeftArrowWhiteSVG : RightArrowWhiteSVG}
+              />
+              <span>터치</span>
+            </ArrowAbsoluteBox>
+
             <SelectedText>선택완료</SelectedText>
           </SelecteItemBackground>
         )}
@@ -225,4 +238,25 @@ const ApplyButtonNotClick = styled.div`
 const ApplicantDeletedUserDiv = styled.div`
   font-size: 1.11rem;
   color: #d9d9d9;
+`;
+
+const Arrow = styled.img`
+  width: 2.39rem;
+  height: 1.25rem;
+`;
+
+const ArrowAbsoluteBox = styled(motion.div)`
+  width: 2.39rem;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  color: white;
+  font-size: 1rem;
+  margin-left: 10%;
 `;
