@@ -10,7 +10,7 @@ import Category7WhiteSVG from "@/assets/icons/category7-white.svg";
 import { colorTheme } from "@/style/color-theme";
 import { TypeIdInteractionString } from "@/utils/type-id-interaction-string";
 
-export const PostDetailCategory = (category: number) => {
+export const PostDetailCategory = ({ category }: { category: number }) => {
   return (
     <Wrapper>
       {category === 1 && (
@@ -63,13 +63,14 @@ export const PostDetailCategory = (category: number) => {
 };
 
 const Wrapper = styled.div`
-  padding: 0.39rem 0.89rem;
+  height: 2.06rem;
+  padding: 0 0.89rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 0.39rem;
-  background-color: ${colorTheme.blue700};
+  background-color: ${colorTheme.blue500};
   color: white;
   font-size: 1.11rem;
   font-weight: bold;

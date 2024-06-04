@@ -4,13 +4,13 @@ import { styled } from "styled-components";
 import { PostListItemProps } from "./type";
 
 import ApplicantSVG from "@/assets/icons/applicant.svg";
-import Category1SVG from "@/assets/icons/category1.svg";
-import Category2SVG from "@/assets/icons/category2.svg";
-import Category3SVG from "@/assets/icons/category3.svg";
-import Category4SVG from "@/assets/icons/category4.svg";
-import Category5SVG from "@/assets/icons/category5.svg";
-import Category6SVG from "@/assets/icons/category6.svg";
-import Category7SVG from "@/assets/icons/category7.svg";
+import Category1MiniSVG from "@/assets/icons/category1-mini.svg";
+import Category2MiniSVG from "@/assets/icons/category2-mini.svg";
+import Category3MiniSVG from "@/assets/icons/category3-mini.svg";
+import Category4MiniSVG from "@/assets/icons/category4-mini.svg";
+import Category5MiniSVG from "@/assets/icons/category5-mini.svg";
+import Category6MiniSVG from "@/assets/icons/category6-mini.svg";
+import Category7MiniSVG from "@/assets/icons/category7-mini.svg";
 import DateSVG from "@/assets/icons/date.svg";
 import KnotSVG from "@/assets/icons/knot.svg";
 import LocationSVG from "@/assets/icons/location.svg";
@@ -38,23 +38,22 @@ export const PostListItem = (props: PostListItemProps) => {
           <StateFin>거래완료</StateFin>
         )}
         {props.deleted && <StateFin>삭제된 글</StateFin>}
-
-        <TopIcon src={ApplicantSVG} />
-        <StateSpan>
-          {props.currentApplicant}/{props.maxNumOfPeople}명
-        </StateSpan>
-        {props.category === 1 && <TopIcon src={Category1SVG} />}
-        {props.category === 2 && <TopIcon src={Category2SVG} />}
-        {props.category === 3 && <TopIcon src={Category3SVG} />}
-        {props.category === 4 && <TopIcon src={Category4SVG} />}
-        {props.category === 5 && <TopIcon src={Category5SVG} />}
-        {props.category === 6 && <TopIcon src={Category6SVG} />}
-        {props.category === 7 && <TopIcon src={Category7SVG} />}
+        {props.category === 1 && <TopIcon src={Category1MiniSVG} />}
+        {props.category === 2 && <TopIcon src={Category2MiniSVG} />}
+        {props.category === 3 && <TopIcon src={Category3MiniSVG} />}
+        {props.category === 4 && <TopIcon src={Category4MiniSVG} />}
+        {props.category === 5 && <TopIcon src={Category5MiniSVG} />}
+        {props.category === 6 && <TopIcon src={Category6MiniSVG} />}
+        {props.category === 7 && <TopIcon src={Category7MiniSVG} />}
         <StateSpan>
           {TypeIdInteractionString({
             categoryId: props.category,
             idToString: true,
           })}
+        </StateSpan>
+        <TopIcon src={ApplicantSVG} />
+        <StateSpan>
+          {props.currentApplicant}/{props.maxNumOfPeople}명
         </StateSpan>
         <TopIcon src={KnotSVG} />
         <StateSpan>{props.pay}타임</StateSpan>
