@@ -32,7 +32,7 @@ export const Posting7 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onCustomClick={() => handleSave()} nowPage={6} />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={7} />
       <PostingBoldText>활동 제목을 적어보세요</PostingBoldText>
       <PostingInput.InputTitle
         value={title}

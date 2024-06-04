@@ -63,7 +63,7 @@ export const ChatListItem = (props: ChatRoomItemType) => {
         {!props.deletedPost && props.blockedRoom && (
           <BlockRoom>{"작성자\n탈퇴"}</BlockRoom>
         )}
-        <LeftColumnDiv>
+        <LeftColumnDiv style={{ width: "100%" }}>
           <TitleText>
             {props.postTitle}{" "}
             {props.deletedPost

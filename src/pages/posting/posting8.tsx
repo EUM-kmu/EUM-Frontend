@@ -45,13 +45,7 @@ export const Posting8 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar
-        onCustomClick={() => {
-          handleSave();
-          navigate(-1);
-        }}
-        nowPage={7}
-      />
+      <PostingAppBar onCustomClick={() => handleSave()} nowPage={8} />
       <PostingBoldText>활동 내용을 적어보세요</PostingBoldText>
       <PostingInput.InputContent
         value={content}
