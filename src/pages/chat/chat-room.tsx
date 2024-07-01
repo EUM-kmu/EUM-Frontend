@@ -68,6 +68,10 @@ export const ChatRoom = () => {
       `${process.env.REACT_APP_CHAT_WS_BASE_URL}/ws/init`,
     );
     client.current = Stomp.over(socket);
+
+    // 운영 환경에서는 디버깅(destination, endpoints 노출) 안되도록 설정 
+    client.current.debug = () => {};
+
     client.current.connect({}, () => {
       setIsConnected(true);
       const subscription = client.current?.subscribe(
