@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getMessaging, isSupported } from "firebase/messaging/sw";
 
+import { devLog } from "@/utils/dev-log";
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -22,10 +24,10 @@ const messaging = (async () => {
       if (isSupportedBrowser) {
           return getMessaging(app);
       }
-      console.log('Firebase not supported this browser');
+      devLog("알람 지원X. 현재 브라우저 정보: ", navigator.userAgent);
       return null;
   } catch (err) {
-      console.log(err);
+      devLog(err);
       return null;
   }
   })();
