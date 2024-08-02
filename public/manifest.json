@@ -111,5 +111,6 @@
   ],
   "id": "타임페이",
   "lang": "ko",
-  "dir": "ltr"
+  "dir": "ltr",
+  "scope": "."
 }
