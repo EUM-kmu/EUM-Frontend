@@ -1,26 +1,4 @@
 {
-  "shortcuts": [
-    {
-      "name": "타임페이",
-      "short_name": "타임페이",
-      "description": "동네 주민들과 도움을 주고 받아요",
-      "url": "/",
-      "icons": [
-        {
-          "src": "./icons/thumb.svg",
-          "sizes": "192x192",
-          "type": "image/svg+xml",
-          "purpose": "any"
-        },
-        {
-          "src": "./icons/maskable-logo-192.png",
-          "sizes": "512x512",
-          "type": "image/png",
-          "purpose": "maskable"
-        }
-      ]
-    }
-  ],
   "short_name": "타임페이",
   "name": "타임페이",
   "description": "동네 주민들과 도움을 주고 받아요",
