@@ -104,7 +104,7 @@
   "display": "fullscreen",
   "theme_color": "#253659",
   "background_color": "#ffffff",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "prefer_related_applications": true,
   "categories": [
     "lifestyle"
