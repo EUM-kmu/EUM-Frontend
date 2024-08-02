@@ -17,16 +17,13 @@ async function requestPermission(): Promise<PermissionType> {
 }
 
 async function requestToken(): Promise<string | null> {
-  
-  const resolvedMessaging = await messaging; // 비동기 결과를 대기
-
-  if (resolvedMessaging === null) {
+  if (!messaging) {
     alert("이 브라우저는 알림을 지원하지 않습니다.");
     devLog("알람 지원X. 현재 브라우저 정보: ", navigator.userAgent);
     return null;
   }
 
-  const token = await getToken(resolvedMessaging, {
+  const token = await getToken(messaging, {
     vapidKey: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
   })
     .then((currentToken) => {
