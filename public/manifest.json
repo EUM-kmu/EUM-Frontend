@@ -6,7 +6,7 @@
     {
       "src": "./icons/maskable-logo.png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     {
       "src": "./icons/maskable-thumb.png",
