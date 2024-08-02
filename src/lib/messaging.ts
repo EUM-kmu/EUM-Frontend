@@ -16,13 +16,7 @@ async function requestPermission(): Promise<PermissionType> {
   });
 }
 
-async function requestToken(): Promise<string | null> {
-  if (!messaging) {
-    alert("이 브라우저는 알림을 지원하지 않습니다.");
-    devLog("알람 지원X. 현재 브라우저 정보: ", navigator.userAgent);
-    return null;
-  }
-
+async function requestToken(): Promise<string> {
   const token = await getToken(messaging, {
     vapidKey: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
   })
@@ -38,7 +32,6 @@ async function requestToken(): Promise<string | null> {
       alert("권한이 허가되어있지 않아 알림을 보낼 수 없습니다");
       devLog("토큰을 받는 과정에서 에러가 발생하였습니다 ", err);
       // ...
-      return null;
     });
   return token as string;
 }
