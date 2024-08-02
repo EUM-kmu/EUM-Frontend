@@ -1,7 +1,7 @@
 {
   "shortcuts": [
     {
-      "name": "타임페이 - 시간을 거래하다",
+      "name": "타임페이",
       "short_name": "타임페이",
       "description": "동네 주민들과 도움을 주고 받아요",
       "url": "/",
@@ -103,7 +103,7 @@
   "start_url": "/",
   "display": "fullscreen",
   "theme_color": "#253659",
-  "background_color": "#253659",
+  "background_color": "#ffffff",
   "orientation": "portrait",
   "prefer_related_applications": true
 }
