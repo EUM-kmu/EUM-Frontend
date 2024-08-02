@@ -47,10 +47,8 @@ export const PostList = () => {
       const permission = await requestPermission();
       if (permission === "granted") {
         const token = await requestToken();
-        if(token != null){
-          setFcmToken(token);
-          mutate(token);
-        }
+        setFcmToken(token);
+        mutate(token);
       }
     };
 
