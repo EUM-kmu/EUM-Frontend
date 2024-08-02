@@ -1,9 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getMessaging, isSupported } from "firebase/messaging/sw";
-
-import { devLog } from "@/utils/dev-log";
+import { getMessaging, Messaging } from "firebase/messaging/sw";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,18 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const messaging = (async () => {
-  try {
-      const isSupportedBrowser = await isSupported();
-      if (isSupportedBrowser) {
-          return getMessaging(app);
-      }
-      devLog("알람 지원X. 현재 브라우저 정보: ", navigator.userAgent);
-      return null;
-  } catch (err) {
-      devLog(err);
-      return null;
-  }
-  })();
+let messaging: Messaging | undefined;
+
+if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
+  messaging = getMessaging(app);
+}
 
 export { app, auth, messaging };
