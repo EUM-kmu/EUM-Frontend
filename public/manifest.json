@@ -94,5 +94,5 @@
   "scope": ".",
   "launch_handler": {
     "client_mode": "auto"
-}
+  }
 }
