@@ -14,7 +14,7 @@ async function requestPermission(): Promise<PermissionType> {
       // 기존 Notification API를 사용
       return await Notification.requestPermission().then((permission) => {
           devLog(permission === "granted" ? "권한 승인" : "권한 거부");
-          return permission;
+          return permission as PermissionType;
       });
     }
 }
