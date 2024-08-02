@@ -39,7 +39,7 @@ self.addEventListener("fetch", (event) => {
           const cachedResp = await cache.match(offlineFallbackPage);
           return cachedResp;
         }
-      })(),
+      })()
     );
   }
 });
