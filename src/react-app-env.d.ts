@@ -7,6 +7,7 @@ interface AndroidInterface {
 declare global {
   interface Window {
     Android?: AndroidInterface;
+    handlePermissionResult?: (permission: string) => void; 
   }
 }
 
