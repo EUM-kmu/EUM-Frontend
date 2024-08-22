@@ -1,26 +1,4 @@
 {
-  "shortcuts": [
-    {
-      "name": "타임페이 - 시간을 거래하다",
-      "short_name": "타임페이",
-      "description": "동네 주민들과 도움을 주고 받아요",
-      "url": "/",
-      "icons": [
-        {
-          "src": "./icons/thumb.svg",
-          "sizes": "192x192",
-          "type": "image/svg+xml",
-          "purpose": "any"
-        },
-        {
-          "src": "./icons/maskable-logo-192.png",
-          "sizes": "512x512",
-          "type": "image/png",
-          "purpose": "maskable"
-        }
-      ]
-    }
-  ],
   "short_name": "타임페이",
   "name": "타임페이",
   "description": "동네 주민들과 도움을 주고 받아요",
@@ -37,7 +15,8 @@
     },
     {
       "src": "./icons/android/android-launchericon-512-512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "./icons/android/android-launchericon-192-192.png",
@@ -101,9 +80,19 @@
     }
   ],
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#253659",
-  "background_color": "#253659",
-  "orientation": "portrait",
-  "prefer_related_applications": true
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "categories": [
+    "lifestyle"
+  ],
+  "id": "타임페이",
+  "lang": "ko",
+  "dir": "ltr",
+  "scope": ".",
+  "launch_handler": {
+    "client_mode": "auto"
+  }
 }
