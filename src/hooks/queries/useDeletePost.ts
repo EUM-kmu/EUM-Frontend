@@ -7,6 +7,6 @@ export function useDeletePost(postId: string) {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: () => PostApi.deletePost(postId),
-    onSuccess: () => navigate(-1),
+    onSuccess: () => navigate("/post"),
   });
 }
