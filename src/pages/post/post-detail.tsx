@@ -258,7 +258,7 @@ export const PostDetailPage = () => {
               </BottomFixed.Button>
             ) : (
               <BottomFixed.Button
-                rounded={false}
+                style={{ backgroundColor: "#e4e8f1", color: "#eb5242" }}
                 onClick={() => {
                   setApplyModal(true);
                 }}
