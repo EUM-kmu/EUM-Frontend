@@ -183,6 +183,26 @@ export const PostDetailPage = () => {
           {data?.userCurrentStatus.writer ? (
             data?.marketPostResponse.status === "RECRUITING" ? (
               <>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <BottomFixed.Button 
+                      style={{ backgroundColor: "#e4e8f1", color: "#253659" }}
+                      onClick={() => {
+                        if (data && data?.marketPostResponse.currentApplicant > 0) {
+                          setErrorModal(true); // temp
+                        } else {
+                          navigate("edit");
+                        }
+                      }}
+                  >
+                    수정하기
+                  </BottomFixed.Button>
+                  <BottomFixed.Button 
+                    style={{ backgroundColor: "#e4e8f1", color: "#eb5242" }}
+                    onClick={() => setDeleteModal(true)}
+                  >
+                    삭제하기
+                  </BottomFixed.Button>
+                </div>
                 <BottomFixed.Button onClick={() => setRepostModal(true)}>
                   끌어올리기
                 </BottomFixed.Button>
@@ -339,13 +359,22 @@ export const PostDetailPage = () => {
           </Modal>
         )}
         {deleteModal && (
-          <Modal
-            onClose={() => {
-              setDeleteModal(false);
-              deletePost();
-            }}
-          >
-            <Modal.Title text="게시물이\n삭제되었습니다" />
+          <Modal onClose={() => setDeleteModal(false)}>
+            <Modal.Title text="게시글을 삭제할까요?" />
+              <DeleteModalButtonWrapper>
+                <Modal.Button
+                    style={{ backgroundColor: "#e4e8f1", color: "#253659" }}
+                    onClick={() => setDeleteModal(false)}
+                  >
+                    취소
+                  </Modal.Button>
+                  <Modal.Button
+                    color="orange"
+                    onClick={() => deletePost()}
+                  >
+                    삭제
+                  </Modal.Button>
+              </DeleteModalButtonWrapper>
           </Modal>
         )}
         {errorModal && (
@@ -354,7 +383,7 @@ export const PostDetailPage = () => {
               setErrorModal(false);
             }}
           >
-            <Modal.Title text="현재 지원자가 있어\n게시글 수정이 불가합니다\n\n게시글 수정 기능을\n조만간 따로 준비할게요 😎" />
+            <Modal.Title text="현재 지원자가 있어\n게시글 수정이 불가합니다" />
           </Modal>
         )}
         {profileModal && (
@@ -424,6 +453,14 @@ const EditModalButtonWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 0.78rem;
+`;
+
+const DeleteModalButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  gap: 0.78rem;
+  justifyContent: 'space-between'
 `;
 
 const ProfileImg = styled.img`

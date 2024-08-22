@@ -6,14 +6,17 @@ import { devLog } from "@/utils/dev-log";
 export type PermissionType = "granted" | "denied" | "default";
 
 async function requestPermission(): Promise<PermissionType> {
-  return await Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      devLog("권한 승인");
+  if (window.Android) {
+      // Android 인터페이스를 통해 알림 권한을 요청
+      const permission: PermissionType = await window.Android.requestNotificationPermission() as PermissionType;
+      return permission;
     } else {
-      devLog("권한 거부");
+      // 기존 Notification API를 사용
+      return await Notification.requestPermission().then((permission) => {
+          devLog(permission === "granted" ? "권한 승인" : "권한 거부");
+          return permission as PermissionType;
+      });
     }
-    return permission as PermissionType;
-  });
 }
 
 async function requestToken(): Promise<string> {

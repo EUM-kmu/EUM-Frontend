@@ -117,6 +117,19 @@ export const PostList = () => {
     }
   };
 
+  useEffect(() => {
+    // 함수를 window 객체에 추가
+    window.handlePermissionResult = (permission) => {
+      console.log("Permission status: " + permission);
+      // 다른 상태 업데이트나 로직 수행
+    };
+  
+    // 컴포넌트 언마운트 시 함수 제거
+    return () => {
+      delete window.handlePermissionResult;
+    };
+  }, []);
+
   return (
     <>
       <Wrapper ref={wrapperRef}>
