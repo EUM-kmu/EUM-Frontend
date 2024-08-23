@@ -183,7 +183,7 @@ export const PostDetailPage = () => {
           {data?.userCurrentStatus.writer ? (
             data?.marketPostResponse.status === "RECRUITING" ? (
               <>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <RowContainer>
                   <BottomFixed.Button 
                       style={{ backgroundColor: "#e4e8f1", color: "#253659" }}
                       onClick={() => {
@@ -202,7 +202,7 @@ export const PostDetailPage = () => {
                   >
                     삭제하기
                   </BottomFixed.Button>
-                </div>
+                </RowContainer>
                 <BottomFixed.Button onClick={() => setRepostModal(true)}>
                   끌어올리기
                 </BottomFixed.Button>
@@ -258,7 +258,7 @@ export const PostDetailPage = () => {
               </BottomFixed.Button>
             ) : (
               <BottomFixed.Button
-                rounded={false}
+                style={{ backgroundColor: "#e4e8f1", color: "#eb5242" }}
                 onClick={() => {
                   setApplyModal(true);
                 }}
@@ -396,6 +396,14 @@ export const PostDetailPage = () => {
     </DefaultLayout>
   );
 };
+
+const RowContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* 컨테이너의 너비에 맞춤 */
+  max-width: calc(480px - 3.2rem); /* 최대 너비를 설정하여 초과 방지 */
+  margin: auto;
+`;
 
 const PaddingWrapper = styled.div<{ $isWriter: boolean }>`
   position: relative;
