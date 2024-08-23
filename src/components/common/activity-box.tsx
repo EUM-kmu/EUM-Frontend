@@ -191,7 +191,7 @@ const MoreInfoContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  padding: 24px 22px 45px;
+  padding: 24px 22px 100px;
 `;
 
 const PromiseInfoList = styled.div`

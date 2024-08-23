@@ -54,12 +54,19 @@ export const BottomFixed = ({
     <BottomFixedContainer
       $alignDirection={alignDirection}
       style={{
-        bottom: `calc(${
+        paddingBottom: `calc(${
           currentUrl[1] == "post" ||
           (currentUrl[1] == "chat" && !currentUrl[2]) ||
           currentUrl[1] == "mypage"
             ? "4rem"
             : "2.2rem"
+        } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
+        paddingTop: `calc(${
+          currentUrl[1] == "post" ||
+          (currentUrl[1] == "chat" && !currentUrl[2]) ||
+          currentUrl[1] == "mypage"
+            ? "0.5rem" // 네비바(3.5rem)와 BottomFixedContainer(4rem)사이의 간격 만큼 TOP 을 추가함
+            : "0rem"
         } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
       }}
     >
@@ -73,11 +80,12 @@ BottomFixed.Button = Button;
 const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   display: flex;
   position: fixed;
-  margin: 0 2rem;
+  padding: 0 2rem;
   flex-direction: ${({ $alignDirection }) => $alignDirection};
   gap: 11px;
   left: 0;
   right: 0;
+  bottom: 0;
   background-color: white;
 `;
 
