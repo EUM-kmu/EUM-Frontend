@@ -59,7 +59,7 @@ export const BottomFixed = ({
           (currentUrl[1] == "chat" && !currentUrl[2]) ||
           currentUrl[1] == "mypage"
             ? "4rem"
-            : "2.2rem"
+            : "1.8rem"
         } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
         paddingTop: `calc(${
           currentUrl[1] == "post" ||
@@ -87,6 +87,10 @@ const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   right: 0;
   bottom: 0;
   background-color: white;
+  @media (max-height: 400px) {
+    //display: none !important;
+    padding-bottom: 0.5em !important;
+  }
 `;
 
 const StyledButton = styled.button<{
