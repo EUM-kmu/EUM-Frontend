@@ -95,7 +95,7 @@ BottomFixed.Button = Button;
 
 const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   display: flex;
-  position: relative;
+  position: fixed;
   padding: 0 2rem;
   flex-direction: ${({ $alignDirection }) => $alignDirection};
   gap: 11px;
