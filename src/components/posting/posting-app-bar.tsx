@@ -9,11 +9,11 @@ import { colorTheme } from "@/style/color-theme";
 export const PostingAppBar = (props: PostingAppBarProps) => {
   return (
     <AppBar isBorderExist={true}>
-      <AppBar.AppBarNavigate>
+      <KeyboardawareAppBarNavigate>
         <AppBar.BackButton onCustomClick={props.onCustomClick} />
         <AppBar.HeaderText>{props.nowPage}/8</AppBar.HeaderText>
         <div style={{ width: "30px" }} />
-      </AppBar.AppBarNavigate>
+      </KeyboardawareAppBarNavigate>
       <StateLine>
         <NowStateLine
           initial={{ width: `calc((100% / 8) * ${props.nowPage - 1})` }}
@@ -36,3 +36,9 @@ const NowStateLine = styled(motion.div)`
   background-color: ${colorTheme.orange400};
   height: 0.44rem;
 `;
+
+const KeyboardawareAppBarNavigate = styled(AppBar.AppBarNavigate)`
+    @media (max-height: 400px) {
+        display: none !important;
+    }
+`
