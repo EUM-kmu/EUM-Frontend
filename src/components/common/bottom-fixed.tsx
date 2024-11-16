@@ -37,13 +37,20 @@ export const BottomFixed = ({
 
   useEffect(() => {
     const resizeHandler = (event: Event) => {
+      const viewportHeight = window.visualViewport?.height ?? 0;
       setResizeHeight(
-        window.innerHeight - (event.currentTarget as VisualViewport)?.height,
+        window.innerHeight - viewportHeight + window.scrollY,
       );
     };
     visualViewport && visualViewport.addEventListener("resize", resizeHandler);
+    visualViewport && visualViewport.addEventListener("scroll", resizeHandler);
+    window?.addEventListener('touchmove', resizeHandler);
 
-    return () => visualViewport?.removeEventListener("resize", resizeHandler);
+    return () => {
+      visualViewport?.removeEventListener("resize", resizeHandler);
+      visualViewport?.removeEventListener("scroll", resizeHandler);
+      window?.removeEventListener('touchmove', resizeHandler);
+    }
   }, []);
 
   function getCurrentPage(url: string): string[] {
@@ -53,22 +60,31 @@ export const BottomFixed = ({
   return (
     <BottomFixedContainer
       $alignDirection={alignDirection}
-      style={{
-        paddingBottom: `calc(${
-          currentUrl[1] == "post" ||
-          (currentUrl[1] == "chat" && !currentUrl[2]) ||
-          currentUrl[1] == "mypage"
-            ? "4rem"
-            : "1.8rem"
-        } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
-        paddingTop: `calc(${
-          currentUrl[1] == "post" ||
-          (currentUrl[1] == "chat" && !currentUrl[2]) ||
-          currentUrl[1] == "mypage"
-            ? "0.5rem" // 네비바(3.5rem)와 BottomFixedContainer(4rem)사이의 간격 만큼 TOP 을 추가함
-            : "0rem"
-        } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
+      style = {{
+          bottom: `calc(${
+            currentUrl[1] == "post" ||
+            (currentUrl[1] == "chat" && !currentUrl[2]) ||
+            currentUrl[1] == "mypage"
+              ? "4rem"
+              : "1.8rem"
+          } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
       }}
+      // style={{
+      //   paddingBottom: `calc(${
+      //     currentUrl[1] == "post" ||
+      //     (currentUrl[1] == "chat" && !currentUrl[2]) ||
+      //     currentUrl[1] == "mypage"
+      //       ? "4rem"
+      //       : "1.8rem"
+      //   } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
+      //   paddingTop: `calc(${
+      //     currentUrl[1] == "post" ||
+      //     (currentUrl[1] == "chat" && !currentUrl[2]) ||
+      //     currentUrl[1] == "mypage"
+      //       ? "0.5rem" // 네비바(3.5rem)와 BottomFixedContainer(4rem)사이의 간격 만큼 TOP 을 추가함
+      //       : "0rem"
+      //   } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
+      // }}
     >
       {children}
     </BottomFixedContainer>
@@ -87,6 +103,8 @@ const BottomFixedContainer = styled.div<{ $alignDirection: string }>`
   right: 0;
   bottom: 0;
   background-color: white;
+  width: 100vw;
+  padding-bottom: 1.8rem;
   @media (max-height: 400px) {
     //display: none !important;
     padding-bottom: 0.5em !important;
