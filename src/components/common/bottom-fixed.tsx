@@ -36,21 +36,19 @@ export const BottomFixed = ({
   }, [location.pathname]);
 
   useEffect(() => {
-    const resizeHandler = (event: Event) => {
+    const resizeHandler = (_: Event) => {
       const viewportHeight = window.visualViewport?.height ?? 0;
-      setResizeHeight(
-        window.innerHeight - viewportHeight + window.scrollY,
-      );
+      setResizeHeight(window.innerHeight - viewportHeight + window.scrollY);
     };
     visualViewport && visualViewport.addEventListener("resize", resizeHandler);
     visualViewport && visualViewport.addEventListener("scroll", resizeHandler);
-    window?.addEventListener('touchmove', resizeHandler);
+    window?.addEventListener("touchmove", resizeHandler);
 
     return () => {
       visualViewport?.removeEventListener("resize", resizeHandler);
       visualViewport?.removeEventListener("scroll", resizeHandler);
-      window?.removeEventListener('touchmove', resizeHandler);
-    }
+      window?.removeEventListener("touchmove", resizeHandler);
+    };
   }, []);
 
   function getCurrentPage(url: string): string[] {
@@ -60,14 +58,14 @@ export const BottomFixed = ({
   return (
     <BottomFixedContainer
       $alignDirection={alignDirection}
-      style = {{
-          bottom: `calc(${
-            currentUrl[1] == "post" ||
-            (currentUrl[1] == "chat" && !currentUrl[2]) ||
-            currentUrl[1] == "mypage"
-              ? "4rem"
-              : "1.8rem"
-          } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
+      style={{
+        bottom: `calc(${
+          currentUrl[1] == "post" ||
+          (currentUrl[1] == "chat" && !currentUrl[2]) ||
+          currentUrl[1] == "mypage"
+            ? "0rem"
+            : "0rem"
+        } + ${!resizeHeight ? 0 : resizeHeight - 20}px)`,
       }}
       // style={{
       //   paddingBottom: `calc(${

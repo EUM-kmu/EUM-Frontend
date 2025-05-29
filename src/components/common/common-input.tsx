@@ -87,17 +87,20 @@ const EachBox = styled.div`
 `;
 
 const TextDiv = styled.div`
-  font-size: 1.11rem;
+  font-size: 3rem;
   margin: 0 0 5% 2%;
-  width: 2.3rem;
+  width: 3.3rem;
 `;
-
+//* 기존 fontsize 1.11rem */
+//기존 width: 2.3rem
 const StyledInput = styled(motion.input)`
   width: 100%;
   height: 4.39rem;
   border-radius: 0.83rem;
   text-align: center;
-  font-size: 2.78rem;
+  font-size: 3.78rem;
   font-weight: bold;
   border: none;
 `;
+//* 기존 fontsize 2.78rem */
+//http://localhost:3000/posting/3 시,분 폰트크기

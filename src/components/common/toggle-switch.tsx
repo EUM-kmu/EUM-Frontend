@@ -61,7 +61,7 @@ const SelectToggleWrapper = styled.div`
 
 const SelectToggleButton = styled(motion.button)`
   text-align: center;
-  font-size: 1rem;
+  font-size: 2rem;
   color: #ffffff;
   width: 100%;
   line-height: 1.61rem;
@@ -69,3 +69,5 @@ const SelectToggleButton = styled(motion.button)`
   border: 0;
   border-radius: 1.11rem;
 `;
+//기존 1rem
+//http://localhost:3000/posting/3 오전, 오후 폰트크기 조절

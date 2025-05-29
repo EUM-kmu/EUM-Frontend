@@ -45,25 +45,118 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
   const setProfileEdit = useSetRecoilState(profileEditState);
 
   const [errorMsg, setErrorMsg] = useState<ErrorMessageType>("INITIAL");
-
+  const [focusStep, setFocusStep] = useState<number>(0);
   const [step, setStep] = useState<number>(0);
 
   const nextStep = (targetStep: number) => {
     return setStep((step) => (step < targetStep ? step + 1 : step));
   };
 
-  const onClick = () => {
-    if (errorMsg === "INITIAL" && step === 2) {
-      setProfileEdit((prev) => ({
-        ...prev,
-        birth: `${bYear}-${bMonth}-${bDay}`,
-      }));
-
-      onClose();
+  
+  // --- 통합 유효성 검사 함수 (오류 유형만 반환) ---
+  const validateUpToStep = (stepToValidate: number): ErrorMessageType => {
+    // 0단계: 연도 검사
+    if (bYear.length === 0 || !validateDate.year(bYear)) {
+      return "YEAR";
     }
-    errorMsg === "INITIAL" &&
-      [bYear, bMonth, bDay][step].length &&
-      nextStep(step + 1);
+
+    // 1단계: 월 검사 (stepToValidate가 1 이상일 때만)
+    if (stepToValidate >= 1) {
+      const paddedMonth = bMonth.padStart(2, '0');
+      if (bMonth.length === 0 || !validateDate.month(paddedMonth)) {
+        return "MONTH";
+      }
+      // (선택적) 검사 통과 시 포맷팅 - 함수 외부에서 해도 됨
+      // if (bMonth !== paddedMonth) setBMonth(paddedMonth);
+    }
+
+    // 2단계: 일 검사 (stepToValidate가 2 이상일 때만)
+    if (stepToValidate >= 2) {
+      const paddedMonth = bMonth.padStart(2, '0'); // 일 검사에도 월 필요
+      const paddedDay = bDay.padStart(2, '0');
+      if (bDay.length === 0 || !validateDate.day(bYear, paddedMonth, paddedDay)) {
+        return "DAY";
+      }
+      // (선택적) 검사 통과 시 포맷팅
+      // if (bDay !== paddedDay) setBDay(paddedDay);
+    }
+
+    // 모든 검사 통과
+    return "INITIAL";
+  };
+  // ---
+
+    // --- 오류 처리 및 포커스 이동 함수 ---
+    const handleError = (errorType: ErrorMessageType) => {
+      setErrorMsg(errorType);
+      switch (errorType) {
+          case "YEAR":
+              yRef.current?.focus();
+              setFocusStep(0); // 포커스 단계 동기화
+              break;
+          case "MONTH":
+              mRef.current?.focus();
+              setFocusStep(1);
+              break;
+          case "DAY":
+              dRef.current?.focus();
+              setFocusStep(2);
+              break;
+          case "INITIAL":
+          default:
+              // 성공 시에는 포커스 이동은 다른 로직에서 처리
+              break;
+      }
+  };
+  // ---
+
+  // --- '다음' 또는 '완료하기' 버튼 클릭 핸들러 (통합 검증 사용) ---
+  const handleNextOrSubmit = () => {
+    let validationResult: ErrorMessageType = "INITIAL";
+    let stepToValidate: number;
+
+    // '완료하기' 상태일 때 검증할 단계 = 2
+    if (step === 2) {
+      stepToValidate = 2;
+    }
+    // '다음' 상태일 때 검증할 단계 = 현재 포커스된 단계
+    else {
+      stepToValidate = focusStep;
+    }
+
+    // 결정된 단계까지 유효성 검사 수행
+    validationResult = validateUpToStep(stepToValidate);
+
+    // 검증 결과 처리
+    if (validationResult === "INITIAL") {
+      // 성공!
+      setErrorMsg("INITIAL"); // 혹시 모를 이전 오류 클리어
+
+      // '다음' 로직 처리
+      if (step < 2) {
+        const nextStepIndex = focusStep + 1;
+        setStep((prevMaxStep) => Math.max(prevMaxStep, nextStepIndex));
+        setFocusStep(nextStepIndex); // 다음 단계로 포커스 이동 요청
+         // 성공 시 값 포맷팅 (패딩) - validateUpToStep 내부에서 안 했다면 여기서 수행
+        if (focusStep === 1 && bMonth.length > 0) setBMonth(bMonth.padStart(2,'0'));
+        if (focusStep === 2 && bDay.length > 0) setBDay(bDay.padStart(2,'0'));
+      }
+      // '완료하기' 로직 처리
+      else {
+        // 최종 저장 전 값 포맷팅 확인
+        const finalYear = bYear;
+        const finalMonth = bMonth.padStart(2, '0');
+        const finalDay = bDay.padStart(2, '0');
+        setProfileEdit((prev) => ({
+          ...prev,
+          birth: `${finalYear}-${finalMonth}-${finalDay}`,
+        }));
+        onClose();
+      }
+    } else {
+      // 실패! 오류 처리 함수 호출
+      handleError(validationResult);
+    }
   };
 
   useEffect(() => {
@@ -102,11 +195,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setBYear(e.target.value)
             }
-            onBlur={() => {
-              if (validateDate.year(bYear)) {
-                setErrorMsg("INITIAL");
-              } else setErrorMsg("YEAR");
-            }}
+            onFocus={() => setFocusStep(0)}
           />
           <RowBox>
             {step >= 1 && (
@@ -121,12 +210,7 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setBMonth(e.target.value)
                 }
-                onBlur={() => {
-                  if (validateDate.month(bMonth)) {
-                    setErrorMsg("INITIAL");
-                    setBMonth((prev) => prev.padStart(2, "0"));
-                  } else setErrorMsg("MONTH");
-                }}
+                onFocus={() => setFocusStep(1)}
               />
             )}
             {step >= 2 && (
@@ -141,17 +225,12 @@ export const BirthModal = ({ onClose }: { onClose: () => void }) => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setBDay(e.target.value)
                 }
-                onBlur={() => {
-                  if (validateDate.day(bYear, bMonth, bDay)) {
-                    setErrorMsg("INITIAL");
-                    setBDay((prev) => prev.padStart(2, "0"));
-                  } else setErrorMsg("DAY");
-                }}
+                onFocus={() => setFocusStep(2)}
               />
             )}
           </RowBox>
         </>
-        <NextButton onClick={onClick}>
+        <NextButton onClick={handleNextOrSubmit}>
           {step < 2 ? "다음" : "완료하기"}
         </NextButton>
       </ModalInner>

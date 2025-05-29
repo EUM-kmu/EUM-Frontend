@@ -447,6 +447,10 @@ const PageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100%;
+
+  height: var(--app-height); // 📌 뷰포트 높이 대응
+  overflow-y: auto;         // 📌 입력 시 스크롤 가능하게
+  padding-bottom: 120px;    // 📌 버튼 영역만큼 여백 확보
 `;
 
 const ChatList = styled.div`

@@ -81,6 +81,7 @@ const InputBoxCom = styled.input`
   border-radius: 0.61rem;
   padding: 0.61rem;
 `;
+//* 기존 2.78rem */
 
 const WonText = styled.span`
   color: black;
@@ -88,6 +89,7 @@ const WonText = styled.span`
   vertical-align: bottom;
   margin: 0 0 5% 7%;
 `;
+//* 기존 1.11rem */
 
 const InputMapContainer = styled.div`
   width: 100%;
@@ -108,12 +110,14 @@ const InputMapBox = styled(motion.input)`
   width: 69.12%;
   height: 100%;
   padding: 7.4%;
-  font-size: 1rem;
+  font-size: 2rem;
   color: black;
   background-color: ${colorTheme.blue100};
   border-radius: 0.61rem;
   border: 0;
 `;
+//* 기존 1rem */
+//http://localhost:3000/posting/1 위치를 입력해주세요 아래 돋보기 채팅 크기 조절
 
 InputBox.InputNum = InputNum;
 InputBox.InputMap = InputMap;

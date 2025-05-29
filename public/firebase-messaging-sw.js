@@ -6,7 +6,7 @@ importScripts(
 );
 
 const app = firebase.initializeApp({
-  apiKey: "AIzaSyDL6M57Z3PAo5nAjKbwm05FBz0CfDX5gSI",
+  apiKey: "AIzaSyAb8gPmyBEft0oRnRAr5uPwBQf8zMKo5yo",
   projectId: "k-eum2023",
   messagingSenderId: 761364583261,
   appId: "1:761364583261:web:588b54a65b3d7ebf0f8eb4",

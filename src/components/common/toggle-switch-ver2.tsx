@@ -58,7 +58,7 @@ const SelectToggleWrapper = styled.div`
 
 const SelectToggleButton = styled(motion.button)`
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #ffffff;
   width: 100%;
   line-height: 1.61rem;
@@ -67,3 +67,6 @@ const SelectToggleButton = styled(motion.button)`
   border-top-right-radius: 1.11rem;
   border-top-left-radius: 1.11rem;
 `;
+//* 기존 1rem */
+//http://localhost:3000/mypage 내게시물, 신청내역 폰트크기 조절
+//http://localhost:3000/chat 진행중, 진행완료 폰트크기도 조절

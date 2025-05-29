@@ -49,12 +49,15 @@ const Wrapper = styled.div`
 
 const PageText = styled.div`
   color: black;
-  font-size: 1.78rem;
+  font-size: 2.5rem;
   width: 100%;
-  padding: 1.39rem 7.95% 0.56rem;
+  padding: 0.8rem 7.95% 0.56rem;
   font-weight: 500;
   vertical-align: bottom;
 `;
+//기존 fontsize 1.78rem -> 2.5
+//기존 padding 1.39rem -> 0.8
+//http://localhost:3000/chat 채팅 크기, 위치 조절
 
 const HeaderWrapper = styled.div`
   width: 100%;
