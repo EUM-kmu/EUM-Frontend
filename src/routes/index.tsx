@@ -29,6 +29,8 @@ import { PrivacyPolicyPage } from "@/pages/terms/privacy-policy";
 import { UserTermsPage } from "@/pages/terms/user-terms";
 import { BottomFixedTest } from "@/pages/test/bottom-fixed-test";
 import { FCMTest } from "@/pages/test/fcm";
+import { NoticePage } from "@/pages/notice/notice";
+import { ContactPage } from "@/pages/contact/contact";
 
 const routeChildren = [
   {
@@ -147,7 +149,16 @@ const routeChildren = [
     element: <Mypage />,
     auth: true,
   },
-
+  {
+    path: "/notice",
+    element: <NoticePage />,
+    auth: true,
+  },
+  {
+    path: "/contact",
+    element: <ContactPage />,
+    auth: true,
+  },
   // test
   { path: "/test", element: <BottomFixedTest />, auth: false },
   { path: "/test3", element: <FCMTest />, auth: false },

@@ -95,7 +95,7 @@ const Picker = styled.div`
         flex-direction: column;
         justify-content: space-between;
         padding: 2.8%;
-        font-size: 0.89rem;
+        font-size: 1.33rem;
         .react-datepicker__week {
           display: flex;
           justify-content: space-between;
@@ -110,7 +110,7 @@ const Picker = styled.div`
       flex-direction: column;
       justify-content: space-between;
       border: none;
-      font-size: 1rem;
+      font-size: 1.7rem;
     }
     .react-datepicker__day-names {
       margin: 3% 0 0 0;
@@ -123,7 +123,7 @@ const Picker = styled.div`
     }
     .react-datepicker__day--selected {
       background-color: #d9d9d9;
-      font-size: 1rem;
+      font-size: 1.5rem;
       color: #000000;
     }
     .react-datepicker__day {
@@ -137,6 +137,8 @@ const Picker = styled.div`
     }
   }
 `;
+// 기존 fontsize 0.89rem, 1rem, 1rem -> 1.3, 1.7, 1.5
+//http://localhost:3000/posting/2 날짜 크기 조절
 
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -161,12 +163,16 @@ const ArrowImg = styled.img`
 `;
 
 const HeaderButtonText = styled.span`
-  font-size: 1.11rem;
+  font-size: 1.5rem;
   color: #a1a1a1;
 `;
+//기존 1.11rem -> 1.5rem
+//http://localhost:3000/posting/2 이전달, 다음달 크기 조절
 
 const HeaderNowMonth = styled.span`
-  font-size: 1.39rem;
+  font-size: 1.7rem;
   color: #000000;
   padding-bottom: 0.28rem;
 `;
+//기존 1.39rem -> 1.7rem 더키우면 november이 안됨
+//http://localhost:3000/posting/2 현재달 크기 조절

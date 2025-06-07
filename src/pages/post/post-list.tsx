@@ -181,7 +181,7 @@ export const PostList = () => {
             </CategoryField>
           )}
           <SmallHeader>
-            게시글 만들기 버튼을 눌러 게시글을 만들어 보아요
+            {'게시글 만들기 버튼을 눌러\n게시글을 만들어 주세요'}
           </SmallHeader>
           <PostPostingButton />
         </div>
@@ -217,7 +217,7 @@ export const PostList = () => {
     </>
   );
 };
-
+// 게시글 만들기 버튼을 눌러 게시글을 만들어 보아요 -> {'게시글 만들기 버튼을 눌러\n게시글을 만들어 주세요'}
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -235,9 +235,18 @@ const Wrapper = styled.div`
 
 const SmallHeader = styled.div`
   width: 100%;
-  font-size: 0.83rem;
-  padding: 0 8.5% 0.6rem;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 0 8.5% 0.3rem;
+  white-space: pre-line;
+  line-height: 1.1
 `;
+//기존 0.83rem -> 1.4
+//text-align: center; 추가
+//white-space: pre-line; 줄바꿈을 위해 추가
+//http://localhost:3000/post 게시글 만들기 버튼을 눌러 게시글을 만들어 보아요 크기 조절
+//line-height: 1.1 줄간격 지정된 폰트 사이즈(12xp)의 1.1배
+//padding: 0 8.5% 0.6rem; -> padding: 0 8.5% 0.3rem; 게시글만들어 보아요와 게시글만들기 버튼 사이 간격 조절
 
 const InputWrapper = styled.div`
   width: 100%;

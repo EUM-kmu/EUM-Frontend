@@ -7,7 +7,7 @@ export const validateDate = {
     return +month > 0 && +month < 13;
   },
   day: function (year: string, month: string, day: string) {
-    return +day > 0 && +day < new Date(+year, +month, 0).getDate();
+    return +day > 0 && +day <= new Date(+year, +month, 0).getDate();
   },
   all: function (year: string, month: string, day: string) {
     return this.year(year) && this.month(month) && this.day(year, month, day);

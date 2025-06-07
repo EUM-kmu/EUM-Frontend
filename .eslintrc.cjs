@@ -28,7 +28,13 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "react/react-in-jsx-scope": "off",
-    "no-restricted-imports": ["error", { patterns: ["../*", "../**/*"] }],
+    "no-restricted-imports": ["error", { 
+      patterns: ["../*", "../**/*"],
+      paths: [{
+        name: "../*",
+        message: "Please use absolute imports with @/ prefix instead of relative imports."
+      }]
+    }],
     "import/order": [
       "warn",
       {
@@ -47,7 +53,10 @@ module.exports = {
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: "src/",
+        project: "./tsconfig.json",
+      },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
     react: {

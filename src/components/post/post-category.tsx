@@ -13,7 +13,7 @@ export const PostCategory = ({
     { id: 1, name: "이동" },
     { id: 2, name: "심부름" },
     { id: 3, name: "교육" },
-    { id: 4, name: "장소" },
+    { id: 4, name: "청소" },
     { id: 5, name: "돌봄" },
     { id: 6, name: "수리" },
     { id: 7, name: "기타" },

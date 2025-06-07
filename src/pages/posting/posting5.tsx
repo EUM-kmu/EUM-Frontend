@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 
 import { BankAccountData } from "@/api/types/bank-type";
-import { BottomFixed } from "@/components/common/bottom-fixed";
 import { CommonInput } from "@/components/common/common-input";
 import { PostingAppBar } from "@/components/posting/posting-app-bar";
 import { PostingBoldText } from "@/components/posting/posting-bold-text";
@@ -29,6 +28,21 @@ export const Posting5 = () => {
     });
   };
 
+  const handlePrev = () => {
+    handleSave();
+    navigate(-1);
+  };
+
+  const handleNext = () => {
+    if (member === "" || member === "0") {
+      setIsErrorText(true);
+      setIsError(true);
+    } else {
+      handleSave();
+      navigate("/posting/6");
+    }
+  };
+
   useEffect(() => {
     if (isErrorText && member !== "") {
       setIsErrorText(false);
@@ -37,7 +51,12 @@ export const Posting5 = () => {
 
   return (
     <PageContainer>
-      <PostingAppBar onCustomClick={() => handleSave()} nowPage={5} />
+      <PostingAppBar 
+        onCustomClick={handleSave} 
+        nowPage={5}
+        onPrevClick={handlePrev}
+        onNextClick={handleNext}
+      />
       <PostingBoldText style={{ marginBottom: "1.8rem" }}>
         필요한 인원을
         <br />
@@ -75,31 +94,6 @@ export const Posting5 = () => {
         {availableBudget - posting.price * Number(member)}
         타임입니다.
       </BalanceText>
-      <BottomFixed alignDirection="row">
-        <BottomFixed.Button
-          color="blue"
-          onClick={() => {
-            handleSave();
-            navigate(-1);
-          }}
-        >
-          이전
-        </BottomFixed.Button>
-        <BottomFixed.Button
-          color="blue"
-          onClick={() => {
-            if (member === "" || member === "0") {
-              setIsErrorText(true);
-              setIsError(true);
-            } else {
-              handleSave();
-              navigate("/posting/6");
-            }
-          }}
-        >
-          다음
-        </BottomFixed.Button>
-      </BottomFixed>
     </PageContainer>
   );
 };
@@ -109,17 +103,22 @@ const PageContainer = styled.div`
   width: 100%;
   align-items: center;
   flex-direction: column;
+  height: var(--app-height); // 📌 뷰포트 높이 대응
+  overflow-y: auto; // 📌 입력 시 스크롤 가능하게
+  padding-bottom: 20px; // 📌 버튼 영역만큼 여백 확보
 `;
 
 const BalanceText = styled.div`
   color: ${colorTheme.orange400};
-  font-size: 1rem;
+  font-size: 1.4rem;
+  width: 90%;
+  text-align: center;
   margin: 3% 0px 3% 0px;
 `;
 
 const ErrorMsg = styled.div`
   color: ${colorTheme.orange400};
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: center;
   font-weight: bold;
   line-height: 1.2rem;
@@ -142,13 +141,13 @@ const SumContainer = styled.div`
 `;
 
 const SumText = styled.span`
-  font-size: 1.11rem;
+  font-size: 2rem;
   font-weight: bold;
   color: black;
 `;
 
 const SumNumberText = styled.span`
-  font-size: 2.22rem;
+  font-size: 3rem;
   font-weight: bold;
   color: ${colorTheme.orange400};
 `;
