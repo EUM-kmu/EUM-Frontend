@@ -7,7 +7,7 @@ import { devLog } from "@/utils/dev-log";
 import "react-html5-camera-photo/build/css/index.css";
 import "./camera.css";
 
-const OriginCamera = CameraModule.default ?? CameraModule;
+const OriginCamera = (CameraModule.default ?? CameraModule) as FC<any>;
 
 type CameraProps = {
   setDataUri: Dispatch<SetStateAction<string>>;
