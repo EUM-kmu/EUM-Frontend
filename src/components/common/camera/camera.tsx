@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import CameraModule from "react-html5-camera-photo";
 import { styled } from "styled-components";
 
@@ -7,7 +7,14 @@ import { devLog } from "@/utils/dev-log";
 import "react-html5-camera-photo/build/css/index.css";
 import "./camera.css";
 
-const OriginCamera = (CameraModule.default ?? CameraModule) as FC<any>;
+interface OriginCameraProps {
+  isImageMirror?: boolean;
+  onTakePhotoAnimationDone: (dataUri: string) => void;
+  imageType?: string;
+  imageCompression?: number;
+}
+
+const OriginCamera = (CameraModule.default ?? CameraModule) as FC<OriginCameraProps>;
 
 type CameraProps = {
   setDataUri: Dispatch<SetStateAction<string>>;
@@ -23,7 +30,7 @@ const Camera = ({ setDataUri }: CameraProps) => {
     <CameraWrapper>
       <OriginCamera
         isImageMirror
-        onTakePhotoAnimationDone={(dataUri: string) => {
+        onTakePhotoAnimationDone={(dataUri) => {
           handleTakePhoto(dataUri);
           setDataUri(dataUri);
         }}
