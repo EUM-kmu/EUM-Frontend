@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 import { ReactComponent as LoginIcon } from "@/assets/icons/login-icon.svg";
 import { GoogleButton } from "@/components/login/google-button";
 import { KakaoButton } from "@/components/login/kakao-button";
-import { colorTheme } from "@/style/color-theme";
 import { createGuestProfile } from '@/hooks/queries/useGetProfile';
+import { colorTheme } from "@/style/color-theme";
 // import { devLog } from "@/utils/dev-log";
 // import { Modal } from "@/components/common/modal";
 
