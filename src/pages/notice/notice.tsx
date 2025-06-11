@@ -1,17 +1,16 @@
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { collection, addDoc, getDocs, orderBy, query, Timestamp, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState, useRef } from "react";
 import { styled } from "styled-components";
 
-import { collection, addDoc, getDocs, orderBy, query, Timestamp, doc, getDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-
-import { db } from "@/lib/firebase";
-import { AppBar } from "@/components/common/app-bar";
-import { Sidebar } from "@/components/sidebar";
-import { colorTheme } from "@/style/color-theme";
 
 import noticeImage1 from "@/assets/images/notice1.png";
 import noticeImage2 from "@/assets/images/notice2.png";
 import noticeImage3 from "@/assets/images/notice3.png";
+import { AppBar } from "@/components/common/app-bar";
+import { Sidebar } from "@/components/sidebar";
+import { db } from "@/lib/firebase";
+import { colorTheme } from "@/style/color-theme";
 
 
 //  공지 목록 상태

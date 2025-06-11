@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { styled } from "styled-components";
 import { useLocation } from "react-router-dom";
+import { styled } from "styled-components";
 
 import { AppBar } from "@/components/common/app-bar";
-import { Sidebar } from "@/components/sidebar";
 import { ToggleSwitchVer2 } from "@/components/common/toggle-switch-ver2";
 import { MypageList } from "@/components/mypage/mypage-list";
 import { MypageListProfile } from "@/components/mypage/mypage-list-profile";
 import { MypageUpButton } from "@/components/mypage/mypage-up-button";
+import { Sidebar } from "@/components/sidebar";
 import { colorTheme } from "@/style/color-theme";
 
 export const Mypage = () => {
