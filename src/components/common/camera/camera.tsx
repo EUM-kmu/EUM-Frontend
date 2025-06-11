@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, FC } from "react";
-import CameraModule from "react-html5-camera-photo";
+import { Dispatch, SetStateAction } from "react";
+import Camera from "react-html5-camera-photo";
 import { styled } from "styled-components";
 
 import { devLog } from "@/utils/dev-log";
@@ -7,20 +7,11 @@ import { devLog } from "@/utils/dev-log";
 import "react-html5-camera-photo/build/css/index.css";
 import "./camera.css";
 
-interface OriginCameraProps {
-  isImageMirror?: boolean;
-  onTakePhotoAnimationDone: (dataUri: string) => void;
-  imageType?: string;
-  imageCompression?: number;
-}
-
-const OriginCamera = (CameraModule.default ?? CameraModule) as FC<OriginCameraProps>;
-
 type CameraProps = {
   setDataUri: Dispatch<SetStateAction<string>>;
 };
 
-const Camera = ({ setDataUri }: CameraProps) => {
+const MyCamera = ({ setDataUri }: CameraProps) => {
   function handleTakePhoto(dataUri: string) {
     devLog("takePhoto");
     devLog(dataUri);
@@ -28,9 +19,9 @@ const Camera = ({ setDataUri }: CameraProps) => {
 
   return (
     <CameraWrapper>
-      <OriginCamera
+      <Camera
         isImageMirror
-        onTakePhotoAnimationDone={(dataUri) => {
+        onTakePhotoAnimationDone={(dataUri: string) => {
           handleTakePhoto(dataUri);
           setDataUri(dataUri);
         }}
@@ -41,24 +32,24 @@ const Camera = ({ setDataUri }: CameraProps) => {
   );
 };
 
-export default Camera;
+export default MyCamera;
 
 const CameraWrapper = styled.div`
   width: 100%;
   overflow: hidden;
-
+  /* 플래쉬 화면 이후 잠깐 뜨는 캡처 이미지 */
   & img {
     width: 100% !important;
     aspect-ratio: 1;
     object-fit: cover;
   }
-
+  /* 촬영 버튼 */
   & #container-circles {
+    /* 클릭시, margin 변경으로 인한 정렬 파괴 방지 */
     & .is-clicked {
       margin: -22px 0 0 -22px;
     }
   }
-
   & #outer-circle {
     background-color: #f17547;
   }
@@ -80,7 +71,6 @@ const CameraWrapper = styled.div`
       background-color: #f17547;
       border-radius: 100%;
       z-index: 3;
-
       &:active {
       }
     }
