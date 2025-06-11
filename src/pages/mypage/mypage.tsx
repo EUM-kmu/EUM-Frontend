@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { AppBar } from "@/components/common/app-bar";
@@ -13,7 +13,7 @@ import { colorTheme } from "@/style/color-theme";
 export const Mypage = () => {
   const [isLeftSelected, setIsLeftSelected] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const location = useLocation();
+//  const location = useLocation();
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [miniButtonVisible, setMiniButtonVisible] = useState(false);
@@ -55,7 +55,6 @@ export const Mypage = () => {
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         menuItems={menuItems}
-        currentPath={location.pathname}
       />
       <MainContent $isSidebarOpen={isSidebarOpen}>
         <Wrapper ref={wrapperRef}>

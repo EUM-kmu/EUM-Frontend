@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import Camera from "react-html5-camera-photo";
 import { styled } from "styled-components";
 
 import { devLog } from "@/utils/dev-log";
+import Camera from "react-html5-camera-photo";
 
 import "react-html5-camera-photo/build/css/index.css";
 import "./camera.css";

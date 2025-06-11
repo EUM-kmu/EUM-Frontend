@@ -27,7 +27,7 @@ export const NoticePage = () => {
   const [newNotice, setNewNotice] = useState({ title: "", content: "" });
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
+//  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   //  사이드바 상태
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -63,7 +63,7 @@ export const NoticePage = () => {
       } else {
         setIsAdmin(false);
       }
-      setIsAuthLoading(false);
+    //  setIsAuthLoading(false);
     };
 
     // 비동기 콜백 사용 안함

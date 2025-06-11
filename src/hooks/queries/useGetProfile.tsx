@@ -43,17 +43,17 @@ function isValidProfileData(data: unknown): data is ProfileData {
   );
 }
 
-export const createGuestProfile = (): ProfileData => {
-  return {
-    userId: 0,
-    nickName: "게스트",
-    gender: "male",
-    address: "정릉 3동",
-    birth: "2000-01-01",
-    ageRange: 2,
-    accountNumber: "",
-    profileImage: "/icons/guest.png",
-    blocked: false,
-    dealCount: 0
-  };
-};
+//export const createGuestProfile = (): ProfileData => {
+//  return {
+//    userId: 0,
+//    nickName: "게스트",
+//    gender: "male",
+//    address: "정릉 3동",
+//    birth: "2000-01-01",
+//    ageRange: 2,
+//    accountNumber: "",
+//    profileImage: "/icons/guest.png",
+//    blocked: false,
+//    dealCount: 0
+//  };
+//};
