@@ -73,6 +73,9 @@ const CameraWrapper = styled.div`
       background-color: #f17547;
       border-radius: 100%;
       z-index: 3;
+
+      &:active {
+      }
     }
   }
 `;
