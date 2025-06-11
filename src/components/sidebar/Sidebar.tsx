@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+
 import { colorTheme } from "@/style/color-theme";
 
 interface SidebarProps {
@@ -9,9 +10,10 @@ interface SidebarProps {
     title: string;
     path: string;
   }>;
+  currentPath?: string;
 }
 
-export const Sidebar = ({ isOpen, onClose, menuItems }: SidebarProps) => {
+export const Sidebar = ({ isOpen, onClose, menuItems, currentPath }: SidebarProps) => {
   const handleNavigation = (path: string) => {
     window.location.href = path;
   };
@@ -26,8 +28,8 @@ export const Sidebar = ({ isOpen, onClose, menuItems }: SidebarProps) => {
         </SidebarHeader>
         <SidebarContent>
           {menuItems.map((item) => (
-            <SidebarItem 
-              key={item.id} 
+            <SidebarItem
+              key={item.id}
               onClick={() => handleNavigation(item.path)}
             >
               {item.title}
