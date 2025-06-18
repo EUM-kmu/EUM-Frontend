@@ -57,4 +57,8 @@ const PaddingWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 0 1.6rem;
+
+  height: var(--app-height); // 📌 뷰포트 높이 대응
+  overflow-y: auto;         // 📌 입력 시 스크롤 가능하게
+  padding-bottom: 120px;    // 📌 버튼 영역만큼 여백 확보
 `;

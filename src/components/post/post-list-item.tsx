@@ -111,6 +111,7 @@ const StateFin = styled.div`
   color: ${colorTheme.blue900};
   padding: 0.22rem;
 `;
+//http://localhost:3000/post 전체 게시물 목록에서 모집중, 모집완료, 거래완료, 삭제된 글 크기 조절
 
 const Title = styled.span`
   width: 100%;
@@ -129,6 +130,7 @@ const TopIcon = styled.img`
 const StateSpan = styled.span`
   font-size: 0.83rem;
 `;
+//http://localhost:3000/post 주소, 시간 크기 조절로 추정
 
 const BottomIcon = styled.div<{ icon: string }>`
   margin-right: 0.78rem;
@@ -140,6 +142,7 @@ const BottomIcon = styled.div<{ icon: string }>`
   background-repeat: no-repeat;
   background-size: contain;
 `;
+//http://localhost:3000/post 주소, 시간 아이콘 크기 조절로 추정
 
 const BottomRowBox = styled.div`
   width: 100%;

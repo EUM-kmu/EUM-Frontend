@@ -60,6 +60,8 @@ const PlusImg = styled.img`
 `;
 
 const ButtonSpan = styled.span`
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: white;
 `;
+// 기존 1.8rem -> 2더커지면 두줄됨
+// http://localhost:3000/posting/1 게시글 만들기 크기 조절

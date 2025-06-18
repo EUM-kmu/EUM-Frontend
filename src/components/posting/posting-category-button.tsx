@@ -117,13 +117,17 @@ const ColumnBox = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0rem;
 `;
+//기존 gap 0.3rem -> 0rem
+//http://localhost:3000/posting/6 카테고리 이미지와 글자 간격 조절
 
 const TypeSpan = styled.span`
   text-align: center;
   /* width: 100%; */
   /* height: 100%; */
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #ffffff;
 `;
+//기존 1rem -> 1.5rem
+//http://localhost:3000/posting/6 카테고리 글자 크기 조절

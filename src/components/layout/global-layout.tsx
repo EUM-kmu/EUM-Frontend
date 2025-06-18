@@ -23,7 +23,8 @@ export const GlobalLayout = () => {
     <div
       style={{
         width: "100%",
-        height: "100%",
+        height: "100vh",
+        minHeight: "450px",
         position: "relative",
         overflow: "hidden",
       }}
@@ -34,9 +35,10 @@ export const GlobalLayout = () => {
           height:
             currentUrl[1] == "post" ||
             (currentUrl[1] == "chat" && !currentUrl[2]) ||
-            currentUrl[1] == "mypage"
-              ? `calc(100% - 3.5rem)`
-              : "100%",
+            currentUrl[1] == "mypage" ||
+            currentUrl[1] == "notice"
+              ? `calc(100vh - 3.5rem)`
+              : "100vh",
           position: "relative",
         }}
       >
@@ -44,7 +46,8 @@ export const GlobalLayout = () => {
       </div>
       {(currentUrl[1] == "post" ||
         (currentUrl[1] == "chat" && !currentUrl[2]) ||
-        currentUrl[1] == "mypage") && <BottomNavigationBar />}
+        currentUrl[1] == "mypage" ||
+        currentUrl[1] == "notice") && <BottomNavigationBar />}
     </div>
   );
 };

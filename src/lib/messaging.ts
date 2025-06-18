@@ -32,7 +32,7 @@ async function requestToken(): Promise<string> {
       return currentToken;
     })
     .catch((err) => {
-      alert("권한이 허가되어있지 않아 알림을 보낼 수 없습니다");
+      // alert("권한이 허가되어있지 않아 알림을 보낼 수 없습니다");
       devLog("토큰을 받는 과정에서 에러가 발생하였습니다 ", err);
       // ...
     });

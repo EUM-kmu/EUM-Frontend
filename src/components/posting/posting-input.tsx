@@ -85,20 +85,24 @@ const InputContainer = styled(motion.div)`
 `;
 
 const InputTitleBox = styled.input`
-  font-size: 1.39rem;
+  font-size: 2rem;
   font-weight: bold;
   width: 100%;
   background-color: transparent;
   border: 0;
 `;
+//기존 1.39rem -> 2
+//http://localhost:3000/posting/7 활동 제목 아래 글자 크기 조절
 
 const InputLeft = styled.span`
-  font-size: 0.83rem;
+  font-size: 1.5rem;
   width: 100%;
   border: 0;
   padding-top: 0.56rem;
   text-align: end;
 `;
+//기존 0.83rem -> 1.5
+//http://localhost:3000/posting/7 활동 제목 아래 /20자 크기 조절
 
 const InputContentBoxContainer = styled.div`
   width: 100%;
@@ -110,11 +114,13 @@ const InputContentBoxContainer = styled.div`
 const InputContentBox = styled.textarea`
   width: 100%;
   height: 100%;
-  font-size: 1rem;
+  font-size: 1.4rem;
   background-color: transparent;
   resize: vertical;
   border: 0;
 `;
+//기존 1rem -> 1.4
+//http://localhost:3000/posting/7 활동 내용 아래 글자 크기 조절
 
 PostingInput.InputTitle = InputTitle;
 PostingInput.InputContent = InputContent;

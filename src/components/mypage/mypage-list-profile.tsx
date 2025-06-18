@@ -145,20 +145,25 @@ const Wrapper = styled.div`
   background-color: ${colorTheme.blue100};
   border-top-left-radius: 0.83rem;
   border-top-right-radius: 0.83rem;
-  padding: 1.44rem 0 1.4rem 9%;
+  padding: 1.44rem 0 1.4rem 4.5%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 3.3%;
 `;
-
+//padding: 1.44rem 0 1.4rem 9%; -> padding: 1.44rem 0 1.4rem 4.5% 
+//http://localhost:3000/mypage 프로필 사진 위치 왼쪽으로 이동
 const ProfileImg = styled.img`
-  width: 4.33rem;
+  width: 5rem;
   aspect-ratio: 1;
   border-radius: 0.56rem;
-  border: 3px solid ${colorTheme.orange400};
+  border: 4px solid ${colorTheme.orange400};
   object-fit: cover;
 `;
+//기존 width 4.33rem -> 5
+//http://localhost:3000/mypage 프로필사진 크기 조절
+//border: 3px solid ${colorTheme.orange400}; < 프로필 사진 테두리 두께 조절
+//기존 3px -> 4px
 
 const ColumnBox = styled.div`
   width: 100%;
@@ -180,19 +185,25 @@ const ProfileRowBox = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 1.39rem;
+  font-size: 1.4rem;
 `;
+//기존 1.39rem-> 1.4
+//http://localhost:3000/mypage 이름 크기 조절
 
 const SexAge = styled.div`
-  font-size: 0.56rem;
+  font-size: 1.4rem;
   color: ${colorTheme.shade};
 `;
+//기존 0.56rem -> 1.4
+//http://localhost:3000/mypage 성별 나이 크기 조절
 
 const MenuBox = styled.div`
   position: absolute;
   right: 3.3%;
-  height: 25px;
+  height: 32px;
 `;
+//기존 25px ->32
+//http://localhost:3000/mypage 점세개 메뉴 크기 조절
 
 const MenuSVG = styled.img`
   height: 100%;
@@ -226,8 +237,10 @@ const PriceStateBox = styled.div`
   flex-direction: row;
   align-items: flex-end;
   gap: 3%;
-  font-size: 0.5rem;
+  font-size: 0.72rem;
 `;
+//기존 0.5rem -> 0.72
+//http://localhost:3000/mypage 위치, 도움횟수 크기 조절
 
 const KnotIconImg = styled.img`
   width: 1.39rem;
@@ -240,9 +253,11 @@ const KnotPriceState = styled.div`
 `;
 
 const KnotPriceWon = styled.div`
-  font-size: 0.722rem;
-  width: 1.8rem;
+  font-size: 1rem;
+  width: 2.8rem;
 `;
+//기존 0.722rem -> 1
+//http://localhost:3000/mypage 타임 크기 조절
 
 const OtherStateColumnBox = styled.div`
   display: flex;
@@ -253,6 +268,9 @@ const OtherStateColumnBox = styled.div`
 `;
 
 const OtherStateIcon = styled.img`
-  width: 0.5rem;
-  height: 0.68rem;
+  width: 1.3rem;
+  height: 1.3rem;
 `;
+//기존 width: 0.5rem; -> 1.3rem
+//기존 height: 0.68rem; -> 1.3rem
+//http://localhost:3000/mypage 성별, 위치, 도움횟수 왼쪽 아이콘 크기 조절

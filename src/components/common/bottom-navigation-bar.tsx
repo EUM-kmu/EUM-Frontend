@@ -6,9 +6,12 @@ import ChatDarkSVG from "@/assets/icons/chat-dark.svg";
 import ChatOrangeSVG from "@/assets/icons/chat-orange.svg";
 import MypageDarkSVG from "@/assets/icons/mypage-dark.svg";
 import MypageOrangeSVG from "@/assets/icons/mypage-orange.svg";
+import NoticeDarkSVG from "@/assets/icons/notice-dark.svg";
+import NoticeOrangeSVG from "@/assets/icons/notice-orange.svg";
 import PostDark from "@/assets/icons/post-dark.svg";
 import PostOrange from "@/assets/icons/post-orange.svg";
 import { colorTheme } from "@/style/color-theme";
+
 
 export const BottomNavigationBar = () => {
   const navigate = useNavigate();
@@ -27,6 +30,22 @@ export const BottomNavigationBar = () => {
 
   return (
     <Wrapper>
+      <NavigateButton
+        onClick={() => {
+          navigate("/notice", { replace: true });
+        }}
+      >
+        <img src={currentUrl == "notice" ? NoticeOrangeSVG : NoticeDarkSVG} />
+        <ButtonText
+          style={{
+            color:
+              currentUrl == "notice" ? colorTheme.orange400 : colorTheme.shade,
+            fontWeight: currentUrl == "notice" ? "bold" : "normal",
+          }}
+        >
+          게시판
+        </ButtonText>
+      </NavigateButton>
       <NavigateButton
         onClick={() => {
           navigate("/mypage", { replace: true });
@@ -92,7 +111,7 @@ const Wrapper = styled.div`
 `;
 
 const NavigateButton = styled.button`
-  width: 33.33%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -107,6 +126,6 @@ const NavigateButton = styled.button`
 
 const ButtonText = styled.span`
   width: 100%;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: ${colorTheme.shade};
 `;
